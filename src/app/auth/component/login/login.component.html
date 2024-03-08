@@ -1,0 +1,68 @@
+<div class="container">
+  <h2>Admin Login</h2>
+  <form [formGroup]="LoginForm" (ngSubmit)="onSubmit()" novalidate class="content">
+    <div class="inputFields">
+      <mat-form-field appearance="fill">
+        <mat-label>E-Mail</mat-label>
+        <input
+          matInput
+          type="email"
+          formControlName="email"
+          (input)="onInputBox($event)"
+        />
+        <mat-error
+          *ngIf="
+            LoginForm.get('email')?.invalid && LoginForm.get('email')?.touched
+          "
+        >
+          <span *ngIf="LoginForm.get('email')?.errors?.['required']"
+            >Email address is required</span
+          >
+          <span *ngIf="LoginForm.get('email')?.errors?.['email']"
+            >Invalid email address</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="{{ passwordHidden ? 'password' : 'text' }}"
+          formControlName="password"
+          (input)="onInputBox($event)"
+        />
+        <button type="button"
+          mat-icon-button
+          matSuffix
+          (click)="togglePasswordVisibility()"
+          aria-label="Toggle password visibility"
+        >
+          <mat-icon>{{
+            passwordHidden ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+        <mat-error
+          *ngIf="
+            LoginForm.get('password')?.invalid &&
+            LoginForm.get('password')?.touched
+          "
+        >
+          <span *ngIf="LoginForm.get('password')?.errors?.['required']"
+            >Password is required</span
+          >
+          <span *ngIf="LoginForm.get('password')?.errors?.['minlength']"
+            >Password must be at least 8 characters long</span
+          >
+        </mat-error>
+      </mat-form-field>
+</div>
+
+    <div class="button-class">
+      <button type="submit" mat-raised-button color="primary" class="login">Login</button>
+      <button type="button" class="signup"  routerLink="/auth/signup"> New User? Sign Up  </button>
+    </div>
+  </form>
+</div>

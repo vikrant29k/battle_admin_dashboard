@@ -1,0 +1,60 @@
+<!-- Import Angular Material modules in your component or module where you use this code -->
+<!-- Example: import { MatInputModule, MatButtonModule } from '@angular/material'; -->
+
+<div class="card">
+  <h2 class="form-title">Sign Up</h2>
+  <form #signupForm="ngForm" (submit)="submit()" class="form-container">
+   <div class="sub-container">
+    <mat-form-field class="form-group">
+      <mat-label>Name</mat-label>
+      <input
+        matInput
+        type="text"
+        name="name"
+        placeholder="Enter Your Name"
+        required
+        [(ngModel)]="formData.name"
+      />
+    </mat-form-field>
+    <mat-form-field class="form-group">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        type="email"
+        name="email"
+        placeholder="Enter Your Email"
+        required
+        [(ngModel)]="formData.email"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="form-group">
+      <mat-label>Company Number</mat-label>
+      <input
+        matInput
+        type="number"
+        name="companyNumber"
+        placeholder="Enter Company Number"
+        required
+        [(ngModel)]="formData.companyNumber"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="form-group">
+      <mat-label>Company Name</mat-label>
+      <input
+        matInput
+        type="text"
+        name="companyName"
+        placeholder="Enter Company Name"
+        required
+        [(ngModel)]="formData.companyName"
+      />
+    </mat-form-field>
+   </div>
+
+    <div class="form-submit">
+      <button type="submit" mat-raised-button color="primary">Sign Up</button>
+    </div>
+  </form>
+</div>

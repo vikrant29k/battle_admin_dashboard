@@ -1,0 +1,17 @@
+<div [ngClass]="!showMenu?'slider-shrunk':'slider-visible'">
+  <button mat-icon-button (click)="toggleMenu()" class="menu-switch-button">
+    <mat-icon>{{!showMenu?'menu':'close'}}</mat-icon>
+  </button>
+  <!-- <app-slider *ngIf="showMenu" ></app-slider> -->
+</div>
+<div class="slider" >
+  <span class="menu">
+      <p>Home</p>
+  </span>
+  <span class="menu" (click)="goToRoute('news-update')">
+ <p>News</p>
+</span>
+<span class="menu">
+ <p> Excel Upload</p>
+</span>
+</div>
