@@ -5,12 +5,15 @@ import { DashboardRoutingModule } from './modules/dashboard-routing.module';
 import { SliderComponent } from './component/slider/slider.component';
 import { ScoreboardComponent } from './component/scoreboard/scoreboard.component';
 import { HeaderComponent } from './component/header/header.component';
-import { MatIconModule } from '@angular/material/icon';
 import { NewsUpdateComponent } from './component/news-update/news-update.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { HttpClientModule } from '@angular/common/http';
+import { DashboardMaterialModule } from './modules/dashboard-material.module';
+import { NewsListComponent } from './component/news-list/news-list.component';
 @NgModule({
-  declarations: [DashboardComponent, SliderComponent, ScoreboardComponent, HeaderComponent, NewsUpdateComponent],
+  declarations: [DashboardComponent, SliderComponent, ScoreboardComponent, HeaderComponent, NewsUpdateComponent, NewsListComponent],
   imports: [
-    CommonModule,DashboardRoutingModule,MatIconModule
+    CommonModule,DashboardRoutingModule,AngularEditorModule,HttpClientModule,DashboardMaterialModule
   ]
 })
 export class DashboardModule { }

@@ -13,10 +13,10 @@ const routes: Routes = [
     {
       path: '',pathMatch:'full',redirectTo:'login'
     },
-  {
+    {
     path:'login',
     component:LoginComponent
-  },
+   },
   {
     path:'signup',
     component:SignUpComponent

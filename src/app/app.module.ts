@@ -7,12 +7,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardModule } from './dashboard/dashboard.module';
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
 
   ],
   imports: [
     BrowserModule,RouterModule,BrowserAnimationsModule,
     AppRoutingModule,DashboardModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

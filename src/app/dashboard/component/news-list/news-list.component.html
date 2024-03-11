@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="newsList">
+    <h2 class="titleNewsList">News List</h2>
+    <div class="contentNewsList">
+      <ng-container *ngFor="let news of listOfNews.data">
+        <mat-card class="card">
+          <mat-card-header class="card-header">
+            <mat-card-title class="card-title"><h2>{{ news.newsTitle }}</h2></mat-card-title>
+            <!-- <mat-card-subtitle class="timestamp"></mat-card-subtitle> -->
+          </mat-card-header>
+          <mat-card-content class="card-content">
+            <p [innerHTML]="news.content"></p>
+          </mat-card-content>
+          <mat-card-actions class="card-action">
+            <button mat-raised-button color="primary">Update</button>
+            <button mat-raised-button color="warn" (click)="deleteNews(news._id)">Delete</button>
+          </mat-card-actions>
+          <mat-card-footer align="right" class="card-footer">{{ getFormattedDate(news.timestamp) }}</mat-card-footer>
+        </mat-card>
+      </ng-container>
+    </div>
+
+  </div>
+
+</div>

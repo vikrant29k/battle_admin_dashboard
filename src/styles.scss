@@ -32,7 +32,7 @@ $battle-admin-dashboard-theme: mat.define-light-theme((
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($battle-admin-dashboard-theme);
-
+// @import '../node_modu\les/ngx-simplemde/index.less';
 /* You can add global styles to this file, and also import other style files */
 html,body{
   margin: 0;
@@ -45,3 +45,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
   background-position: center;
   background-size: cover;
  }
+ .angular-editor {
+  background-color: white;
+}
