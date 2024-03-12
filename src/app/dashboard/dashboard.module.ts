@@ -10,8 +10,10 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardMaterialModule } from './modules/dashboard-material.module';
 import { NewsListComponent } from './component/news-list/news-list.component';
+import { ProfileComponent } from './component/profile/profile.component';
+
 @NgModule({
-  declarations: [DashboardComponent, SliderComponent, ScoreboardComponent, HeaderComponent, NewsUpdateComponent, NewsListComponent],
+  declarations: [DashboardComponent, SliderComponent, ScoreboardComponent, HeaderComponent, NewsUpdateComponent, NewsListComponent, ProfileComponent],
   imports: [
     CommonModule,DashboardRoutingModule,AngularEditorModule,HttpClientModule,DashboardMaterialModule
   ]

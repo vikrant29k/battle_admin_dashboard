@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { environment } from 'src/environment/enviroment';
 
 @Component({
@@ -8,7 +9,8 @@ import { environment } from 'src/environment/enviroment';
   styleUrls: ['./news-list.component.scss']
 })
 export class NewsListComponent implements OnInit{
-  constructor(private http:HttpClient) {}
+
+  constructor(private http:HttpClient,private route:Router) {}
 ngOnInit(): void {
     this.getListofNews()
 }
@@ -28,4 +30,5 @@ ngOnInit(): void {
       console.log(res)
     })
   }
+
 }

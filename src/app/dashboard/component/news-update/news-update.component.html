@@ -1,12 +1,14 @@
 <div class="container">
-<form [formGroup]="newsContent">
-  <mat-form-field appearance="fill" class="title">
-    <mat-label>Title</mat-label>
-      <input type="text" matInput formControlName="title">
-  </mat-form-field>
-  <angular-editor formControlName="content" [config]="config" #editor></angular-editor>
-  <button mat-raised-button (click)="submitContent()">Post</button>
-</form>
-
-
+  <form [formGroup]="newsContent">
+    <mat-form-field appearance="fill" class="title">
+      <mat-label>Title</mat-label>
+      <input type="text" matInput formControlName="title" />
+    </mat-form-field>
+    <angular-editor
+      formControlName="content"
+      [config]="config"
+      #editor
+    ></angular-editor>
+    <button mat-raised-button (click)="submitContent()">Post</button>
+  </form>
 </div>
