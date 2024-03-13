@@ -12,6 +12,8 @@
     }
     angular-editor{
       text-align: left;
+      // max-width: 600px; /* Set a desired max-width for the editor */
+       word-wrap: break-word;
     }
     button{
       background-color: rgb(64, 207, 255);

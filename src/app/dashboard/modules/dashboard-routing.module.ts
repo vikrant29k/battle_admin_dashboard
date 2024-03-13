@@ -4,6 +4,7 @@ import { DashboardComponent } from '../dashboard.component';
 import { ScoreboardComponent } from '../component/scoreboard/scoreboard.component';
 import { NewsUpdateComponent } from '../component/news-update/news-update.component';
 import { NewsListComponent } from '../component/news-list/news-list.component';
+import { ImportExcelComponent } from '../component/import-excel/import-excel.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,9 @@ const routes: Routes = [
         {
           path:'news-list',
           component:NewsListComponent
+        },{
+          path:'import-file',
+          component:ImportExcelComponent
         }
     ]
 }

@@ -33,7 +33,7 @@
       </ng-template>
     </p>
 </span>
-  <span class="menu">
+  <span class="menu" (click)="goToRoute('import-file')">
     <p>
       <ng-container *ngIf="showMenu; else noexcel">
         <mat-icon>note_add</mat-icon> Upload File

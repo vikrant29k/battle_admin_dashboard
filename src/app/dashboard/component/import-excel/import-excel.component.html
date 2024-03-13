@@ -1,0 +1,18 @@
+<div class="container">
+  <h2 class="header-title">Import File</h2>
+  <div class="upload-section">
+    <!-- <h2 class="header-title">Upload File</h2> -->
+    <div class="file-selection">
+      <h3>Select a file to upload from your computer or device</h3>
+      <div class="file-chooser">
+        <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
+        <button class="choose-button" (click)="fileInput.click()">Choose a File</button>
+      </div>
+
+      <br />
+      <div class="confirm-button">
+        <button (click)="onFileUpload()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

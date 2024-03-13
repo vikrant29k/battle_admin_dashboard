@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environment/enviroment';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -54,7 +56,7 @@ export class LoginComponent {
   onSubmit() {
     if (this.LoginForm.valid) {
 
-    this.http.post('http://192.168.29.234:8000/admin-login',this.LoginForm.value).subscribe(
+    this.http.post(environment.baseUrl+'admin-login',this.LoginForm.value).subscribe(
       (response:any) => {
         if(response.message ==  "invalid creadentials"){
           alert("Invalid Email or Password");
