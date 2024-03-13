@@ -7,7 +7,7 @@
 }
 .card {
   width: 724px;
-  height: 489px;
+  height: 575px;
  background-image: url("../../../../assets/backgound.png");
   border-radius: 20px;
 }
@@ -37,3 +37,12 @@
   justify-content: end;
   align-items: end;
 }
+.card-action{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+
+ }
+ .btn{
+  font-size: 20px;
+ }

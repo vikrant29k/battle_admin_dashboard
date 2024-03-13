@@ -7,13 +7,16 @@ import { Route, Router } from '@angular/router';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit{
+
   constructor(private route:Router){}
 ngOnInit(): void {
-  throw new Error('Method not implemented.');
+  
 }
 profile(event:any) {
   this.route.navigate(['/profile']);
 }
   // showMenu = true; // Initialize menu state to open
-
+  Logout(event:any) {
+    this.route.navigate(['login'])
+  }
 }
