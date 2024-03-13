@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { environment } from 'src/environment/enviroment';
 import { NewsUpdateService } from 'src/app/services/update.service';
-import { Router } from '@angular/router';
 @Component({
   selector: 'app-news-list',
   templateUrl: './news-list.component.html',
