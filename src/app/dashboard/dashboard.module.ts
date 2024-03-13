@@ -10,9 +10,12 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardMaterialModule } from './modules/dashboard-material.module';
 import { NewsListComponent } from './component/news-list/news-list.component';
+import { ProfileComponent } from './component/profile/profile.component';
+import { DialogAnimationsComponent } from './component/dialog-animations/dialog-animations.component';
+
 import { ImportExcelComponent } from './component/import-excel/import-excel.component';
 @NgModule({
-  declarations: [DashboardComponent, SliderComponent, ScoreboardComponent, HeaderComponent, NewsUpdateComponent, NewsListComponent, ImportExcelComponent],
+  declarations: [DashboardComponent, SliderComponent, ScoreboardComponent, HeaderComponent, NewsUpdateComponent, NewsListComponent, ProfileComponent, DialogAnimationsComponent, ImportExcelComponent],
   imports: [
     CommonModule,DashboardRoutingModule,AngularEditorModule,HttpClientModule,DashboardMaterialModule
   ]

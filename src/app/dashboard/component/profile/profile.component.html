@@ -1,0 +1,75 @@
+<div class="profile-container">
+  <div class="card">
+    <h2 class="form-title">Profile</h2>
+    <form class="form-container">
+      <div class="sub-container">
+        <mat-form-field class="form-group">
+          <mat-label>Name</mat-label>
+          <input
+            matInput
+            type="text"
+            name="name"
+            placeholder="Enter Your Name"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field class="form-group">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            name="email"
+            placeholder="Enter Your Email"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field class="form-group">
+          <mat-label>Company Number</mat-label>
+          <input
+            matInput
+            type="number"
+            name="companyNumber"
+            placeholder="Enter Company Number"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field class="form-group">
+          <mat-label>Company Name</mat-label>
+          <input
+            matInput
+            type="text"
+            name="companyName"
+            placeholder="Enter Company Name"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field class="form-group" *ngIf="!showpassword">
+          <mat-label>Change Password</mat-label>
+          <input
+            matInput
+            type="text"
+            name="changepassword"
+            placeholder="Enter changepassword"
+            required
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="form-submit">
+        <mat-card-actions class="card-action">
+          <button mat-raised-button color="primary" class="btn">Edit</button>
+          <button
+            mat-raised-button
+            color="warn"
+            class="btn"
+            (click)="openDialog('0ms', '0ms')"
+          >
+            Change Password
+          </button>
+        </mat-card-actions>
+      </div>
+    </form>
+  </div>
+</div>
