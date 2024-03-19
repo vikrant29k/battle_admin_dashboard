@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { environment } from 'src/environment/enviroment';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -15,36 +18,46 @@ export class SignUpComponent implements OnInit {
     companyName: ""
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private auth:AuthService, private toastr:ToastrService) {}
 
   ngOnInit(): void {}
 
   submit(): void {
-    console.log('Form Data:', this.formData);
+    // console.log('Form Data:', this.formData);
+    if(this.formData.name==""||this.formData.email==""||this.formData.companyNumber==undefined||this.formData.companyName==""){
+      this.toastr.error("enter all fields")
+    }
+    else{
     // Create the data object with form values
     const data = {
       email: this.formData.email,
       companyNumber: this.formData.companyNumber,
       companyName: this.formData.companyName,
-      name:this.formData.name
+      userName:this.formData.name,
+      role:"admin",
     };
 
     console.log(data);
 
     // Call the API
-    this.http.post('http://192.168.29.234:8000/admin-register', data).subscribe(
-      (response:any) => {
+    this.auth.signUp(data).subscribe({
+      next:(response:any)=>{
         console.log('API Response:', response);
-        if(response.success== "Sign Up successfully!!"){
-          alert(response.message);
-        }
-
-        // Handle success, e.g., show a success message
+          if(response.message== "please verify..."||response.message=="please check your mail for email verifiying..."){
+            this.toastr.success(response.message)
+            this.formData.name = ''
+            this.formData.email = ''
+            this.formData.companyNumber = 0
+            this.formData.companyName=''
+          } 
       },
-      (error) => {
+      error:(error:HttpErrorResponse)=>{
         console.error('API Error:', error);
-        // Handle error, e.g., show an error message
+          // Handle error, e.g., show an error message
+          this.toastr.error("error while signup")
       }
+    }
     );
+  }
   }
 }

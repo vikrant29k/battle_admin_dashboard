@@ -1,10 +1,12 @@
 import { Component,ViewChild,ElementRef,AfterViewInit, OnInit } from '@angular/core';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { HttpClient } from '@angular/common/http';
+import { AngularEditorConfig, UploadResponse } from '@kolkov/angular-editor';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { FormGroup,FormControl,Validators } from '@angular/forms';
 import { environment } from 'src/environment/enviroment';
 import { NewsUpdateService } from 'src/app/services/update.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-news-update',
   templateUrl: './news-update.component.html',
@@ -20,7 +22,7 @@ export class NewsUpdateComponent implements OnInit{
   })
   updateNews:boolean=false;
   newsId!:string;
-  constructor(private http:HttpClient,private updateService:NewsUpdateService,private route:Router) {}
+  constructor(private http:HttpClient,private updateService:NewsUpdateService,private route:Router,private toastr:ToastrService) {}
    ngOnInit(): void {
     let data:any = this.updateService.news
     this.newsId=data._id
@@ -29,7 +31,7 @@ export class NewsUpdateComponent implements OnInit{
       this.updateNews=true
       this.newsContent.patchValue({
         content:data.content,
-        title:data.newsTitle
+        title:data.title
       })
     }
   }
@@ -52,13 +54,18 @@ config: AngularEditorConfig = {
 if(this.newsContent.valid){
   console.log(this.newsContent.value);
   if(this.updateNews){
-    this.http.put(environment.baseUrl+'update-news/'+this.newsId,this.newsContent.value).subscribe(res=>{
-      // console.log(res)
+    this.http.patch(environment.baseUrl+'news/'+this.newsId,this.newsContent.value).subscribe((res:any)=>{
+      if( res.statusCode==200){
+        this.toastr.success(res.message)
+        this.route.navigate(['/','dashboard','news-list'])
+       }
     })
   }else{
-    this.http.post(environment.baseUrl+'add-news',this.newsContent.value).subscribe((res:any)=>{
-      // console.log(res)
-     if( res.message=="News added succeefully"){
+    console.log("news adding")
+    this.http.post(environment.baseUrl+'news',this.newsContent.value).subscribe((res:any)=>{
+      console.log(res)
+     if( res.statusCode==200){
+      this.toastr.success("News added successfully")
       this.route.navigate(['/','dashboard','news-list'])
      }
     })
