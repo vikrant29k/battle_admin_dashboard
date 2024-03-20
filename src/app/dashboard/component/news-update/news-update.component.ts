@@ -49,9 +49,9 @@ config: AngularEditorConfig = {
       return Observable.create((observer: Observer<HttpEvent<UploadResponse>>) => {
         
         const formData = new FormData();
-        formData.append('image', file);
+        formData.append('file', file);
         
-        fetch('http://localhost:3000/api/upload', {
+        fetch('http://192.168.29.223:3000/upload', {
           method: 'POST',
           body: formData
         })
@@ -61,11 +61,13 @@ config: AngularEditorConfig = {
           }
           return response.json() as Promise<UploadResponse>;
         })
-        .then(data => {
+        .then((data:any) => {
           console.log("data", data)
           this.images.push(data)
+          let imageUrl = data.data.url
+          console.log("data", imageUrl)
           const httpResponse: HttpResponse<UploadResponse> = new HttpResponse({
-            body: data,
+            body: {imageUrl},
             status: 200, 
             statusText: 'OK', 
             // headers: null 
