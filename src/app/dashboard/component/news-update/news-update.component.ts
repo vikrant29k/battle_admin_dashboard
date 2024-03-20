@@ -45,43 +45,129 @@ config: AngularEditorConfig = {
     maxHeight: '20rem',
     minWidth:'100%',
     width:'50rem',
+
     upload: (file: File): Observable<HttpEvent<UploadResponse>> => {
+      console.log("file is", file);
       return Observable.create((observer: Observer<HttpEvent<UploadResponse>>) => {
-        
-        const formData = new FormData();
-        formData.append('file', file);
-        
-        fetch('http://192.168.29.223:3000/upload', {
-          method: 'POST',
-          body: formData
-        })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Failed to upload file');
+        const maxDimension = 250; // Maximum width or height for the resized image
+    
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const image = new Image();
+        image.src = URL.createObjectURL(file);
+    
+        image.onload = () => {
+          let width = image.width;
+          let height = image.height;
+    
+          // Resize the image if either dimension is greater than the maximum
+          if (width > maxDimension || height > maxDimension) {
+            // Calculate the new dimensions while maintaining aspect ratio
+            if (width > height) {
+              height *= maxDimension / width;
+              width = maxDimension;
+            } else {
+              width *= maxDimension / height;
+              height = maxDimension;
+            }
           }
-          return response.json() as Promise<UploadResponse>;
-        })
-        .then((data:any) => {
-          console.log("data", data)
-          this.images.push(data)
-          let imageUrl = data.data.url
-          console.log("data", imageUrl)
-          const httpResponse: HttpResponse<UploadResponse> = new HttpResponse({
-            body: {imageUrl},
-            status: 200, 
-            statusText: 'OK', 
-            // headers: null 
-          });
-          // Emit the HttpResponse
-          observer.next(httpResponse);
-          observer.complete();
-        })
-        .catch(error => {
-          console.error('Error uploading file:', error);
-          observer.error('Failed to upload file');
-        });
+    
+          // Set canvas dimensions
+          canvas.width = width;
+          canvas.height = height;
+    
+          // Draw image on canvas with new dimensions
+          ctx?.drawImage(image, 0, 0, width, height);
+    
+          // Convert canvas content to Blob
+          canvas.toBlob((blob) => {
+            if (!blob) {
+              observer.error('Failed to resize image');
+              return;
+            }
+    
+            // Create FormData and append resized image
+            const formData = new FormData();
+            formData.append('file', blob, file.name);
+    
+            // Upload resized image
+            fetch(`${environment.baseUrl}news/upload`, {
+              method: 'POST',
+              body: formData
+            })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Failed to upload file');
+              }
+              return response.json() as Promise<UploadResponse>;
+            })
+            .then((data: any) => {
+              console.log("data", data);
+              this.images.push(data);
+              let imageUrl = `${environment.baseUrl}${data.data.path}`;
+              console.log("data", imageUrl);
+              const httpResponse: HttpResponse<UploadResponse> = new HttpResponse({
+                body: { imageUrl },
+                status: 200,
+                statusText: 'OK',
+                // headers: null 
+              });
+              // Emit the HttpResponse
+              observer.next(httpResponse);
+              observer.complete();
+            })
+            .catch(error => {
+              console.error('Error uploading file:', error);
+              observer.error('Failed to upload file');
+            });
+          }, file.type);
+        };
       });
     },
+    
+    
+    
+
+    // upload: (file: File): Observable<HttpEvent<UploadResponse>> => {
+    //   console.log("file is",file)
+    //   return Observable.create((observer: Observer<HttpEvent<UploadResponse>>) => {
+        
+    //     const formData = new FormData();
+    //     formData.append('file', file);
+        
+    //     fetch(`${environment.baseUrl}news/upload`, {
+    //       method: 'POST',
+    //       body: formData
+    //     })
+    //     .then(response => {
+    //       if (!response.ok) {
+    //         throw new Error('Failed to upload file');
+    //       }
+    //       return response.json() as Promise<UploadResponse>;
+    //     })
+    //     .then((data:any) => {
+    //       console.log("data", data)
+    //       this.images.push(data)
+    //       let imageUrl = `${environment.baseUrl}${data.data.path}`
+    //       console.log("data", imageUrl)
+    //       const httpResponse: HttpResponse<UploadResponse> = new HttpResponse({
+    //         body: {imageUrl},
+    //         status: 200, 
+    //         statusText: 'OK', 
+    //         // headers: null 
+    //       });
+    //       // Emit the HttpResponse
+    //       observer.next(httpResponse);
+    //       observer.complete();
+    //     })
+    //     .catch(error => {
+    //       console.error('Error uploading file:', error);
+    //       observer.error('Failed to upload file');
+    //     });
+    //   });
+    // },
+
+
     // upload: (file: File): Observable<HttpEvent<UploadResponse>> => {
     //   return Observable.create((observer: Observer<HttpEvent<UploadResponse>>) => {
     //     // Simulate file upload
