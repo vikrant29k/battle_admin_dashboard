@@ -16,7 +16,11 @@ export class LoginComponent {
   passwordHidden: boolean = true;
   show: boolean = true;
   eyes: boolean = false;
-  constructor(private fb: FormBuilder, private router: Router, private http:HttpClient) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private http: HttpClient
+  ) {}
   togglePasswordVisibility(): void {
     this.passwordHidden = !this.passwordHidden;
   }
@@ -33,13 +37,7 @@ export class LoginComponent {
           ),
         ],
       ],
-      password: [
-        '',
-        [
-          Validators.required,
-
-        ],
-      ],
+      password: ['', [Validators.required]],
     });
     this.show = true;
     this.eyes = false;
@@ -55,29 +53,28 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.LoginForm.valid) {
+      this.http
+        .post(environment.baseUrl + 'admin-login', this.LoginForm.value)
+        .subscribe(
+          (response: any) => {
+            if (response.message == 'invalid creadentials') {
+              alert('Invalid Email or Password');
+            } else {
+              console.log('API Response:', response);
+              localStorage.setItem('token', response.token);
+              this.router.navigate(['/dashboard']);
+            }
 
-    this.http.post(environment.baseUrl+'admin-login',this.LoginForm.value).subscribe(
-      (response:any) => {
-        if(response.message ==  "invalid creadentials"){
-          alert("Invalid Email or Password");
-        }else{
-          console.log('API Response:', response);
-          localStorage.setItem('token',response.token)
-          this.router.navigate(['/dashboard']);
-        }
-
-
-        // Handle success, e.g., show a success message
-      },
-      (error) => {
-        console.error('API Error:', error);
-        // Handle error, e.g., show an error message
-      }
-    );
-    }else{
-alert("error")
+            // Handle success, e.g., show a success message
+          },
+          (error) => {
+            console.error('API Error:', error);
+            // Handle error, e.g., show an error message
+          }
+        );
+    } else {
+      alert('error');
     }
-
   }
 
   onInputBox(event: any) {
