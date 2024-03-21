@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute,Router } from '@angular/router';
+import { environment } from 'src/environment/enviroment';
 
 @Component({
   selector: 'app-set-password',
@@ -33,7 +34,7 @@ export class SetPasswordComponent {
        isVerified:true
    }
      console.log('Password set successfully');
-     this.http.patch('http://192.168.29.234:8000/admin-verify/'+_id,data).subscribe(
+     this.http.patch(environment.baseUrl+'admin-verify/'+_id,data).subscribe(
        (response:any) => {
          console.log('API Response:', response);
          if(response.message=="verification successfully"){

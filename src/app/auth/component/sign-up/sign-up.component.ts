@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { environment } from 'src/environment/enviroment';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -32,7 +32,7 @@ export class SignUpComponent implements OnInit {
     console.log(data);
 
     // Call the API
-    this.http.post('http://192.168.29.234:8000/admin-register', data).subscribe(
+    this.http.post(environment.baseUrl+'admin-register', data).subscribe(
       (response:any) => {
         console.log('API Response:', response);
         if(response.success== "Sign Up successfully!!"){
