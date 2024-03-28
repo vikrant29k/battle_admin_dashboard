@@ -52,8 +52,11 @@ config: AngularEditorConfig = {
 if(this.newsContent.valid){
   console.log(this.newsContent.value);
   if(this.updateNews){
-    this.http.put(environment.baseUrl+'update-news/'+this.newsId,this.newsContent.value).subscribe(res=>{
+    this.http.put(environment.baseUrl+'update-news/'+this.newsId,this.newsContent.value).subscribe((res:any)=>{
       // console.log(res)
+      if( res.message=="News updated successfully"){
+        this.route.navigate(['/','dashboard','news-list'])
+       }
     })
   }else{
     this.http.post(environment.baseUrl+'add-news',this.newsContent.value).subscribe((res:any)=>{

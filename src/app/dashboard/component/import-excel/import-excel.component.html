@@ -6,8 +6,11 @@
       <h3>Select a file to upload from your computer or device</h3>
       <div class="file-chooser">
         <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
+
         <button class="choose-button" (click)="fileInput.click()">Choose a File</button>
       </div>
+<!-- Display the selected file name -->
+<p *ngIf="selectedFile" class="selected-file-name">Selected File: {{ selectedFile.name }}</p>
 
       <br />
       <div class="confirm-button">

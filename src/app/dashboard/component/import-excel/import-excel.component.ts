@@ -367,8 +367,11 @@ export class ImportExcelComponent {
 
       // Send the file using HttpClient
       this.http.post(`${environment.baseUrl}importTeam`, formData).subscribe(
-        (res) => {
-          console.log('File upload response:', res);
+        (res:any) => {
+          // console.log('File upload response:', res);
+          if(res.message=='file received...'){
+            alert("Import Successful");
+          }
         },
         (error) => {
           console.error('Error uploading file:', error);
