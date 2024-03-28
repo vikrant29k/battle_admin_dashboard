@@ -86,11 +86,13 @@ export class LoginComponent {
       }
     }
     );
-    }else{
-      this.toastr.error("Please fill all fields")
-    }
-  }
 
+})
+}else{
+  this.toastr.error("Please fill all fields")
+}
+
+}
   onInputBox(event: any) {
     const emailControl = this.LoginForm.get('email');
     const passwordControl = this.LoginForm.get('password');
