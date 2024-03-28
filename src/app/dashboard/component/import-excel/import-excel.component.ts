@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import * as XLSX from 'xlsx';
 
 import { environment } from 'src/environment/enviroment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-import-excel',
@@ -11,7 +12,9 @@ import { environment } from 'src/environment/enviroment';
 })
 export class ImportExcelComponent {
   selectedFile: File | null = null;
-  constructor(private http: HttpClient) {}
+  fileError: boolean = true;
+  finalResult: any;
+  constructor(private http: HttpClient, private toastr: ToastrService) {}
 
   // onFileSelected(event: any): void {
   //   const file: File = event.target.files[0];
@@ -157,6 +160,8 @@ export class ImportExcelComponent {
 
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
+    this.selectedFile = file;
+    var commonFieldObject: any = {};
     const fileReader: FileReader = new FileReader();
 
     fileReader.onload = (e: any) => {
@@ -196,10 +201,13 @@ export class ImportExcelComponent {
         console.log('arrays is same');
       } else {
         console.log('array not same');
-        alert('Please check headers');
+        this.toastr.error('Please Check Headers');
+        this.fileError = true;
       }
 
       const dataArray = data.slice(1); // Exclude the header row
+
+      // console.log('dataarry', dataArray);
 
       // Extract column data
       const columnData: { [key: string]: any[] } = {};
@@ -225,18 +233,93 @@ export class ImportExcelComponent {
       this.validateColumn(columnData, 'Target / Sales Rep LC');
       this.validateColumn(columnData, 'Sales rep No');
       this.validateColumn(columnData, 'E-Mail');
-      // this.validateColumn(columnData, 'Company Unit (Region or Division...)');
+      this.validateColumn(columnData, 'Company Unit (Region or Division...)');
+      this.validateColumn(columnData, 'Team name (ASM level)');
 
       // Convert the array of arrays into an array of objects
       const result = dataArray.reduce((acc: any[], row: any[]) => {
         // Check if all values in the row are undefined
+        // console.log('this is a excel row', row);
         const isEmpty = row.every((value: any) => value === undefined);
         // If the row is not empty, convert it to an object and add it to the result
         if (!isEmpty) {
+          // console.log('second column', row[2]);
+
           const obj: any = {};
           headers.forEach((header: any, index: any) => {
             obj[header] = row[index];
+
+            if (obj[header] == undefined && header !== 'Game-Leader (GL)') {
+              this.toastr.error(`fill all fields in ${header}`);
+              this.fileError = true;
+            }
           });
+
+          // Assign values to commonFieldObject outside the loop
+          commonFieldObject['Company No'] = obj['Company No'];
+          commonFieldObject['Company Name'] = obj['Company Name'];
+          commonFieldObject['Company Target LC Total'] =
+            obj['Company Target LC Total'];
+          commonFieldObject.Currency = obj.Currency;
+          commonFieldObject['Time zone (correlated to CET)'] =
+            obj['Time zone (correlated to CET)'];
+          commonFieldObject['Language\r\nISO-639-1'] =
+            obj['Language\r\nISO-639-1'];
+          commonFieldObject['Battle Partner Company No'] =
+            obj['Battle Partner Company No'];
+          commonFieldObject['Battle Partner Company Name'] =
+            obj['Battle Partner Company Name'];
+
+          // Remove assigned fields from the current object
+          delete obj['Company No'];
+          delete obj['Company Name'];
+          delete obj['Company Target LC Total'];
+          delete obj.Currency;
+          delete obj['Time zone (correlated to CET)'];
+          delete obj['Language\r\nISO-639-1'];
+          delete obj['Battle Partner Company No'];
+          delete obj['Battle Partner Company Name'];
+
+          // console.log('common obj ', commonFieldObject);
+
+          // if (obj['Company Unit (Region or Division...)'] == undefined) {
+          //   this.toastr.error(
+          //     `fill all fields in Company Unit (Region or Division...`
+          //   );
+          // } else if (
+          //   typeof obj['Company Unit (Region or Division...)'] !== 'string'
+          // ) {
+          //   this.toastr.error(
+          //     'Company Unit (Region or Division...) value should be string it must be letters'
+          //   );
+          // }
+
+          // if (obj['Team name (ASM level)'] == undefined) {
+          //   this.toastr.error(`fill all fields in Team name (ASM level)`);
+          // } else if (typeof obj['Team name (ASM level)'] !== 'string') {
+          //   this.toastr.error(
+          //     'Team name (ASM level) value should be string it must be letters'
+          //   );
+          // }
+
+          // if (obj['Battle Partner Team name (ASM level)'] == undefined) {
+          //   this.toastr.error(
+          //     `fill all fields in Battle Partner Team name (ASM level)`
+          //   );
+          // } else if (
+          //   typeof obj['Battle Partner Team name (ASM level)'] !== 'string'
+          // ) {
+          //   this.toastr.error(
+          //     'Battle Partner Team name (ASM level) value should be string it must be letters'
+          //   );
+          // }
+
+          // if (obj['Game-Leader (GL)'] == 'GL') {
+          //   obj.isGL = true;
+          // } else {
+          //   obj.isGL = false;
+          // }
+
           acc.push(obj);
         }
         return acc;
@@ -257,10 +340,15 @@ export class ImportExcelComponent {
         }
       });
 
-      // Extract arrays of objects with the same team name
       const teamArrays = Object.values(teamObject);
 
-      console.log('Arrays of objects with the same team name:', teamArrays);
+      this.finalResult = {
+        teamsData: teamArrays, // Assign the teamArrays
+        commonFields: commonFieldObject, // Assign the commonFieldObject
+      };
+      this.fileError = false;
+
+      console.log('Final Result:', this.finalResult);
 
       console.log('Column data:', columnData);
     };
@@ -285,12 +373,16 @@ export class ImportExcelComponent {
               index + 1
             } in the "${columnName}" column.`
           );
-          alert(`invalid Email ${email}`);
+          
+          this.toastr.error(`invalid Email ${email}`);
+          this.fileError = true;
+          return;
         }
       });
       return;
     }
 
+    // check if column values in numbers
     if (
       columnName == 'Battle Partner Company No' ||
       columnName == 'Sales rep No' ||
@@ -305,11 +397,47 @@ export class ImportExcelComponent {
         console.error(
           `Error: Not all values in the "${columnName}" column are numbers.`
         );
-        return alert(`Please check all values in number column ${columnName}`);
+        this.toastr.error(
+          `Please check all values in number column ${columnName}`
+        );
+        this.fileError = true;
+        return;
       }
     }
 
     if (columnName == 'Target / Sales Rep LC' || columnName == 'Sales rep No') {
+      return;
+    }
+
+    // check column values in string
+    if (
+      columnName == 'Company Name' ||
+      columnName == 'Company Unit (Region or Division...)' ||
+      columnName == 'Team name (ASM level)' ||
+      columnName == 'Currency' ||
+      columnName == 'Battle Partner Team name (ASM level)' ||
+      columnName == 'Language\r\nISO-639-1' ||
+      columnName == 'Battle Partner Company Name'
+    ) {
+      var allVAluesInString = columnArray.every(
+        (value: any) => typeof value === 'string'
+      );
+      if (!allVAluesInString) {
+        console.error(
+          `Error: Not all values in the "${columnName}" column are string.`
+        );
+        this.toastr.error(
+          `Please check all values in string, column ${columnName}`
+        );
+        this.fileError = true;
+      }
+    }
+
+    if (
+      columnName == 'Company Unit (Region or Division...)' ||
+      columnName == 'Team name (ASM level)' ||
+      columnName == 'Battle Partner Team name (ASM level)'
+    ) {
       return;
     }
 
@@ -331,6 +459,7 @@ export class ImportExcelComponent {
     // }
 
     const firstValue = columnArray[0];
+
     const allValuesMatch = columnArray.every(
       (value: any) => value === firstValue
     );
@@ -339,7 +468,9 @@ export class ImportExcelComponent {
       console.error(
         `Error: Not all values in the "${columnName}" column are the same.`
       );
-      alert(`${columnName} need to same `);
+
+      this.toastr.error(`${columnName} need to same `);
+      this.fileError = true;
     }
   }
 
@@ -360,25 +491,33 @@ export class ImportExcelComponent {
   }
 
   onFileUpload(): void {
-    if (this.selectedFile) {
+    
+    if (!this.fileError) {
       // Use FormData to send the file
-      const formData = new FormData();
-      formData.append('excel', this.selectedFile, this.selectedFile.name);
+      // const formData = new FormData();
+      // formData.append('excel', this.selectedFile, this.selectedFile.name);
 
       // Send the file using HttpClient
-      this.http.post(`${environment.baseUrl}importTeam`, formData).subscribe(
-        (res:any) => {
-          // console.log('File upload response:', res);
-          if(res.message=='file received...'){
-            alert("Import Successful");
+      this.http
+        .post(`${environment.baseUrl}admin/player`, this.finalResult)
+        .subscribe(
+          (res: any) => {
+            console.log('File upload response:', res);
+            if (res.message == 'file received...') {
+              // alert("Import Successful");
+              this.toastr.error('Import Successful');
+            }
+          },
+          (error) => {
+            console.error('Error uploading file:', error);
           }
-        },
-        (error) => {
-          console.error('Error uploading file:', error);
-        }
-      );
+        );
     } else {
-      console.error('No file selected.');
+      if (!this.selectedFile) {
+        this.toastr.error('Please Select File');
+      } else {
+        this.toastr.error('Error in file');
+      }
     }
   }
 }
