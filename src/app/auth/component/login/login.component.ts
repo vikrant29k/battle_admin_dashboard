@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environment/enviroment';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,11 +18,10 @@ export class LoginComponent {
   passwordHidden: boolean = true;
   show: boolean = true;
   eyes: boolean = false;
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private http: HttpClient
-  ) {}
+
+
+  constructor(private fb: FormBuilder, private router: Router, private http:HttpClient,private toastr:ToastrService, private auth:AuthService) {}
+
   togglePasswordVisibility(): void {
     this.passwordHidden = !this.passwordHidden;
   }
@@ -65,15 +66,28 @@ export class LoginComponent {
               this.router.navigate(['/dashboard']);
             }
 
-            // Handle success, e.g., show a success message
-          },
-          (error) => {
-            console.error('API Error:', error);
-            // Handle error, e.g., show an error message
-          }
-        );
-    } else {
-      alert('error');
+
+    this.auth.login(this.LoginForm.value).subscribe({
+      next:(response:any)=>{
+        if(response.message ==  "invalid creadentials"){
+          // alert("Invalid Email or Password");
+          this.toastr.error(response.message)
+        }else{
+          console.log('API Response:', response);
+          this.toastr.success(response.message)
+          localStorage.setItem('token',response.token)
+          this.router.navigate(['/dashboard']);
+        }
+      },
+      error:(error:HttpErrorResponse)=>{
+        console.error('API Error:', error);
+        // Handle error, e.g., show an error message
+        this.toastr.error("error while login")
+      }
+    }
+    );
+    }else{
+      this.toastr.error("Please fill all fields")
     }
   }
 

@@ -17,6 +17,7 @@ profile(event:any) {
 }
   // showMenu = true; // Initialize menu state to open
   Logout(event:any) {
-    this.route.navigate(['login'])
+    localStorage.removeItem("token")
+    this.route.navigate([''])
   }
 }
