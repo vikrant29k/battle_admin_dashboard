@@ -31,11 +31,10 @@ export class SignUpComponent implements OnInit {
     else{
     // Create the data object with form values
     const data = {
-      email: this.formData.email,
-      companyNumber: this.formData.companyNumber,
-      companyName: this.formData.companyName,
       userName:this.formData.name,
-      role:"admin",
+      email: this.formData.email,
+      uid: this.formData.companyNumber,
+      name: this.formData.companyName,
     };
 
     console.log(data);
@@ -57,7 +56,7 @@ export class SignUpComponent implements OnInit {
       error:(error:HttpErrorResponse)=>{
         console.error('API Error:', error);
           // Handle error, e.g., show an error message
-          this.toastr.error("error while signup")
+          this.toastr.error(error.error.message)
       }
     }
     );

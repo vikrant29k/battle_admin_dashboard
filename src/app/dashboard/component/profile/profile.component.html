@@ -1,7 +1,7 @@
 <div class="profile-container">
   <div class="card">
     <h2 class="form-title">Profile</h2>
-    <form class="form-container">
+    <form class="form-container" [formGroup]="profileForm">
       <div class="sub-container">
         <mat-form-field class="form-group">
           <mat-label>Name</mat-label>
@@ -11,6 +11,7 @@
             name="name"
             placeholder="Enter Your Name"
             required
+            formControlName="userName"
           />
         </mat-form-field>
         <mat-form-field class="form-group">
@@ -21,6 +22,7 @@
             name="email"
             placeholder="Enter Your Email"
             required
+            formControlName="email"
           />
         </mat-form-field>
 
@@ -32,6 +34,7 @@
             name="companyNumber"
             placeholder="Enter Company Number"
             required
+            formControlName="uid"
           />
         </mat-form-field>
 
@@ -43,6 +46,7 @@
             name="companyName"
             placeholder="Enter Company Name"
             required
+            formControlName="name"
           />
         </mat-form-field>
         <mat-form-field class="form-group" *ngIf="!showpassword">

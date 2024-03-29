@@ -19,8 +19,13 @@ export class LoginComponent {
   show: boolean = true;
   eyes: boolean = false;
 
-
-  constructor(private fb: FormBuilder, private router: Router, private http:HttpClient,private toastr:ToastrService, private auth:AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private http: HttpClient,
+    private toastr: ToastrService,
+    private auth: AuthService
+  ) {}
 
   togglePasswordVisibility(): void {
     this.passwordHidden = !this.passwordHidden;
@@ -54,45 +59,36 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.LoginForm.valid) {
-      this.http
-        .post(environment.baseUrl + 'admin-login', this.LoginForm.value)
-        .subscribe(
-          (response: any) => {
-            if (response.message == 'invalid creadentials') {
-              alert('Invalid Email or Password');
-            } else {
-              console.log('API Response:', response);
-              localStorage.setItem('token', response.token);
-              this.router.navigate(['/dashboard']);
-            }
-
-
-    this.auth.login(this.LoginForm.value).subscribe({
-      next:(response:any)=>{
-        if(response.message ==  "invalid creadentials"){
-          // alert("Invalid Email or Password");
-          this.toastr.error(response.message)
-        }else{
-          console.log('API Response:', response);
-          this.toastr.success(response.message)
-          localStorage.setItem('token',response.token)
-          this.router.navigate(['/dashboard']);
+      this.auth.login(this.LoginForm.value).subscribe({
+        next: (response: any) => {
+          console.log('response =>>', response);
+          if(response.statusCode==200){
+            console.log('API Response:', response);
+            this.toastr.success(response.message);
+            localStorage.setItem('token', response.data);
+            this.router.navigate(['/dashboard']);
+          }
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log("error", error)
+          if(error.error.statusCode==404){
+            this.toastr.error("check your email")
+          }
+          else{
+            // alert("Invalid Email or Password");
+            this.toastr.error(error.error.message);
+          }
+          console.error('API Error:', error);
+          // Handle error, e.g., show an error message
+          if(!error.error.message){
+          this.toastr.error('error while login');
         }
-      },
-      error:(error:HttpErrorResponse)=>{
-        console.error('API Error:', error);
-        // Handle error, e.g., show an error message
-        this.toastr.error("error while login")
-      }
+        },
+      });
+    } else {
+      this.toastr.error('Please fill all fields');
     }
-    );
-
-})
-}else{
-  this.toastr.error("Please fill all fields")
-}
-
-}
+  }
   onInputBox(event: any) {
     const emailControl = this.LoginForm.get('email');
     const passwordControl = this.LoginForm.get('password');

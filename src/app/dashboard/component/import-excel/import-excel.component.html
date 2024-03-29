@@ -5,7 +5,7 @@
     <div class="file-selection">
       <h3>Select a file to upload from your computer or device</h3>
       <div class="file-chooser">
-        <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
+        <input type="file" #fileInput style="display: none" accept=".xlsx, .xls" (change)="onFileSelected($event)">
 
         <button class="choose-button" (click)="fileInput.click()" *ngIf="!fileSelectedSpinner">Choose a File</button>
         <mat-spinner style="width: 50px;" *ngIf="fileSelectedSpinner" ></mat-spinner>

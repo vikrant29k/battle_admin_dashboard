@@ -26,15 +26,15 @@ export class AuthService {
 
 
     signUp(data: any): Observable<any> {
-      return this.http.post(`${environment.baseUrl}admin/signup`, data);
+      return this.http.post(`${environment.baseUrl}user/admin-add`, data);
     }
 
     setPassword(data: any): Observable<any> {
-      return this.http.patch(`${environment.baseUrl}admin`, data);
+      return this.http.patch(`${environment.baseUrl}user/admin-password`, data);
     }
 
     login(data:any): Observable<any>{
-      return this.http.post(`${environment.baseUrl}admin/signin`, data);
+      return this.http.post(`${environment.baseUrl}user/signin`, data);
     }
   
 

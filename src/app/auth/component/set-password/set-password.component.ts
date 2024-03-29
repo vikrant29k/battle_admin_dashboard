@@ -38,7 +38,8 @@ export class SetPasswordComponent implements OnInit {
 
         this.passwordMismatchError =
           'Passwords do not match. Please try again.';
-        alert(this.passwordMismatchError);
+        // alert(this.passwordMismatchError);
+        this.toastr.error(this.passwordMismatchError)
         return;
       } else {
         this.passwordMismatchError = '';
@@ -51,15 +52,22 @@ export class SetPasswordComponent implements OnInit {
       this.auth.setPassword(data).subscribe({
         next: (response) => {
           console.log('API Response:', response);
-          if (response.message == 'update successfully') {
+          if (response.statusCode == 200) {
             // alert("Password set successful");
-            this.toastr.success('Password set successful');
+            this.toastr.success(response.message);
             this.route.navigate(['/', 'auth', 'login']);
+          }else{
+            this.toastr.success(response.message)
           }
+
         },
         error: (error: HttpErrorResponse) => {
           console.error('API Error:', error);
-          //    this.toastr.error(error.error.error)
+          if(error.error.message){
+             this.toastr.error(error.error.message)
+            }else{
+              this.toastr.error("server error")
+            }
         },
       });
     } else {
