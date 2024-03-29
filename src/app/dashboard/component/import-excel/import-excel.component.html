@@ -7,14 +7,16 @@
       <div class="file-chooser">
         <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
 
-        <button class="choose-button" (click)="fileInput.click()">Choose a File</button>
+        <button class="choose-button" (click)="fileInput.click()" *ngIf="!fileSelectedSpinner">Choose a File</button>
+        <mat-spinner style="width: 50px;" *ngIf="fileSelectedSpinner" ></mat-spinner>
       </div>
 <!-- Display the selected file name -->
-<p *ngIf="selectedFile" class="selected-file-name">Selected File: {{ selectedFile.name }}</p>
+<p *ngIf="selectedFile" [class.colorRed]="fileError" class="selected-file-name">Selected File: {{ selectedFile.name }}</p>
 
       <br />
       <div class="confirm-button">
-        <button (click)="onFileUpload()">Confirm</button>
+        <button (click)="onFileUpload()" *ngIf="!confirm">Confirm</button>
+        <mat-spinner style="width: 50px;" *ngIf="confirm"></mat-spinner>
       </div>
     </div>
   </div>
