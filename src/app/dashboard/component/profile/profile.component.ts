@@ -23,6 +23,9 @@ export class ProfileComponent {
 
   profileForm! : FormGroup
 
+  editBtn:boolean= true
+  changePassword:boolean = false
+
   ngOnInit(): void {
     this.changepass.showOtherDiv.subscribe((res: any) => {
       this.showpassword = res;
@@ -55,14 +58,35 @@ export class ProfileComponent {
       enterAnimationDuration,
       exitAnimationDuration,
     });
+
+    this.changePassword = true
   }
 
   getProfileDetails() {
     this.http.get(`${environment.baseUrl}user/details`).subscribe({
       next: (res: any) => {
         console.log('api res', res);
-        this.profileForm.patchValue(res.data)
+        let formData = {
+          userName:res.data.userName,
+          email:res.data.email,
+          uid:res.data.companyId.uid,
+          name:res.data.companyId.name
+        }
+        this.profileForm.patchValue(formData)
+        this.profileForm.disable()
       },
     });
+  }
+
+  editBtnClick(){
+    this.profileForm.enable()
+    this.profileForm.get('email')?.disable()
+    this.editBtn = false
+  }
+
+  saveBtnClick(){
+    this.profileForm.disable()
+    this.editBtn = true
+    alert("working on it")
   }
 }

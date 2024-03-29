@@ -55,7 +55,7 @@
             matInput
             type="text"
             name="changepassword"
-            placeholder="Enter changepassword"
+            placeholder="Enter new password"
             required
           />
         </mat-form-field>
@@ -63,7 +63,8 @@
 
       <div class="form-submit">
         <mat-card-actions class="card-action">
-          <button mat-raised-button color="primary" class="btn">Edit</button>
+          <button mat-raised-button color="primary" class="btn" (click)="editBtnClick()" *ngIf="editBtn" >Edit</button>
+          <button mat-raised-button color="primary" class="btn" (click)="saveBtnClick()" *ngIf="!editBtn" >Save</button>
           <button
             mat-raised-button
             color="warn"
