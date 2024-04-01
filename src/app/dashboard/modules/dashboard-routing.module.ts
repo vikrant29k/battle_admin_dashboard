@@ -6,6 +6,7 @@ import { NewsUpdateComponent } from '../component/news-update/news-update.compon
 import { NewsListComponent } from '../component/news-list/news-list.component';
 import { ImportExcelComponent } from '../component/import-excel/import-excel.component';
 import { ProfileComponent } from '../component/profile/profile.component';
+import { MatchComponent } from '../component/match/match.component';
 const routes: Routes = [
   {
     path:'',
@@ -31,9 +32,14 @@ const routes: Routes = [
         {
           path:'profile',
           component:ProfileComponent
-        },{
+        },
+        {
           path:'import-file',
           component:ImportExcelComponent
+        },
+        {
+          path:'match',
+          component:MatchComponent
         }
 
     ]

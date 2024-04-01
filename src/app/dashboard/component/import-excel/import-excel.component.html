@@ -8,10 +8,11 @@
         <input type="file" #fileInput style="display: none" accept=".xlsx, .xls" (change)="onFileSelected($event)">
 
         <button class="choose-button" (click)="fileInput.click()" *ngIf="!fileSelectedSpinner">Choose a File</button>
-        <mat-spinner style="width: 50px;" *ngIf="fileSelectedSpinner" ></mat-spinner>
+        <mat-spinner style="width: 50px;" *ngIf="fileSelectedSpinner"></mat-spinner>
       </div>
-<!-- Display the selected file name -->
-<p *ngIf="selectedFile" [class.colorRed]="fileError" class="selected-file-name">Selected File: {{ selectedFile.name }}</p>
+      <!-- Display the selected file name -->
+      <p *ngIf="selectedFile" [class.colorRed]="fileError" class="selected-file-name">Selected File: {{
+        selectedFile.name }}</p>
 
       <br />
       <div class="confirm-button">

@@ -43,6 +43,16 @@
       </ng-template>
     </p>
   </span>
+  <span class="menu" (click)="goToRoute('match')">
+    <p>
+      <ng-container *ngIf="showMenu; else match">
+        <mat-icon>image</mat-icon> Match
+      </ng-container>
+      <ng-template #match>
+        <mat-icon>image</mat-icon>
+      </ng-template>
+    </p>
+  </span>
   </div>
 </div>
 

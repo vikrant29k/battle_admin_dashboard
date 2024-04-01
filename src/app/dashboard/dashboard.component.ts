@@ -16,7 +16,7 @@ profile(event:any) {
   this.route.navigate(['/profile']);
 }
   // showMenu = true; // Initialize menu state to open
-  Logout(event:any) {
+  Logout() {
     localStorage.removeItem("token")
     this.route.navigate([''])
   }

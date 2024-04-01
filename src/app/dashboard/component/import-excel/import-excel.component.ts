@@ -116,8 +116,8 @@ export class ImportExcelComponent {
         ) ||
         this.validateColumn(columnData, 'Team name (ASM level)')
       ) {
-        throw new Error('validation failed');
         this.fileSelectedSpinner = false;
+        throw new Error('validation failed');
       }
 
       // Convert the array of arrays into an array of objects

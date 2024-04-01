@@ -16,7 +16,7 @@
         </button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item routerLink="/profile">Profile</button>
-          <button mat-menu-item  routerLink="/auth/login">Logout</button>
+          <button mat-menu-item (click)="Logout()" >Logout</button>
         </mat-menu>
       </div>
     </header>

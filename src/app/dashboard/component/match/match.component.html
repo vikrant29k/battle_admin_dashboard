@@ -1,0 +1,50 @@
+<div class="container">
+    <h1 style="color: white;">
+        Upload Match Image
+    </h1>
+    <div class="upload-section">
+
+        <div class="file-selection">
+            <mat-form-field class="form-group">
+                <mat-label>Match Name</mat-label>
+                <input matInput #matchName type="text" name="name" placeholder="Enter Match Name" required />
+            </mat-form-field>
+            <div class="textImgContainer">
+                <!-- <div>
+                    <input type="text" placeholder="Enter Match Name">
+                </div> -->
+
+                <div class="file-chooser">
+                    <input type="file" #fileInput style="display: none" accept="image/*"
+                        (change)="onFileSelected($event)">
+
+                    <button class="choose-button" (click)="fileInput.click()">Choose a
+                        Image</button>
+                </div>
+            </div>
+
+            <p *ngIf="selectedImg" [class.colorRed]="fileError" class="selected-file-name">Selected File: {{
+                selectedImg.name }}</p>
+
+            <br />
+            <div class="confirm-button">
+                <button (click)="onFileUpload(matchName.value)">Confirm</button>
+            </div>
+        </div>
+    </div>
+    <div class="matchListContainer">
+        <div *ngFor="let match of matches"
+            style="display: flex; justify-content: space-around; flex-direction: row;margin: 10px; border: 1px solid white; padding: 5px; border-radius: 5px; align-items: center;">
+            <div style="display: flex; flex-direction: column; align-items: flex-start; justify-content: space-around; flex: 2;">
+                <h3>Match Name - {{match.matchName}}</h3>
+                <p>Active - {{match.isActive?'Yes':'No'}}</p>
+            </div>
+            <!-- <img [src]='match.matchAvatar' alt=""> -->
+            <img style="flex: 2;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0TQvA69HAHtHym43p3_bt0Kmh-7shcjRMJA&usqp=CAU"
+                alt="image">
+
+            <mat-icon style="flex: 1;">delete</mat-icon>
+
+        </div>
+    </div>
+</div>
