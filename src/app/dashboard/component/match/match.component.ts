@@ -12,7 +12,7 @@ export class MatchComponent implements OnInit {
   @ViewChild('matchName') matchNameInput!: ElementRef;
   selectedImg: File | null = null;
   fileError: boolean = false;
-  baseUrl = environment.baseUrl;
+  baseUrl = environment.baseUrl
 
   matches = [
     {
@@ -21,7 +21,7 @@ export class MatchComponent implements OnInit {
       matchAvatar: '1711968940477-img2.jpg',
       isActive: true,
       __v: 0,
-    },
+    }
   ];
 
   constructor(private http: HttpClient, private toastr: ToastrService) {}
@@ -37,40 +37,36 @@ export class MatchComponent implements OnInit {
   onFileUpload(match: any) {
     if (match) {
       console.log('match', match);
-      
-
-      for (let i = 0; i < 100; i++) {
-        let data = new FormData();
+      let data = new FormData();
       if (this.selectedImg) {
         data.append('avatar', this.selectedImg);
       } else {
         this.toastr.info('Please select an Image');
         return;
       }
-        data.append('matchName', match + i);
 
-        this.http.post(`${environment.baseUrl}match`, data).subscribe({
-          next: (response: any) => {
-            console.log('response =>>', response);
-            if (response.statusCode == 200) {
-              console.log('API Response:', response);
-              this.selectedImg = null;
-              this.matchNameInput.nativeElement.value = '';
-              this.toastr.success(response.message);
-              this.getAllMatches();
-            }
-          },
-          error: (error: HttpErrorResponse) => {
-            console.log('error', error);
-            console.error('API Error:', error);
-            if (!error.error.message) {
-              this.toastr.error('error');
-            } else {
-              this.toastr.error(error.error.message);
-            }
-          },
-        });
-      }
+      data.append('matchName', match);
+      this.http.post(`${environment.baseUrl}match`, data).subscribe({
+        next: (response: any) => {
+          console.log('response =>>', response);
+          if (response.statusCode == 200) {
+            console.log('API Response:', response);
+            this.selectedImg = null;
+            this.matchNameInput.nativeElement.value = '';
+            this.toastr.success(response.message);
+            this.getAllMatches()
+          }
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log('error', error);
+          console.error('API Error:', error);
+          if (!error.error.message) {
+            this.toastr.error('error');
+          } else {
+            this.toastr.error(error.error.message);
+          }
+        },
+      });
     } else {
       this.toastr.info('Enter Match Name');
     }
@@ -86,7 +82,7 @@ export class MatchComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         console.log('error', error);
-        this.toastr.error('error');
+        this.toastr.error("error")
       },
     });
   }
