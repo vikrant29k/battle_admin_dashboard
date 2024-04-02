@@ -23,33 +23,19 @@
                 </div>
             </div>
 
-            <p *ngIf="selectedImg" [class.colorRed]="fileError" class="selected-file-name">Selected File: {{
+            <p *ngIf="selectedImg" [class.colorRed]="fileError" class="selected-file-name" style="margin-bottom: 0%;">Selected File: {{
                 selectedImg.name }}</p>
 
             <br />
             <div class="confirm-button">
-                <button (click)="onFileUpload(matchName.value)">Confirm</button>
+                <button (click)="onFileUpload(matchName.value)" *ngIf="!updateBtn">Confirm</button>
+                <button (click)="updateMatch(matchName.value)" *ngIf="updateBtn">Update</button>
             </div>
         </div>
     </div>
-    <!-- <div class="matchListContainer">
-        <div *ngFor="let match of matches"
-            style="display: flex; justify-content: space-around; flex-direction: row;margin: 10px; border: 1px solid white; padding: 5px; border-radius: 5px; align-items: center;">
-            <div
-                style="display: flex; flex-direction: column; align-items: center; justify-content: space-around; flex: 3; width: 30%;">
-                <h3 style="line-break: anywhere;margin: 10px">Match Name - {{match.matchName}}</h3>
-                <p>Active - {{match.isActive?'Yes':'No'}}</p>
-            </div>
-            <img [src]="baseUrl+'images/' + match.matchAvatar" alt="" style="flex: 3; height: 220px;width: 450px;">
-            <!-- <img style="flex: 3; height: 220px;width: 450px;"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0TQvA69HAHtHym43p3_bt0Kmh-7shcjRMJA&usqp=CAU"
-                alt="image"> -->
 
-    <!-- <mat-icon style="flex: 1;">delete</mat-icon>
-
-        </div>
-    </div> -->
 </div>
+
 <div class="table">
     <div class="tableContainer">
         <table>
@@ -65,13 +51,13 @@
                 <ng-container *ngFor="let match of matches">
                     <tr>
                         <td><input [checked]="match.isActive" type="radio" name="selectedMatch"
-                                (change)="selectMatch(match)"></td>
+                                (change)="updateActiveMatch(match)"></td>
                         <td>{{ match.matchName }}</td>
-                        <td><img id="img" [src]="baseUrl+'images/' + match.matchAvatar" alt="Image" ></td>
+                        <td><img id="img" [src]="baseUrl+'images/' + match.matchAvatar" alt="Image"></td>
                         <!-- <td>{{ match.isActive ? 'Yes' : 'No' }}</td> -->
                         <td>
-                            <button mat-icon-button><mat-icon>delete</mat-icon></button>
-                            <button mat-icon-button><mat-icon>edit</mat-icon></button>
+                            <button mat-icon-button (click)="deleteMatch(match)"><mat-icon>delete</mat-icon></button>
+                            <button mat-icon-button (click)="updateMatchBtn(match)"><mat-icon>edit</mat-icon></button>
                         </td>
                     </tr>
                 </ng-container>

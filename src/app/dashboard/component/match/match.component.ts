@@ -10,58 +10,60 @@ import { environment } from 'src/environment/enviroment';
 })
 export class MatchComponent implements OnInit {
   @ViewChild('matchName') matchNameInput!: ElementRef;
-  selectedImg: File | null = null;
+  selectedImg: any = null;
   fileError: boolean = false;
-  baseUrl = environment.baseUrl
+  baseUrl = environment.baseUrl;
+  updateBtn = false;
+  matchIdForUpdate = '';
 
-  matches = [
-    {
-      _id: '660a568b2014fdbbccbdb020',
-      matchName: 'updatej',
-      matchAvatar: "1712036672850-football.jpg",
-      isActive: true,
-      __v: 0,
-    },
-    {
-      "_id": "660b97b88b633acb9ca5d18f",
-      "matchName": "pavan",
-      matchAvatar: "1712036672850-football.jpg",
-      "isActive": false,
-      "__v": 0
-  },
-    {
-      "_id": "660b97b88b633acb9ca5d18f",
-      "matchName": "pavan",
-      matchAvatar: "1712036672850-football.jpg",
-      "isActive": false,
-      "__v": 0
-  },
-    {
-      "_id": "660b97b88b633acb9ca5d18f",
-      "matchName": "pavan",
-      matchAvatar: "1712036672850-football.jpg",
-      "isActive": false,
-      "__v": 0
-  },
-    {
-      "_id": "660b97b88b633acb9ca5d18f",
-      "matchName": "pavan",
-      matchAvatar: "1712036672850-football.jpg",
-      "isActive": false,
-      "__v": 0
-  },
-    {
-      "_id": "660b97b88b633acb9ca5d18f",
-      "matchName": "pavan",
-      matchAvatar: "1712036672850-football.jpg",
-      "isActive": false,
-      "__v": 0
-  },
+  matches: any = [
+    //   {
+    //     _id: '660a568b2014fdbbccbdb020',
+    //     matchName: 'updatej',
+    //     matchAvatar: "1712036672850-football.jpg",
+    //     isActive: true,
+    //     __v: 0,
+    //   },
+    //   {
+    //     "_id": "660b97b88b633acb9ca5d18f",
+    //     "matchName": "pavan",
+    //     matchAvatar: "1712036672850-football.jpg",
+    //     "isActive": false,
+    //     "__v": 0
+    // },
+    //   {
+    //     "_id": "660b97b88b633acb9ca5d18f",
+    //     "matchName": "pavan",
+    //     matchAvatar: "1712036672850-football.jpg",
+    //     "isActive": false,
+    //     "__v": 0
+    // },
+    //   {
+    //     "_id": "660b97b88b633acb9ca5d18f",
+    //     "matchName": "pavan",
+    //     matchAvatar: "1712036672850-football.jpg",
+    //     "isActive": false,
+    //     "__v": 0
+    // },
+    //   {
+    //     "_id": "660b97b88b633acb9ca5d18f",
+    //     "matchName": "pavan",
+    //     matchAvatar: "1712036672850-football.jpg",
+    //     "isActive": false,
+    //     "__v": 0
+    // },
+    //   {
+    //     "_id": "660b97b88b633acb9ca5d18f",
+    //     "matchName": "pavan",
+    //     matchAvatar: "1712036672850-football.jpg",
+    //     "isActive": false,
+    //     "__v": 0
+    // },
   ];
 
   constructor(private http: HttpClient, private toastr: ToastrService) {}
   ngOnInit(): void {
-    // this.getAllMatches();
+    this.getAllMatches();
   }
 
   onFileSelected(event: any): void {
@@ -70,6 +72,7 @@ export class MatchComponent implements OnInit {
   }
 
   onFileUpload(match: any) {
+    console.log('file type is', this.selectedImg.type);
     if (match) {
       console.log('match', match);
       let data = new FormData();
@@ -89,7 +92,7 @@ export class MatchComponent implements OnInit {
             this.selectedImg = null;
             this.matchNameInput.nativeElement.value = '';
             this.toastr.success(response.message);
-            // this.getAllMatches()
+            this.getAllMatches();
           }
         },
         error: (error: HttpErrorResponse) => {
@@ -117,12 +120,85 @@ export class MatchComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         console.log('error', error);
-        this.toastr.error("error")
+        this.toastr.error('error');
       },
     });
   }
 
-  selectMatch(match:any){
-    console.log("match select ", match)
+  updateActiveMatch(match: any) {
+    console.log('match select ', match);
+    const data = new FormData();
+    data.append('isActive', 'true');
+    this.http
+      .patch(`${environment.baseUrl}match/${match._id}`, data)
+      .subscribe({
+        next: (res: any) => {
+          if (res.success) {
+            console.log('api res', res);
+            this.toastr.success(res.message);
+            this.getAllMatches();
+          }
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log('error', error);
+          this.toastr.error('error');
+        },
+      });
+  }
+
+  deleteMatch(match: any) {
+    console.log('delete match', match);
+    this.http.delete(`${environment.baseUrl}match/${match._id}`).subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          console.log('api res', res);
+          this.toastr.success(res.message);
+          this.getAllMatches();
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log('error', error);
+        this.toastr.error('error');
+      },
+    });
+  }
+
+  updateMatchBtn(match: any) {
+    console.log('update match btn', match);
+    this.matchNameInput.nativeElement.value = match.matchName;
+    this.selectedImg = { name: match.matchAvatar };
+    this.updateBtn = true;
+    this.matchIdForUpdate = match._id;
+  }
+
+  updateMatch(matchName: any) {
+    console.log('file type is', this.selectedImg.type);
+    console.log('update match ', matchName);
+    const data = new FormData();
+    data.append('matchName', matchName);
+    if (this.selectedImg.type !== undefined) {
+      data.append('avatar', this.selectedImg);
+    }
+
+    this.http
+      .patch(`${environment.baseUrl}match/${this.matchIdForUpdate}`, data)
+      .subscribe({
+        next: (res: any) => {
+          if (res.success) {
+            console.log('api res', res);
+            this.toastr.success(res.message);
+            this.getAllMatches();
+
+            this.matchNameInput.nativeElement.value = '';
+            this.selectedImg = null;
+            this.updateBtn = false;
+            this.matchIdForUpdate = '';
+          }
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log('error', error);
+          this.toastr.error('error');
+        },
+      });
   }
 }
