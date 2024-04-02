@@ -18,15 +18,50 @@ export class MatchComponent implements OnInit {
     {
       _id: '660a568b2014fdbbccbdb020',
       matchName: 'updatej',
-      matchAvatar: '1711968940477-img2.jpg',
+      matchAvatar: "1712036672850-football.jpg",
       isActive: true,
       __v: 0,
-    }
+    },
+    {
+      "_id": "660b97b88b633acb9ca5d18f",
+      "matchName": "pavan",
+      matchAvatar: "1712036672850-football.jpg",
+      "isActive": false,
+      "__v": 0
+  },
+    {
+      "_id": "660b97b88b633acb9ca5d18f",
+      "matchName": "pavan",
+      matchAvatar: "1712036672850-football.jpg",
+      "isActive": false,
+      "__v": 0
+  },
+    {
+      "_id": "660b97b88b633acb9ca5d18f",
+      "matchName": "pavan",
+      matchAvatar: "1712036672850-football.jpg",
+      "isActive": false,
+      "__v": 0
+  },
+    {
+      "_id": "660b97b88b633acb9ca5d18f",
+      "matchName": "pavan",
+      matchAvatar: "1712036672850-football.jpg",
+      "isActive": false,
+      "__v": 0
+  },
+    {
+      "_id": "660b97b88b633acb9ca5d18f",
+      "matchName": "pavan",
+      matchAvatar: "1712036672850-football.jpg",
+      "isActive": false,
+      "__v": 0
+  },
   ];
 
   constructor(private http: HttpClient, private toastr: ToastrService) {}
   ngOnInit(): void {
-    this.getAllMatches();
+    // this.getAllMatches();
   }
 
   onFileSelected(event: any): void {
@@ -54,7 +89,7 @@ export class MatchComponent implements OnInit {
             this.selectedImg = null;
             this.matchNameInput.nativeElement.value = '';
             this.toastr.success(response.message);
-            this.getAllMatches()
+            // this.getAllMatches()
           }
         },
         error: (error: HttpErrorResponse) => {
@@ -85,5 +120,9 @@ export class MatchComponent implements OnInit {
         this.toastr.error("error")
       },
     });
+  }
+
+  selectMatch(match:any){
+    console.log("match select ", match)
   }
 }

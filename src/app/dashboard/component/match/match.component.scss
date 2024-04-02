@@ -1,7 +1,7 @@
 .container {
   text-align: center;
-  height: 88vh !important;
-  overflow-y: auto;
+  // height: 88vh !important;
+  // overflow-y: auto;
 
   .colorRed {
     color: red;
@@ -69,11 +69,32 @@
       }
     }
   }
+}
 
-  .matchListContainer {
-    // height: 40vh !important;
-    // overflow-y: auto;
+.table{
+  border: 5px solid white;
+  margin: 20px 10px 10px 10px;
+}
+.tableContainer {
+  height: 40vh;
+  overflow: auto;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  
+  table {
     color: white;
-    // margin: 25px;
+    text-align: center;
+    // border: 4px solid white;
+    width: 80%
+    // thead {
+    // }
+    // tbody {
+    // }
   }
+}
+
+#img {
+  height: 50px !important ;
+  width: auto;
 }
