@@ -71,7 +71,7 @@
   }
 }
 
-.table{
+.table {
   border: 5px solid white;
   margin: 20px 10px 10px 10px;
 }
@@ -81,20 +81,22 @@
   margin-top: 20px;
   display: flex;
   justify-content: center;
-  
+
   table {
     color: white;
     text-align: center;
     // border: 4px solid white;
-    width: 80%
-    // thead {
-    // }
-    // tbody {
-    // }
+    width: 80%;
   }
 }
 
 #img {
   height: 50px !important ;
   width: auto;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }

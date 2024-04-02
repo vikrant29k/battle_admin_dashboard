@@ -45,7 +45,7 @@ export class SignUpComponent implements OnInit {
       next:(response:any)=>{
 
         console.log('API Response:', response);
-          if(response.message== "please verify..."||response.message=="please check your mail for email verifiying..."){
+          if(response.success){
             this.toastr.success(response.message)
             this.formData.name = ''
             this.formData.email = ''
@@ -55,8 +55,12 @@ export class SignUpComponent implements OnInit {
       },
       error:(error:HttpErrorResponse)=>{
         console.error('API Error:', error);
-          // Handle error, e.g., show an error message
+          if(error.error.message){
           this.toastr.error(error.error.message)
+        }
+        else{
+          this.toastr.error("server error")
+        }
       }
     }
     );

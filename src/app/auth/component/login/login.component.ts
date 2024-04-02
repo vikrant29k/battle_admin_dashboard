@@ -71,16 +71,18 @@ export class LoginComponent {
         },
         error: (error: HttpErrorResponse) => {
           console.log("error", error)
-          if(error.error.statusCode==404){
-            this.toastr.error("check your email")
-          }
-          else{
+          // if(error.error.statusCode==404){
+          //   this.toastr.error("check your email")
+          // }
+          // else{
             // alert("Invalid Email or Password");
-            this.toastr.error(error.error.message);
-          }
+            if(error.error.message){
+              this.toastr.error(error.error.message);
+            }else{
+          // }
           console.error('API Error:', error);
           // Handle error, e.g., show an error message
-          if(!error.error.message){
+        //   if(!error.error.message){
           this.toastr.error('error while login');
         }
         },
