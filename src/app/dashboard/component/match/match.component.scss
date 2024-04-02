@@ -82,18 +82,20 @@
   display: flex;
   justify-content: center;
 
+  scrollbar-width: thin;
+
   table {
     color: white;
     text-align: center;
     // border: 4px solid white;
     width: 80%;
 
-    thead{
+    thead {
       background-color: black;
       height: 40px;
     }
-    tbody{
-      td{
+    tbody {
+      td {
         border-bottom: 1px solid white;
         padding: 5px;
       }

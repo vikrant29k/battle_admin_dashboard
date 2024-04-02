@@ -72,9 +72,9 @@ export class MatchComponent implements OnInit {
   }
 
   onFileUpload(match: any) {
-    console.log('file type is', this.selectedImg.type);
+    // console.log('file type is', this.selectedImg.type);
     if (match) {
-      console.log('match', match);
+      // console.log('match', match);
       let data = new FormData();
       if (this.selectedImg) {
         data.append('avatar', this.selectedImg);
@@ -86,9 +86,9 @@ export class MatchComponent implements OnInit {
       data.append('matchName', match);
       this.http.post(`${environment.baseUrl}match`, data).subscribe({
         next: (response: any) => {
-          console.log('response =>>', response);
+          // console.log('response =>>', response);
           if (response.statusCode == 200) {
-            console.log('API Response:', response);
+            // console.log('API Response:', response);
             this.selectedImg = null;
             this.matchNameInput.nativeElement.value = '';
             this.toastr.success(response.message);
@@ -114,7 +114,7 @@ export class MatchComponent implements OnInit {
     this.http.get(`${environment.baseUrl}match`).subscribe({
       next: (res: any) => {
         if (res.success) {
-          console.log('api res', res);
+          // console.log('api res', res);
           this.matches = res.data;
         }
       },
@@ -126,7 +126,7 @@ export class MatchComponent implements OnInit {
   }
 
   updateActiveMatch(match: any) {
-    console.log('match select ', match);
+    // console.log('match select ', match);
     const data = new FormData();
     data.append('isActive', 'true');
     this.http
@@ -134,7 +134,7 @@ export class MatchComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           if (res.success) {
-            console.log('api res', res);
+            // console.log('api res', res);
             this.toastr.success(res.message);
             this.getAllMatches();
           }
@@ -147,11 +147,11 @@ export class MatchComponent implements OnInit {
   }
 
   deleteMatch(match: any) {
-    console.log('delete match', match);
+    // console.log('delete match', match);
     this.http.delete(`${environment.baseUrl}match/${match._id}`).subscribe({
       next: (res: any) => {
         if (res.success) {
-          console.log('api res', res);
+          // console.log('api res', res);
           this.toastr.success(res.message);
           this.getAllMatches();
         }
@@ -172,8 +172,8 @@ export class MatchComponent implements OnInit {
   }
 
   updateMatch(matchName: any) {
-    console.log('file type is', this.selectedImg.type);
-    console.log('update match ', matchName);
+    // console.log('file type is', this.selectedImg.type);
+    // console.log('update match ', matchName);
     const data = new FormData();
     data.append('matchName', matchName);
     if (this.selectedImg.type !== undefined) {
@@ -185,7 +185,7 @@ export class MatchComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           if (res.success) {
-            console.log('api res', res);
+            // console.log('api res', res);
             this.toastr.success(res.message);
             this.getAllMatches();
 
