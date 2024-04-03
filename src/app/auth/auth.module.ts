@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { AuthRoutingModule } from './module/auth-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthMaterialModule } from './module/auth-material.module';
+import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AuthMaterialModule } from './module/auth-material.module';
     AuthComponent,
     SignUpComponent,
     SetPasswordComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     CommonModule,

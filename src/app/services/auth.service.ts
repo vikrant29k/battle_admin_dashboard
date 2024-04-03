@@ -37,5 +37,7 @@ export class AuthService {
       return this.http.post(`${environment.baseUrl}user/signin`, data);
     }
   
-
+    forgotPassword(data:any): Observable<any>{
+      return this.http.post(`${environment.baseUrl}user/admin-forget-password`, data);
+    }
 }

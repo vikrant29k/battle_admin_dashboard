@@ -176,9 +176,13 @@ export class MatchComponent implements OnInit {
     // console.log('update match ', matchName);
     const data = new FormData();
     data.append('matchName', matchName);
-    if (this.selectedImg.type !== undefined) {
+    if (this.selectedImg?.type !== undefined) {
       data.append('avatar', this.selectedImg);
     }
+
+    // if ('type' in this.selectedImg) {
+    //   
+    // }
 
     this.http
       .patch(`${environment.baseUrl}match/${this.matchIdForUpdate}`, data)

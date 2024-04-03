@@ -4,6 +4,7 @@ import { LoginComponent } from '../component/login/login.component';
 import { SignUpComponent } from '../component/sign-up/sign-up.component';
 import { SetPasswordComponent } from '../component/set-password/set-password.component';
 import { AuthComponent } from '../auth.component';
+import { ForgotPasswordComponent } from '../component/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path:'password/:id',
     component:SetPasswordComponent
+  },
+  {
+    path:'forgot-password',
+    component:ForgotPasswordComponent
   }
 ]
 }
