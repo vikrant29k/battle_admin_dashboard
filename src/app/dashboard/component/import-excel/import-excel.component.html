@@ -11,7 +11,7 @@
         <mat-spinner style="width: 50px;" *ngIf="fileSelectedSpinner"></mat-spinner>
       </div>
       <!-- Display the selected file name -->
-      <p *ngIf="selectedFile" [class.colorRed]="fileError" class="selected-file-name">Selected File: {{
+      <p *ngIf="selectedFile" [class.colorRed]="fileError" class="selected-file-name" style="margin-bottom: 0%;" >Selected File: {{
         selectedFile.name }}</p>
 
       <br />

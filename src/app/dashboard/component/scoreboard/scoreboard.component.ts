@@ -147,7 +147,6 @@ export class ScoreboardComponent {
       // check if column values in numbers
       if (
         columnName == 'Company ID' ||
-        columnName == 'Sales rep no.' ||
         columnName == 'Sales in LC'
       ) {
         var allVAluesInNumber = columnArray.every(
@@ -162,6 +161,25 @@ export class ScoreboardComponent {
           );
           this.fileError = true;
           throw new Error('column values not in number');
+          return;
+        }
+      }
+
+      // check all values in number or string
+      if(columnName == 'Sales rep no.'){
+        var allValuesInNumberOrString = columnArray.every(
+          (value: any) => typeof value === 'number' || typeof value === 'string'
+        );
+
+        if (!allValuesInNumberOrString) {
+          console.error(
+            `Error: Not all values in the "${columnName}" column are numbers or string.`
+          );
+          this.toastr.error(
+            `Please check all values in number or string in column ${columnName}`
+          );
+          this.fileError = true;
+          throw new Error('column values not in number or string');
           return;
         }
       }

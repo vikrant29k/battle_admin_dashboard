@@ -203,9 +203,113 @@ export class ImportExcelComponent {
 
       const teamArrays = Object.values(teamObject);
 
+      teamArrays.map((arr, i) => {
+        // try {
+        let values: any = [];
+        let teamName = '';
+        arr.map((obj, i) => {
+          if (obj['Game-Leader (GL)'] == 'SU') {
+            // console.log('obj', obj['Game-Leader (GL)']);
+            if (obj['Company Unit (Region or Division...)'] !== 'Superuser') {
+              this.toastr.error(
+                'superuser name should be Superuser in Company Unit (Region or Division...)'
+              );
+              this.fileError = true;
+              this.fileErrorMessage = `superuser name should be Superuser in Company Unit (Region or Division...)`;
+              this.fileSelectedSpinner = false;
+              throw new Error(
+                'superuser name should be Superuser in Company Unit (Region or Division...)'
+              );
+            }
+            if (obj['Team name (ASM level)'] !== 'Superuser') {
+              this.toastr.error(
+                'superuser name should be Superuser in Team name (ASM level)'
+              );
+              this.fileError = true;
+              this.fileErrorMessage = `superuser name should be Superuser in Team name (ASM level)`;
+              this.fileSelectedSpinner = false;
+              throw new Error(
+                'superuser name should be Superuser in Team name (ASM level)'
+              );
+            }
+            if (obj['Sales rep No'] !== 'Superuser') {
+              this.toastr.error(
+                'superuser name should be Superuser in Sales rep No'
+              );
+              this.fileError = true;
+              this.fileErrorMessage = `superuser name should be Superuser in Sales rep No`;
+              this.fileSelectedSpinner = false;
+              throw new Error(
+                'superuser name should be Superuser in Sales rep No'
+              );
+            }
+            if (obj['Battle Partner Team name (ASM level)'] !== 'Superuser') {
+              this.toastr.error(
+                'superuser name should be Superuser in Battle Partner Team name (ASM level)'
+              );
+              this.fileError = true;
+              this.fileErrorMessage = `superuser name should be Superuser in Battle Partner Team name (ASM level)`;
+              this.fileSelectedSpinner = false;
+              throw new Error(
+                'superuser name should be Superuser in Battle Partner Team name (ASM level)'
+              );
+            }
+          }
+
+          values.push(obj['Game-Leader (GL)']);
+          teamName = obj['Team name (ASM level)'];
+        });
+        //     console.log('values =>', values);
+        // var atleastOneString = values.every(
+        //     //   (value: any) => typeof value === 'number'
+        //     // );
+
+        //     // var values = [1, 'su', 'three', 'four', 5];
+
+        var stringCount = values.reduce((count: any, value: any) => {
+          return typeof value === 'string' ? count + 1 : count;
+        }, 0);
+
+        if (stringCount === 0) {
+          console.log('game leader not found, team name', teamName);
+          this.toastr.error('game leader not found', teamName);
+          this.fileError = true;
+          this.fileErrorMessage = `game leader not found, team name ${teamName}`;
+          this.fileSelectedSpinner = false;
+          throw new Error(`game leader not found, team name,${teamName}`);
+        } else {
+          console.log('No error. team leader found');
+        }
+
+        var stringCountforMoreGL = values.reduce((count: any, value: any) => {
+          return typeof value === 'string' && value !== 'SU'
+            ? count + 1
+            : count;
+        }, 0);
+
+        if (stringCountforMoreGL > 1) {
+          // console.log('game leader not found, team name', teamName);
+          this.toastr.error('more than one game leader found in', teamName);
+          this.fileError = true;
+          this.fileErrorMessage = `more than one game leader found in ${teamName}`;
+          this.fileSelectedSpinner = false;
+          throw new Error(`more than one game leader found in,${teamName}`);
+        } else {
+          console.log('No error. team leader found');
+        }
+
+        //     ///////
+        // } catch (error: any) {
+        //   console.error('error while validating', error.message);
+        //   this.fileErrorMessage = error.message;
+        //   this.fileError = true;
+        //   this.fileSelectedSpinner = false;
+        // }
+      });
+
       this.finalResult = {
-        teamsData: teamArrays, // Assign the teamArrays
-        commonFields: commonFieldObject, // Assign the commonFieldObject
+        teamsData: teamArrays,
+        commonFields: commonFieldObject,
       };
       this.fileError = false;
       this.fileSelectedSpinner = false;
@@ -259,7 +363,6 @@ export class ImportExcelComponent {
       // check if column values in numbers
       if (
         columnName == 'Battle Partner Company No' ||
-        columnName == 'Sales rep No' ||
         columnName == 'Target / Sales Rep LC' ||
         columnName == 'Company Target LC Total' ||
         columnName == 'Company No'
@@ -279,6 +382,24 @@ export class ImportExcelComponent {
           return;
         }
       }
+      // check column values in number or string
+      if (columnName == 'Sales rep No') {
+        var allValuesInNumberOrString = columnArray.every(
+          (value: any) => typeof value === 'number' || typeof value === 'string'
+        );
+
+        if (!allValuesInNumberOrString) {
+          console.error(
+            `Error: Not all values in the "${columnName}" column are numbers or string.`
+          );
+          this.toastr.error(
+            `Please check all values in number or string in column ${columnName}`
+          );
+          this.fileError = true;
+          throw new Error('column values not in number or string');
+          return;
+        }
+      }
 
       if (
         columnName == 'Target / Sales Rep LC' ||
@@ -286,6 +407,27 @@ export class ImportExcelComponent {
       ) {
         return;
       }
+      //
+
+      //validate total value of Target / Sales Rep LC is equal to Company Target LC Total
+      const Target_Sales_Rep_LC_total = columnData['Target / Sales Rep LC'];
+      let total_value = 0;
+      Target_Sales_Rep_LC_total.map((num: number, i: number) => {
+        total_value += num;
+      });
+
+      const Company_Target_LC_Total = columnData['Company Target LC Total'];
+      Company_Target_LC_Total.map((val: number, i: number) => {
+        if (val !== total_value) {
+          this.fileError = true;
+          this.toastr.error(
+            'Target / Sales Rep LC total not equal to Company Target LC Total'
+          );
+          throw new Error(
+            'Target / Sales Rep LC total not equal to Company Target LC Total'
+          );
+        }
+      });
 
       // check column values in string
       if (
