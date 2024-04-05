@@ -15,7 +15,7 @@ export class SignUpComponent implements OnInit {
   formData: any = {
     name:"",
     email: "",
-    companyNumber: 0,
+    companyNumber: null,
     companyName: ""
   };
 
@@ -49,7 +49,7 @@ export class SignUpComponent implements OnInit {
             this.toastr.success(response.message)
             this.formData.name = ''
             this.formData.email = ''
-            this.formData.companyNumber = 0
+            this.formData.companyNumber = null
             this.formData.companyName=''
           } 
       },

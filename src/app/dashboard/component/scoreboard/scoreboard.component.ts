@@ -234,7 +234,7 @@ export class ScoreboardComponent {
           this.toastr.error('file upload in progress');
         }
       } else {
-        this.toastr.error('select file first');
+        this.toastr.error('Please select file');
       }
     } else {
       this.toastr.error(this.fileErrorMessage);

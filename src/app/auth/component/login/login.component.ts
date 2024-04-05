@@ -44,6 +44,7 @@ export class LoginComponent {
         ],
       ],
       password: ['', [Validators.required]],
+      role: ['admin'],
     });
     this.show = true;
     this.eyes = false;
@@ -58,35 +59,43 @@ export class LoginComponent {
   }
 
   onSubmit() {
+    let password = this.LoginForm?.get('password')?.value;
+    let validatePass = this.validatePassword(String(password));
     if (this.LoginForm.valid) {
-      this.auth.login(this.LoginForm.value).subscribe({
-        next: (response: any) => {
-          console.log('response =>>', response);
-          if(response.statusCode==200){
-            console.log('API Response:', response);
-            this.toastr.success(response.message);
-            localStorage.setItem('token', response.data);
-            this.router.navigate(['/dashboard']);
-          }
-        },
-        error: (error: HttpErrorResponse) => {
-          console.log("error", error)
-          // if(error.error.statusCode==404){
-          //   this.toastr.error("check your email")
-          // }
-          // else{
+      if (validatePass) {
+        this.auth.login(this.LoginForm.value).subscribe({
+          next: (response: any) => {
+            console.log('response =>>', response);
+            if (response.statusCode == 200) {
+              console.log('API Response:', response);
+              this.toastr.success(response.message);
+              localStorage.setItem('token', response.data.token);
+              this.router.navigate(['/dashboard']);
+            }
+          },
+          error: (error: HttpErrorResponse) => {
+            console.log('error', error);
+            // if(error.error.statusCode==404){
+            //   this.toastr.error("check your email")
+            // }
+            // else{
             // alert("Invalid Email or Password");
-            if(error.error.message){
+            if (error.error.message) {
               this.toastr.error(error.error.message);
-            }else{
-          // }
-          console.error('API Error:', error);
-          // Handle error, e.g., show an error message
-        //   if(!error.error.message){
-          this.toastr.error('error while login');
-        }
-        },
-      });
+            } else {
+              // }
+              console.error('API Error:', error);
+              // Handle error, e.g., show an error message
+              //   if(!error.error.message){
+              this.toastr.error('error while login');
+            }
+          },
+        });
+      } else {
+        this.toastr.error(
+          'Password should have minimum 8 character, atleast one uppercase letter, one lowercase letter, one digit and one special character.'
+        );
+      }
     } else {
       this.toastr.error('Please fill all fields');
     }
@@ -107,5 +116,16 @@ export class LoginComponent {
       this.active = false;
       this.inactive = true;
     }
+  }
+
+  validatePassword(password: string): boolean {
+    // Customize your password validation criteria
+    const minLength = 8;
+    const containsLettersAndNumbers =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+
+    return (
+      password.length >= minLength && containsLettersAndNumbers.test(password)
+    );
   }
 }

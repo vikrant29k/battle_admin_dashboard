@@ -9,8 +9,8 @@ import { ChangepasswordService } from 'src/app/services/changepassword.service';
   styleUrls: ['./dialog-animations.component.scss'],
 })
 export class DialogAnimationsComponent {
-  title: string = 'Password Reset ';
-  message: string = 'Do You want to Reset Your Password';
+  title: string = 'Reset Password';
+  message: string = 'Do you want to reset your password';
 
   constructor(
     public dialogRef: MatDialogRef<DialogAnimationsComponent>,

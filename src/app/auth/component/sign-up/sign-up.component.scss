@@ -3,6 +3,7 @@
   padding: 20px;
   background-image: url('../../../../assets/backgound.png');
   border-radius: 20px;
+  margin-bottom: 50px;
 }
 
 .form-title {
@@ -20,11 +21,20 @@
   }
 }
 
+.signUp{
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
 .form-group {
   width: 100%;
   margin-bottom: 15px;
 }
 
 .form-submit {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 50%;
   text-align: center;
 }

@@ -20,6 +20,10 @@
       height:70vh;
       overflow-y:scroll;
       gap: 2rem;
+
+      @media (max-height: 650px) {
+        height: 60vh;
+      }
       .card{
         margin-block: 1rem;
         width: 75%;

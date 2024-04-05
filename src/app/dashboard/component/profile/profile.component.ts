@@ -97,7 +97,7 @@ export class ProfileComponent {
       if (this.profileForm.get('newPassword')?.value) {
         let pswd = this.profileForm.get('newPassword')?.value
         if (!this.validatePassword(pswd)) {
-          this.toastr.error('Password must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and be at least 8 characters long');
+          this.toastr.error('Password should have minimum 8 character, atleast one uppercase letter, one lowercase letter, one digit and one special character.');
           return;
         }
         console.log('new password', this.profileForm.get('newPassword'));

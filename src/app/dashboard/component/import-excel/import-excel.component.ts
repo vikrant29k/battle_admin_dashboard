@@ -390,7 +390,7 @@ export class ImportExcelComponent {
 
       // Send the file using HttpClient
       this.http
-        .post(`${environment.baseUrl}admin/player`, this.finalResult)
+        .post(`${environment.baseUrl}user/player-add-excel`, this.finalResult)
         .subscribe(
           (res: any) => {
             this.confirm = false;

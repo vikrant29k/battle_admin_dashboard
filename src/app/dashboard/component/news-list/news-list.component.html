@@ -5,11 +5,11 @@
       <ng-container *ngFor="let news of listOfNews">
         <mat-card class="card">
           <mat-card-header class="card-header">
-            <mat-card-title class="card-title"><h2>{{ news.title }}</h2></mat-card-title>
+            <mat-card-title style="overflow-wrap: anywhere;" class="card-title"><h2>{{ news.title }}</h2></mat-card-title>
             <!-- <mat-card-subtitle class="timestamp"></mat-card-subtitle> -->
           </mat-card-header>
           <mat-card-content class="card-content">
-            <p [innerHTML]="news.content"></p>
+            <p style="overflow-wrap: break-word;" [innerHTML]="news.content"></p>
           </mat-card-content>
           <mat-card-actions class="card-action">
             <div class="action-button">
