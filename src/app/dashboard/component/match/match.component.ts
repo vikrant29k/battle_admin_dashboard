@@ -16,50 +16,7 @@ export class MatchComponent implements OnInit {
   updateBtn = false;
   matchIdForUpdate = '';
 
-  matches: any = [
-    //   {
-    //     _id: '660a568b2014fdbbccbdb020',
-    //     matchName: 'updatej',
-    //     matchAvatar: "1712036672850-football.jpg",
-    //     isActive: true,
-    //     __v: 0,
-    //   },
-    //   {
-    //     "_id": "660b97b88b633acb9ca5d18f",
-    //     "matchName": "pavan",
-    //     matchAvatar: "1712036672850-football.jpg",
-    //     "isActive": false,
-    //     "__v": 0
-    // },
-    //   {
-    //     "_id": "660b97b88b633acb9ca5d18f",
-    //     "matchName": "pavan",
-    //     matchAvatar: "1712036672850-football.jpg",
-    //     "isActive": false,
-    //     "__v": 0
-    // },
-    //   {
-    //     "_id": "660b97b88b633acb9ca5d18f",
-    //     "matchName": "pavan",
-    //     matchAvatar: "1712036672850-football.jpg",
-    //     "isActive": false,
-    //     "__v": 0
-    // },
-    //   {
-    //     "_id": "660b97b88b633acb9ca5d18f",
-    //     "matchName": "pavan",
-    //     matchAvatar: "1712036672850-football.jpg",
-    //     "isActive": false,
-    //     "__v": 0
-    // },
-    //   {
-    //     "_id": "660b97b88b633acb9ca5d18f",
-    //     "matchName": "pavan",
-    //     matchAvatar: "1712036672850-football.jpg",
-    //     "isActive": false,
-    //     "__v": 0
-    // },
-  ];
+  matches: any = [];
 
   constructor(private http: HttpClient, private toastr: ToastrService) {}
   ngOnInit(): void {
@@ -79,7 +36,7 @@ export class MatchComponent implements OnInit {
       if (this.selectedImg) {
         data.append('avatar', this.selectedImg);
       } else {
-        this.toastr.info('Please select an Image');
+        this.toastr.error('Please select an Image');
         return;
       }
 
@@ -106,7 +63,7 @@ export class MatchComponent implements OnInit {
         },
       });
     } else {
-      this.toastr.info('Enter Match Name');
+      this.toastr.error('Enter Match Name');
     }
   }
 
