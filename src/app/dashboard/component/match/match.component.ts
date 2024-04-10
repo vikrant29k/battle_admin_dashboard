@@ -41,7 +41,7 @@ export class MatchComponent implements OnInit {
       }
 
       data.append('matchName', match);
-      this.http.post(`${environment.baseUrl}match`, data).subscribe({
+      this.http.post(`${environment.baseUrl}game`, data).subscribe({
         next: (response: any) => {
           // console.log('response =>>', response);
           if (response.statusCode == 200) {
@@ -68,7 +68,7 @@ export class MatchComponent implements OnInit {
   }
 
   getAllMatches() {
-    this.http.get(`${environment.baseUrl}match`).subscribe({
+    this.http.get(`${environment.baseUrl}game`).subscribe({
       next: (res: any) => {
         if (res.success) {
           // console.log('api res', res);
@@ -87,7 +87,7 @@ export class MatchComponent implements OnInit {
     const data = new FormData();
     data.append('isActive', 'true');
     this.http
-      .patch(`${environment.baseUrl}match/${match._id}`, data)
+      .patch(`${environment.baseUrl}game/${match._id}`, data)
       .subscribe({
         next: (res: any) => {
           if (res.success) {
@@ -105,7 +105,7 @@ export class MatchComponent implements OnInit {
 
   deleteMatch(match: any) {
     // console.log('delete match', match);
-    this.http.delete(`${environment.baseUrl}match/${match._id}`).subscribe({
+    this.http.delete(`${environment.baseUrl}game/${match._id}`).subscribe({
       next: (res: any) => {
         if (res.success) {
           // console.log('api res', res);
@@ -142,7 +142,7 @@ export class MatchComponent implements OnInit {
     // }
 
     this.http
-      .patch(`${environment.baseUrl}match/${this.matchIdForUpdate}`, data)
+      .patch(`${environment.baseUrl}game/${this.matchIdForUpdate}`, data)
       .subscribe({
         next: (res: any) => {
           if (res.success) {

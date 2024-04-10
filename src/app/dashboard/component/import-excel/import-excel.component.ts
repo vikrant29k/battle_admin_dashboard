@@ -18,10 +18,10 @@ export class ImportExcelComponent {
   finalResult: any;
   fileSelectedSpinner: boolean = false;
   confirm: boolean = false;
-  languageHeader: string = '';
   constructor(private http: HttpClient, private toastr: ToastrService) {}
 
   onFileSelected(event: any): void {
+    console.log("file", event)
     this.file = event.target.files[0];
     this.selectedFile = this.file;
 
@@ -64,17 +64,17 @@ export class ImportExcelComponent {
         'Game-Leader (GL)',
         'Battle Partner Team name (ASM level)',
         'Time zone (correlated to CET)',
-        // 'Language\r\nISO-639-1',
+        'Language\r\nISO-639-1',
+        // `Language
+        // ISO-639-1`,
         'Battle Partner Company No',
         'Battle Partner Company Name',
       ];
-      this.languageHeader = data[0][12];
-      // console.log("language header =>",languageHeader)
-      var headers = data[0];
-
-      headers.splice(12, 1);
+      const headers = data[0];
 
       console.log('headers', headers);
+
+      console.log("allowed --", allowedHeaders, "headers", headers)
 
       let headersSame = this.arraysAreEqual(headers, allowedHeaders);
 
@@ -441,7 +441,8 @@ export class ImportExcelComponent {
         columnName == 'Team name (ASM level)' ||
         columnName == 'Currency' ||
         columnName == 'Battle Partner Team name (ASM level)' ||
-        columnName == 'Language\r\nISO-639-1' ||
+        columnName == `Language
+        ISO-639-1` ||
         columnName == 'Battle Partner Company Name'
       ) {
         var allVAluesInString = columnArray.every(
@@ -514,14 +515,6 @@ export class ImportExcelComponent {
     // Check if arrays have the same length
     if (arr1.length !== arr2.length) {
       this.fileErrorMessage = 'Please Check Headers';
-      return false;
-    }
-
-    let languageHeaderCheck = this.languageHeader
-      .toLowerCase()
-      .includes('language');
-    // console.log('language header ', languageHeaderCheck);
-    if (!languageHeaderCheck) {
       return false;
     }
 
