@@ -10,7 +10,8 @@ import { environment } from 'src/environment/enviroment';
 })
 export class MatchComponent implements OnInit {
   @ViewChild('matchName') matchNameInput!: ElementRef;
-  selectedImg: any = null;
+  selectedImgLogo: any = null;
+  selectedImgBg: any = null;
   fileError: boolean = false;
   baseUrl = environment.baseUrl;
   updateBtn = false;
@@ -23,9 +24,13 @@ export class MatchComponent implements OnInit {
     this.getAllMatches();
   }
 
-  onFileSelected(event: any): void {
-    this.selectedImg = event.target.files[0];
-    console.log(this.selectedImg);
+  onFileSelectedLogo(event: any): void {
+    this.selectedImgLogo = event.target.files[0];
+    console.log(this.selectedImgLogo);
+  }
+  onFileSelectedBg(event: any): void {
+    this.selectedImgBg = event.target.files[0];
+    console.log(this.selectedImgBg);
   }
 
   onFileUpload(match: any) {
@@ -33,20 +38,22 @@ export class MatchComponent implements OnInit {
     if (match) {
       // console.log('match', match);
       let data = new FormData();
-      if (this.selectedImg) {
-        data.append('avatar', this.selectedImg);
+      if (this.selectedImgLogo &&  this.selectedImgBg) {
+        data.append('avatar', this.selectedImgLogo);
+        data.append('bgAvatar',this.selectedImgBg)
       } else {
-        this.toastr.error('Please select an Image');
+        this.toastr.error('Please select both the image');
         return;
       }
 
-      data.append('matchName', match);
-      this.http.post(`${environment.baseUrl}game`, data).subscribe({
+      data.append('eventName', match);
+      this.http.post(`${environment.baseUrl}event`, data).subscribe({
         next: (response: any) => {
           // console.log('response =>>', response);
           if (response.statusCode == 200) {
             // console.log('API Response:', response);
-            this.selectedImg = null;
+            this.selectedImgLogo = null;
+            this.selectedImgBg = null;
             this.matchNameInput.nativeElement.value = '';
             this.toastr.success(response.message);
             this.getAllMatches();
@@ -68,7 +75,7 @@ export class MatchComponent implements OnInit {
   }
 
   getAllMatches() {
-    this.http.get(`${environment.baseUrl}game`).subscribe({
+    this.http.get(`${environment.baseUrl}event`).subscribe({
       next: (res: any) => {
         if (res.success) {
           // console.log('api res', res);
@@ -87,7 +94,7 @@ export class MatchComponent implements OnInit {
     const data = new FormData();
     data.append('isActive', 'true');
     this.http
-      .patch(`${environment.baseUrl}game/${match._id}`, data)
+      .patch(`${environment.baseUrl}event/${match._id}`, data)
       .subscribe({
         next: (res: any) => {
           if (res.success) {
@@ -105,7 +112,7 @@ export class MatchComponent implements OnInit {
 
   deleteMatch(match: any) {
     // console.log('delete match', match);
-    this.http.delete(`${environment.baseUrl}game/${match._id}`).subscribe({
+    this.http.delete(`${environment.baseUrl}event/${match._id}`).subscribe({
       next: (res: any) => {
         if (res.success) {
           // console.log('api res', res);
@@ -122,27 +129,25 @@ export class MatchComponent implements OnInit {
 
   updateMatchBtn(match: any) {
     console.log('update match btn', match);
-    this.matchNameInput.nativeElement.value = match.matchName;
-    this.selectedImg = { name: match.matchAvatar };
+    this.matchNameInput.nativeElement.value = match.eventName;
+    this.selectedImgLogo = {name: match.avatar} ;
+    this.selectedImgBg =  {name:match.bgAvatar}
     this.updateBtn = true;
     this.matchIdForUpdate = match._id;
   }
 
   updateMatch(matchName: any) {
-    // console.log('file type is', this.selectedImg.type);
-    // console.log('update match ', matchName);
-    const data = new FormData();
-    data.append('matchName', matchName);
-    if (this.selectedImg?.type !== undefined) {
-      data.append('avatar', this.selectedImg);
+
+    let data = new FormData();
+    data.append('eventName', matchName);
+    if (this.selectedImgLogo.type!==undefined) {
+      console.log(this.selectedImgBg,this.selectedImgLogo)
+      data.append('avatar', this.selectedImgLogo.name);
+      data.append('bgAvatar',this.selectedImgBg.name)
     }
 
-    // if ('type' in this.selectedImg) {
-    //   
-    // }
-
     this.http
-      .patch(`${environment.baseUrl}game/${this.matchIdForUpdate}`, data)
+      .patch(`${environment.baseUrl}event/${this.matchIdForUpdate}`, data)
       .subscribe({
         next: (res: any) => {
           if (res.success) {
@@ -151,7 +156,8 @@ export class MatchComponent implements OnInit {
             this.getAllMatches();
 
             this.matchNameInput.nativeElement.value = '';
-            this.selectedImg = null;
+            this.selectedImgLogo = null;
+            this.selectedImgBg = null;
             this.updateBtn = false;
             this.matchIdForUpdate = '';
           }
