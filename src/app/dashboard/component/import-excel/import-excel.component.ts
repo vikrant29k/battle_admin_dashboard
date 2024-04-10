@@ -19,7 +19,14 @@ export class ImportExcelComponent {
   fileSelectedSpinner: boolean = false;
   confirm: boolean = false;
   constructor(private http: HttpClient, private toastr: ToastrService) {}
+   cleanString(str:any) {
+    return str.replace(/[^\w\s]/gi, '').replace(/\s+/g, ' ').trim();
+  }
 
+  // Clean all strings in the array
+   cleanArray(arr:any) {
+    return arr.map((a:any)=>this.cleanString(a));
+  }
   onFileSelected(event: any): void {
     console.log("file", event)
     this.file = event.target.files[0];
@@ -65,18 +72,19 @@ export class ImportExcelComponent {
         'Battle Partner Team name (ASM level)',
         'Time zone (correlated to CET)',
         'Language\r\nISO-639-1',
-        // `Language
-        // ISO-639-1`,
         'Battle Partner Company No',
         'Battle Partner Company Name',
       ];
-      const headers = data[0];
 
-      console.log('headers', headers);
+      const headers = data[0]
 
-      console.log("allowed --", allowedHeaders, "headers", headers)
+      let cleanedAllowed =  this.cleanArray(allowedHeaders)
+      let cleanedHeader = this.cleanArray(headers)
+      console.log('headers---', headers);
 
-      let headersSame = this.arraysAreEqual(headers, allowedHeaders);
+      console.log("allowed --", cleanedAllowed)
+
+      let headersSame = this.arraysAreEqual(cleanedHeader, cleanedAllowed);
 
       if (headersSame) {
         console.log('arrays is same');
@@ -324,6 +332,7 @@ export class ImportExcelComponent {
     };
 
     fileReader.readAsBinaryString(this.file);
+    event.target.value=''
   }
 
   validateColumn(columnData: any, columnName: string): any {
@@ -331,26 +340,8 @@ export class ImportExcelComponent {
       const columnArray = columnData[columnName];
 
       if (columnName === 'E-Mail') {
-        console.log(columnArray);
+
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-        // columnArray.forEach((email: string, index: number) => {
-        //   // console.log('email is =>', email);
-        //   if (emailRegex.test(email)) {
-        //     console.log('email correct');
-        //   } else {
-        //     console.error(
-        //       `Error: Invalid email address "${email}" at index ${
-        //         index + 1
-        //       } in the "${columnName}" column.`
-        //     );
-
-        //     this.toastr.error(`invalid Email ${email}`);
-        //     this.fileError = true;
-        //     return;
-        //   }
-        // });
-
         for (const [index, email] of columnArray.entries()) {
           if (!emailRegex.test(email)) {
             console.error(
@@ -441,8 +432,7 @@ export class ImportExcelComponent {
         columnName == 'Team name (ASM level)' ||
         columnName == 'Currency' ||
         columnName == 'Battle Partner Team name (ASM level)' ||
-        columnName == `Language
-        ISO-639-1` ||
+        columnName == `Language ISO6391` ||
         columnName == 'Battle Partner Company Name'
       ) {
         var allVAluesInString = columnArray.every(
