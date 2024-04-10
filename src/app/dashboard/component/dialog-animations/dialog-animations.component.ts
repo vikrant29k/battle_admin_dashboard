@@ -17,12 +17,11 @@ export class DialogAnimationsComponent {
     public changePasswordService: ChangepasswordService
   ) {}
   onConfirm(): void {
-   this.changePasswordService.showOtherDiv.emit(false)
+    this.changePasswordService.showOtherDiv.emit(false);
     this.dialogRef.close(true);
   }
 
   onDismiss(): void {
-
     this.dialogRef.close(false);
   }
 }

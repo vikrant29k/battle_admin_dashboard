@@ -6,6 +6,7 @@ import { Route, Router } from '@angular/router';
 import { environment } from 'src/environment/enviroment';
 import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
 import { ChangepasswordService } from 'src/app/services/changepassword.service';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -13,8 +14,7 @@ import { ChangepasswordService } from 'src/app/services/changepassword.service';
 })
 export class ProfileComponent {
   @ViewChild('angularEditor') editor!: ElementRef;
-  // content:any;
-  // title:any
+
   newsContent = new FormGroup({
     content: new FormControl('', Validators.required),
     title: new FormControl('', Validators.required),
@@ -26,9 +26,10 @@ export class ProfileComponent {
       this.showpassword=res
     })
   }
-  constructor(public dialog: MatDialog,public changepass:ChangepasswordService) {}
+  constructor(public dialog: MatDialog,public changepass:ChangepasswordService,private http:HttpClient) {}
   showOtherDiv: boolean = false;
   inputValue: string='';
+  
   showpassword=this.changepass.showOtherDiv
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(DialogAnimationsComponent, {
