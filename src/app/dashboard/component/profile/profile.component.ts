@@ -51,7 +51,8 @@ export class ProfileComponent {
     public changepass: ChangepasswordService,
     private http: HttpClient,
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   showOtherDiv: boolean = false;
@@ -75,10 +76,10 @@ export class ProfileComponent {
       next: (res: any) => {
         console.log('api res', res);
         let formData = {
-          userName: res.data.userName,
-          email: res.data.email,
-          uid: res.data.companyId.uid,
-          name: res.data.companyId.name,
+          userName: res.data?.userName,
+          email: res.data?.email,
+          uid: res.data?.companyId?.uid,
+          name: res.data?.companyId?.name,
         };
         this.profileForm.patchValue(formData);
         this.profileForm.disable();
@@ -93,39 +94,47 @@ export class ProfileComponent {
   }
 
   saveBtnClick() {
-    if (!this.showpassword) {
-      if (this.profileForm.get('newPassword')?.value) {
-        let pswd = this.profileForm.get('newPassword')?.value
-        if (!this.validatePassword(pswd)) {
-          this.toastr.error('Password should have minimum 8 character, atleast one uppercase letter, one lowercase letter, one digit and one special character.');
+    if (this.profileForm.valid) {
+      if (!this.showpassword) {
+        if (this.profileForm.get('newPassword')?.value) {
+          let pswd = this.profileForm.get('newPassword')?.value;
+          if (!this.validatePassword(pswd)) {
+            this.toastr.error(
+              'Password should have minimum 8 character, atleast one uppercase letter, one lowercase letter, one digit and one special character.'
+            );
+            return;
+          }
+          console.log('new password', this.profileForm.get('newPassword'));
+          let password = {
+            password: this.profileForm.get('newPassword')?.value,
+            token: localStorage.getItem('token'),
+          };
+          this.http
+            .patch(`${environment.baseUrl}user/admin-password`, password)
+            .subscribe({
+              next: (res: any) => {
+                if (res.statusCode == 200) {
+                  console.log('password res', res);
+                  this.profileUpdate();
+                  this.toastr.success("Password Updated Successfully")
+                  this.router.navigate(['']);
+                }
+              },
+              error: (err: HttpErrorResponse) => {
+                console.log(' api error', err);
+                this.toastr.error(err.error.message);
+                return;
+              },
+            });
+        } else {
+          this.toastr.info('Enter New Password');
           return;
         }
-        console.log('new password', this.profileForm.get('newPassword'));
-        let password = {
-          password: this.profileForm.get('newPassword')?.value,
-          token: localStorage.getItem('token'),
-        };
-        this.http
-          .patch(`${environment.baseUrl}user/admin-password`, password)
-          .subscribe({
-            next: (res: any) => {
-              if (res.statusCode == 200) {
-                console.log('password res', res);
-                this.profileUpdate();
-              }
-            },
-            error: (err: HttpErrorResponse) => {
-              console.log(' api error', err);
-              this.toastr.error(err.error.message);
-              return;
-            },
-          });
       } else {
-        this.toastr.info('Enter New Password');
-        return;
+        this.profileUpdate();
       }
     } else {
-      this.profileUpdate();
+      this.toastr.error('fill all fields');
     }
   }
 
