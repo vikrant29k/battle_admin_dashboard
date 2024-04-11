@@ -1,9 +1,10 @@
 .card {
   text-align: center;
   padding: 20px;
-  background-image: url('../../../../assets/backgound.png');
+  // background-image: url('../../../../assets/backgound.png');
+  background-color: black;
   border-radius: 20px;
-  margin-bottom: 50px;
+  // margin-bottom: 50px;
 }
 
 .form-title {
@@ -37,4 +38,11 @@
   gap: 2rem;
   width: 50%;
   text-align: center;
+}
+.filter{
+  width: 100%;
+  border: none;
+  &::placeholder{
+    color: rgb(151, 151, 151);
+  }
 }

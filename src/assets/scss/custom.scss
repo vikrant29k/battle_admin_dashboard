@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'WuerthFonts';
+  src: url('../fonts/WuerthBold.ttf') format('truetype'),
+       url('../fonts/WuerthBook.ttf') format('truetype'),
+       url('../fonts/WuerthExtraBoldCond.ttf') format('truetype'),
+       url('../fonts/WuerthExtraBoldCondCaps.ttf') format('truetype');
+  /* Add other font properties if needed */
+}
+
+/* Optionally, you can apply your custom font to specific elements */
+* {
+  font-family: 'WuerthFonts',sans-serif;
+}

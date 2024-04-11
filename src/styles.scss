@@ -29,7 +29,7 @@ $battle-admin-dashboard-theme: mat.define-light-theme((
 ));
 
 @import 'ngx-toastr/toastr';
-
+@import './assets/scss/custom.scss';
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
@@ -49,4 +49,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
  }
  .angular-editor {
   background-color: white;
+}
+.mat-mdc-option:focus.mdc-list-item, .mat-mdc-option.mat-mdc-option-active.mdc-list-item {
+  background-color: rgb(0 0 0 / 47%) !important;
 }
