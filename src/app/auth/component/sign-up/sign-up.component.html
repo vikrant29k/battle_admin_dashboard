@@ -3,7 +3,7 @@
 
 <div class="card">
   <h2 class="form-title">Sign Up</h2>
-  <form #signupForm="ngForm" (submit)="submit()" class="form-container">
+  <form [formGroup]="signupForm" (submit)="submit()" class="form-container">
    <div class="sub-container">
     <mat-form-field class="form-group">
       <mat-label>Name</mat-label>
@@ -13,7 +13,7 @@
         name="name"
         placeholder="Enter Your Name"
         required
-        [(ngModel)]="formData.name"
+        formControlName="name"
       />
     </mat-form-field>
     <mat-form-field class="form-group">
@@ -24,13 +24,13 @@
         name="email"
         placeholder="Enter Your Email"
         required
-        [(ngModel)]="formData.email"
+        formControlName="email"
       />
     </mat-form-field>
 
     <mat-form-field class="form-group">
       <mat-label>Company Number</mat-label>
-      <mat-select [(ngModel)]="formData.companyNumber" placeholder="Ex. 1111" required>
+      <mat-select  name="companyNumber" formControlName="companyNumber" placeholder="Ex. 1111" required>
         <input class="filter" type="number"  aria-label="Filter companies" placeholder="Filter"
         (keyup)="filterCompanies($event)">
         <mat-option *ngFor="let company of filteredCompanies" [value]="company.uid">
@@ -44,7 +44,7 @@
 
     <mat-form-field class="form-group">
       <mat-label>Company Name</mat-label>
-      <mat-select [(ngModel)]="formData.companyName" placeholder="Ex. IN-Würth India" required>
+      <mat-select  name="companyName" formControlName="companyName" placeholder="Ex. IN-Würth India" required>
         <input class="filter" type="text"  aria-label="Filter companies" placeholder="Filter"
         (keyup)="filterCompaniesName($event)">
         <mat-option *ngFor="let company of filteredCompaniesName" [value]="company.name">

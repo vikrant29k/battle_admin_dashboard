@@ -67,7 +67,7 @@ export class SetPasswordComponent implements OnInit {
         );
       }
     } else {
-      this.passwordMismatchError = 'Passwords not match. Please try again.';
+      this.passwordMismatchError = 'Passwords does not match. Please try again.';
       // alert(this.passwordMismatchError);
       this.toastr.error(this.passwordMismatchError);
       return;

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 import { CompanyService } from 'src/app/services/company/company.service';
 interface Company {
   uid: number;
@@ -14,7 +16,12 @@ interface Company {
 })
 export class SignUpComponent implements OnInit {
   companyData:any[]=[]
-
+  signupForm: FormGroup = this.fb.group({
+    name: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    companyNumber: ['', Validators.required],
+    companyName: ['', Validators.required]
+  });
   filteredCompanies: Company[] = [];
   filteredCompaniesName: Company[] = [];
   filterCompanies(event: any) {
@@ -40,18 +47,14 @@ export class SignUpComponent implements OnInit {
       (company) => company.name.toString().includes(searchTerm)
     );
   }
-  formData: any = {
-    name: '',
-    email: '',
-    companyNumber: null,
-    companyName: '',
-  };
+
 
   constructor(
     private http: HttpClient,
     private auth: AuthService,
     private toastr: ToastrService,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    private fb:FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -66,21 +69,24 @@ export class SignUpComponent implements OnInit {
   }
 
   submit(): void {
+    this.signupForm
+    debugger
     // console.log('Form Data:', this.formData);
     if (
-      this.formData.name == '' ||
-      this.formData.email == '' ||
-      this.formData.companyNumber == undefined ||
-      this.formData.companyName == ''
+      this.signupForm.value.name == '' ||
+      this.signupForm.value.email == '' ||
+      this.signupForm.value.companyNumber == undefined ||
+      this.signupForm.value.companyName == ''
     ) {
       this.toastr.error('Enter All Fields');
+      debugger
     } else {
       // Create the data object with form values
       const data = {
-        userName: this.formData.name,
-        email: this.formData.email,
-        uid: this.formData.companyNumber,
-        name: this.formData.companyName,
+        userName: this.signupForm.value.name,
+        email: this.signupForm.value.email,
+        uid: this.signupForm.value.companyNumber,
+        name: this.signupForm.value.companyName,
       };
 
       console.log(data);
@@ -92,10 +98,10 @@ export class SignUpComponent implements OnInit {
           console.log('API Response:', response);
           if (response.success) {
             this.toastr.success(response.message);
-            this.formData.name = '';
-            this.formData.email = '';
-            this.formData.companyNumber = null;
-            this.formData.companyName = '';
+            this.signupForm.value.name = '';
+            this.signupForm.value.email = '';
+            this.signupForm.value.companyNumber = null;
+            this.signupForm.value.companyName = '';
           }
         },
         error: (error: HttpErrorResponse) => {
