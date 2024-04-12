@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environment/enviroment';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
@@ -22,7 +22,6 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private http: HttpClient,
     private toastr: ToastrService,
     private auth: AuthService
   ) {}
@@ -75,11 +74,6 @@ export class LoginComponent {
           },
           error: (error: HttpErrorResponse) => {
             console.log('error', error);
-            // if(error.error.statusCode==404){
-            //   this.toastr.error("check your email")
-            // }
-            // else{
-            // alert("Invalid Email or Password");
             if (error.error.message) {
               this.toastr.error(error.error.message);
             } else {

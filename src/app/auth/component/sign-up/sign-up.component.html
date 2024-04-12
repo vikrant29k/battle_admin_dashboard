@@ -30,29 +30,28 @@
 
     <mat-form-field class="form-group">
       <mat-label>Company Number</mat-label>
-      <mat-select  name="companyNumber" formControlName="companyNumber" placeholder="Ex. 1111" required>
-        <input class="filter" type="number"  aria-label="Filter companies" placeholder="Filter"
-        (keyup)="filterCompanies($event)">
+      <mat-select name="companyNumber" formControlName="companyNumber" placeholder="Ex. 1111" required
+                  (selectionChange)="onCompanySelection($event)">
+        <input class="filter" type="number" aria-label="Filter companies" placeholder="Filter" (keyup)="filterCompanies($event)">
         <mat-option *ngFor="let company of filteredCompanies" [value]="company.uid">
           {{ company.uid }}
         </mat-option>
         <mat-option *ngIf="!filteredCompanies?.length">No companies found</mat-option>
       </mat-select>
-
     </mat-form-field>
-
 
     <mat-form-field class="form-group">
       <mat-label>Company Name</mat-label>
-      <mat-select  name="companyName" formControlName="companyName" placeholder="Ex. IN-Würth India" required>
-        <input class="filter" type="text"  aria-label="Filter companies" placeholder="Filter"
-        (keyup)="filterCompaniesName($event)">
+      <mat-select name="companyName" formControlName="companyName" placeholder="Ex. IN-Würth India" required
+                  (selectionChange)="onCompanySelection($event)">
+        <input class="filter" type="text" aria-label="Filter companies" placeholder="Filter" (keyup)="filterCompaniesName($event)">
         <mat-option *ngFor="let company of filteredCompaniesName" [value]="company.name">
           {{ company.name }}
         </mat-option>
         <mat-option *ngIf="!filteredCompaniesName?.length">No companies found</mat-option>
       </mat-select>
     </mat-form-field>
+
    </div>
 
     <div class="form-submit">

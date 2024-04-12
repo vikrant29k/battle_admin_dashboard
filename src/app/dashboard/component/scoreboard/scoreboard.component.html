@@ -31,7 +31,7 @@
 
             <br />
             <div class="confirm-button">
-                <button (click)="onFileUpload()" *ngIf="!confirm">Confirm</button>
+                <button mat-raised-button (click)="onFileUpload()" [disabled]="disableConfirmButotn">Confirm</button>
                 <mat-spinner style="width: 50px" *ngIf="confirm"></mat-spinner>
             </div>
         </div>

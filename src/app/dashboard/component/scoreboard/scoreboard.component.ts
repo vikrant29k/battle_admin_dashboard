@@ -22,7 +22,7 @@ export class ScoreboardComponent {
   fileErrorMessage!: string;
 
   fileData: any;
-
+  disableConfirmButotn:boolean=true
   onFileSelected(event: any): void {
     this.file = event.target.files[0];
     this.selectedFile = this.file;
@@ -30,6 +30,7 @@ export class ScoreboardComponent {
 
     const fileReader: FileReader = new FileReader();
     this.fileSelectedSpinner = true;
+      this.disableConfirmButotn=false
     fileReader.onload = (e: any) => {
       const binaryString: string = e.target.result;
       const workbook: XLSX.WorkBook = XLSX.read(binaryString, {
@@ -138,6 +139,7 @@ export class ScoreboardComponent {
     this.file
       ? fileReader.readAsBinaryString(this.file)
       : (this.fileSelectedSpinner = false);
+      event.target.value=''
   }
 
   validateColumn(columnData: any, columnName: string): any {
@@ -235,6 +237,7 @@ export class ScoreboardComponent {
                   this.selectedFile = null;
                   this.file = null;
                 }
+                this.disableConfirmButotn=true
               },
               (error: HttpErrorResponse) => {
                 this.confirm = false;

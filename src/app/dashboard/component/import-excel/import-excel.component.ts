@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import * as XLSX from 'xlsx';
-
-import { environment } from 'src/environment/enviroment';
+import { ExcelService } from 'src/app/services/importExcel.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -18,7 +16,7 @@ export class ImportExcelComponent {
   finalResult: any;
   fileSelectedSpinner: boolean = false;
   confirm: boolean = false;
-  constructor(private http: HttpClient, private toastr: ToastrService) {}
+  constructor( private toastr: ToastrService,private  excelService: ExcelService) {}
    cleanString(str:any) {
     return str.replace(/[^\w\s]/gi, '').replace(/\s+/g, ' ').trim();
   }
@@ -36,13 +34,14 @@ export class ImportExcelComponent {
       this.file?.type !== 'application/vnd.ms-excel' &&
       !this.file?.name.endsWith('.xlsx')
     ) {
+
       // File format is not supported
       this.toastr.error('Please select an Excel file (.xlsx).');
       this.fileError = true;
       this.fileErrorMessage = 'Please select an Excel file (.xlsx).';
       return;
     }
-
+    this.disableConfirmButotn=false
     this.fileSelectedSpinner = true;
 
     var commonFieldObject: any = {};
@@ -460,22 +459,7 @@ export class ImportExcelComponent {
         return;
       }
 
-      // if (columnName == 'Company Unit (Region or Division...)') {
-      //   console.log('values =>', columnArray);
-      //   const allColumnInString = columnArray.every(
-      //     (value: any) => typeof value == 'string'
-      //   );
-      //   if (!allColumnInString) {
-      //     console.error(
-      //       `Error: Not all values in the "${columnName}" column are String.`
-      //     );
-      //     return alert(
-      //       `Error: Not all values in the "${columnName}" column are String.`
-      //     );
-      //   } else {
-      //     return;
-      //   }
-      // }
+
 
       const firstValue = columnArray[0];
 
@@ -518,20 +502,14 @@ export class ImportExcelComponent {
 
     return true; // Arrays are equal
   }
-
+disableConfirmButotn:boolean=true
   onFileUpload(): void {
-    this.confirm = true;
     if (!this.fileError) {
-      // Use FormData to send the file
-      // const formData = new FormData();
-      // formData.append('excel', this.selectedFile, this.selectedFile.name);
-
-      // Send the file using HttpClient
-      this.http
-        .post(`${environment.baseUrl}user/player-add-excel`, this.finalResult)
+      console.log(this.finalResult,"DATA THATS BEEND SEND TO THE API")
+      this.excelService.importExcel(this.finalResult)
         .subscribe(
           (res: any) => {
-            this.confirm = false;
+
             console.log('File upload response:', res);
             if (res.statusCode == 200) {
               // alert("Import Successful");
@@ -543,8 +521,9 @@ export class ImportExcelComponent {
               this.selectedFile = null;
               this.file = null;
             }
+            this.disableConfirmButotn=true
           },
-          (error: HttpErrorResponse) => {
+          (error) => {
             this.confirm = false;
             this.file = null;
             console.error('Error uploading file:', error);

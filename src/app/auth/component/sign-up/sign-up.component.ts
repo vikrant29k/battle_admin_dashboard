@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -26,31 +26,41 @@ export class SignUpComponent implements OnInit {
   filteredCompaniesName: Company[] = [];
   filterCompanies(event: any) {
     const searchTerm = event.target.value;
-
     if (!searchTerm) {
       this.filteredCompanies = this.companyData;
       return;
     }
-    this.filteredCompanies = this.companyData.filter(
-      (company) => company.uid.toString().includes(searchTerm)
-    );
+    this.filteredCompanies = this.companyData.filter(company => company.uid.toString().includes(searchTerm));
   }
+
   filterCompaniesName(event: any) {
     const searchTerm = event.target.value;
-
     if (!searchTerm) {
       this.filteredCompaniesName = this.companyData;
       return;
     }
-
-    this.filteredCompaniesName = this.companyData.filter(
-      (company) => company.name.toString().includes(searchTerm)
-    );
+    this.filteredCompaniesName = this.companyData.filter(company => company.name.toString().includes(searchTerm));
   }
 
+  onCompanySelection(event: any) {
+    const selectedCompany = event.value;
+    debugger
+    if (selectedCompany) {
+      const company = this.companyData.find(company => company.uid === selectedCompany || company.name === selectedCompany);
+      if (company) {
+        if (event.source.ngControl.name === 'companyNumber') {
+          debugger
+          this.signupForm.get('companyName')?.setValue(company.name);
+          debugger
+        } else {
+          this.signupForm.get('companyNumber')?.setValue(company.uid);
+          debugger
+        }
+      }
+    }
+  }
 
   constructor(
-    private http: HttpClient,
     private auth: AuthService,
     private toastr: ToastrService,
     private companyService: CompanyService,

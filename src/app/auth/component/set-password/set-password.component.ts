@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environment/enviroment';
 import { ToastrService } from 'ngx-toastr';
@@ -16,7 +16,6 @@ export class SetPasswordComponent implements OnInit {
   confirmPassword: string = '';
   passwordMismatchError: string = ''; // New variable to hold password mismatch error message
   constructor(
-    private http: HttpClient,
     private auth: AuthService,
     private router: ActivatedRoute,
     private route: Router,
