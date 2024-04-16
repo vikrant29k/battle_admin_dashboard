@@ -1,6 +1,9 @@
 <div class="profile-container">
+  <div class="header-tag">
+    <h2>Profile</h2>
+    <p>Access your profile info, edit, change password.</p>
+  </div>
   <div class="card">
-    <h2 class="form-title">Profile</h2>
     <form class="form-container" [formGroup]="profileForm">
       <div class="sub-container">
         <mat-form-field class="form-group">
@@ -30,13 +33,10 @@
       </div>
 
       <div class="form-submit">
-        <mat-card-actions class="card-action">
-          <button mat-raised-button color="primary" class="btn" (click)="editBtnClick()" *ngIf="editBtn">Edit</button>
-          <button mat-raised-button color="primary" class="btn" (click)="saveBtnClick()" *ngIf="!editBtn">Save</button>
+          <button mat-raised-button color="primary" class="btn" (click)="editBtn?editBtnClick():saveBtnClick()">{{editBtn?'Edit':'Save'}}</button>
           <button mat-raised-button color="warn" class="btn" (click)="openDialog('0ms', '0ms')">
             Change Password
           </button>
-        </mat-card-actions>
       </div>
     </form>
   </div>

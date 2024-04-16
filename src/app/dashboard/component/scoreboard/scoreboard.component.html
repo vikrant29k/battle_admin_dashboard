@@ -1,39 +1,56 @@
-<!-- <h3 style="color: white;">JSON FILE UPLOAD FOR SCORE</h3>
-<div class="file-chooser">
-    <input type="file" #fileInput style="display: none" accept=".xlsx, .xls" (change)="onFileSelected($event)">
-
-    <button class="choose-button" (click)="fileInput.click()" *ngIf="!fileSelectedSpinner">Choose a File</button>
-    <!-- <mat-spinner style="width: 50px;" *ngIf="fileSelectedSpinner" ></mat-spinner> -->
-<!-- </div>
-  <div class="confirm-button">
-    <button (click)="onFileUpload()">Confirm</button>
-  </div> -->
-
 <div class="container">
-    <h2 class="header-title">Upload Sales Excel File</h2>
-    <div class="upload-section">
-        <!-- <h2 class="header-title">Upload File</h2> -->
-        <div class="file-selection">
-            <h3>Select a file to upload from your computer or device</h3>
-            <div class="file-chooser">
-                <input type="file" #fileInput style="display: none" accept=".xlsx, .xls"
-                    (change)="onFileSelected($event)" />
+  <div class="header-tag">
+    <h2>Sales Data</h2>
+    <p> Upload Hourly Excel File for Sales Updates</p>
+  </div>
 
-                <button class="choose-button" (click)="fileInput.click()" *ngIf="!fileSelectedSpinner">
-                    Choose a File
-                </button>
-                <mat-spinner style="width: 50px" *ngIf="fileSelectedSpinner"></mat-spinner>
-            </div>
-            <!-- Display the selected file name -->
-            <p *ngIf="selectedFile" [class.colorRed]="fileError" class="selected-file-name" style="margin-bottom: 0%;">
-                Selected File: {{ selectedFile.name }}
-            </p>
+  <div class="upload-section">
+    <!-- <h2 class="header-title">Upload File</h2> -->
+    <div class="file-selection">
+      <h3>Select a file to upload from your computer or device</h3>
+      <div class="file-chooser">
+        <input
+          type="file"
+          #fileInput
+          style="display: none"
+          accept=".xlsx, .xls"
+          (change)="onFileSelected($event)"
+        />
 
-            <br />
-            <div class="confirm-button">
-                <button mat-raised-button (click)="onFileUpload()" [disabled]="disableConfirmButotn">Confirm</button>
-                <mat-spinner style="width: 50px" *ngIf="confirm"></mat-spinner>
-            </div>
-        </div>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="fileInput.click()"
+          *ngIf="!fileSelectedSpinner"
+        >
+          Choose a File
+        </button>
+        <mat-spinner
+          style="width: 50px"
+          *ngIf="fileSelectedSpinner"
+        ></mat-spinner>
+      </div>
+      <!-- Display the selected file name -->
+      <p
+        *ngIf="selectedFile"
+        [class.colorRed]="fileError"
+        class="selected-file-name"
+        style="margin-bottom: 0%"
+      >
+        Selected File: {{ selectedFile.name }}
+      </p>
+
+      <br />
+      <div class="confirm-button">
+        <button
+          mat-raised-button
+          (click)="onFileUpload()"
+          [disabled]="disableConfirmButotn"
+        >
+          Confirm
+        </button>
+        <mat-spinner style="width: 50px" *ngIf="confirm"></mat-spinner>
+      </div>
     </div>
+  </div>
 </div>

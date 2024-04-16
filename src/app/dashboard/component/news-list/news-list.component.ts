@@ -6,7 +6,7 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { environment } from 'src/environment/enviroment';
-import { NewsUpdateService } from 'src/app/services/update.service';
+import { NewsUpdateService } from 'src/app/services/newsUpdate.service';
 import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-news-list',

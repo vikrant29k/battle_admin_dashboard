@@ -17,7 +17,7 @@ import {
 } from '@angular/common/http';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { environment } from 'src/environment/enviroment';
-import { NewsUpdateService } from 'src/app/services/update.service';
+import { NewsUpdateService } from 'src/app/services/newsUpdate.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Observer, of, tap } from 'rxjs';
@@ -27,7 +27,7 @@ import { Observable, Observer, of, tap } from 'rxjs';
   styleUrls: ['./news-update.component.scss'],
 })
 export class NewsUpdateComponent implements OnInit, OnDestroy {
-  @ViewChild('angularEditor') editor!: ElementRef;
+  @ViewChild('editor') editor: ElementRef|any;
   // content:any;
   // title:any
   images: any[] = [];
@@ -58,11 +58,12 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
 
   config: AngularEditorConfig = {
     editable: true,
+
     spellcheck: true,
     minHeight: '20rem',
     maxHeight: '20rem',
-    minWidth: '100%',
-    width: '50rem',
+    // minWidth: '100%',
+    // width: '50rem',
 
     upload: (file: File): Observable<HttpEvent<UploadResponse>> => {
       console.log('file is', file);
@@ -74,11 +75,13 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
           const ctx = canvas.getContext('2d');
           const image = new Image();
           image.src = URL.createObjectURL(file);
+          image.classList.add('insideNews'); // Add your class name here
 
           image.onload = () => {
             let width = image.width;
             let height = image.height;
-
+            image.classList.add('insideNews')
+            image.className='insideNews'
             // Resize the image if either dimension is greater than the maximum
             if (width > maxDimension || height > maxDimension) {
               // Calculate the new dimensions while maintaining aspect ratio
@@ -108,105 +111,25 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
               // Create FormData and append resized image
               const formData = new FormData();
               formData.append('file', blob, file.name);
+                this.updateService.uploadNews(formData)
+                  .subscribe(
+                    (response:any) => {
+                      console.log('Upload successful:', response.body.imageUrl);
+                      this.images.push(response.body.imageUrl);
+                     observer.next(response);
+                     observer.complete()
+                    },
+                    (error) => {
+                      console.error('Upload failed:', error);
+                    }
+                  );
 
-              // Upload resized image
-              fetch(`${environment.baseUrl}news/upload`, {
-                method: 'POST',
-                body: formData,
-              })
-                .then((response) => {
-                  if (!response.ok) {
-                    this.toastr.error("error while upload image")
-                    throw new Error('Failed to upload file');
-                  }
-                  return response.json() as Promise<UploadResponse>;
-                })
-                .then((data: any) => {
-                  console.log('data', data);
-                  this.images.push(data);
-                  let imageUrl = `${environment.baseUrl}${data.data.path}`;
-                  console.log('data', imageUrl);
-                  const httpResponse: HttpResponse<UploadResponse> =
-                    new HttpResponse({
-                      body: { imageUrl },
-                      status: 200,
-                      statusText: 'OK',
-                      // headers: null
-                    });
-                  // Emit the HttpResponse
-                  observer.next(httpResponse);
-                  observer.complete();
-                })
-                .catch((error) => {
-                  console.error('Error uploading file:', error);
-                  observer.error('Failed to upload file');
-                });
+
             }, file.type);
           };
         }
       );
     },
-
-    // upload: (file: File): Observable<HttpEvent<UploadResponse>> => {
-    //   console.log("file is",file)
-    //   return Observable.create((observer: Observer<HttpEvent<UploadResponse>>) => {
-
-    //     const formData = new FormData();
-    //     formData.append('file', file);
-
-    //     fetch(`${environment.baseUrl}news/upload`, {
-    //       method: 'POST',
-    //       body: formData
-    //     })
-    //     .then(response => {
-    //       if (!response.ok) {
-    //         throw new Error('Failed to upload file');
-    //       }
-    //       return response.json() as Promise<UploadResponse>;
-    //     })
-    //     .then((data:any) => {
-    //       console.log("data", data)
-    //       this.images.push(data)
-    //       let imageUrl = `${environment.baseUrl}${data.data.path}`
-    //       console.log("data", imageUrl)
-    //       const httpResponse: HttpResponse<UploadResponse> = new HttpResponse({
-    //         body: {imageUrl},
-    //         status: 200,
-    //         statusText: 'OK',
-    //         // headers: null
-    //       });
-    //       // Emit the HttpResponse
-    //       observer.next(httpResponse);
-    //       observer.complete();
-    //     })
-    //     .catch(error => {
-    //       console.error('Error uploading file:', error);
-    //       observer.error('Failed to upload file');
-    //     });
-    //   });
-    // },
-
-    // upload: (file: File): Observable<HttpEvent<UploadResponse>> => {
-    //   return Observable.create((observer: Observer<HttpEvent<UploadResponse>>) => {
-    //     // Simulate file upload
-    //     setTimeout(() => {
-    //       // Mock response data
-    //       const mockResponse: UploadResponse = {
-    //         imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYOWWq-AMr45F3MB_tDje4CkiDlx_dqavqaEe2f4SSKhOhYQSuAyHpsWYWl_nt_gAbekc&usqp=CAU' // Sample image URL
-    //       };
-    //       // Create an HttpResponse object with the mock response data
-    //       const httpResponse: HttpResponse<UploadResponse> = new HttpResponse({
-    //         body: mockResponse,
-    //         status: 200, // Set the status code
-    //         statusText: 'OK', // Set the status text
-    //         // headers: null // You can set custom headers if needed
-    //       });
-    //       // Emit the HttpResponse
-    //       observer.next(httpResponse);
-    //       observer.complete();
-    //     }, 1000); // Simulate delay for testing
-    //   });
-    // },
     placeholder: 'Enter text here...',
     translate: 'no',
     sanitize: false,
@@ -236,8 +159,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
           );
       } else {
         console.log('news adding', this.images);
-        this.http
-          .post(environment.baseUrl + 'news', this.newsContent.value)
+        this.updateService.postNews(this.newsContent.value)
           .subscribe(
             (res: any) => {
               console.log(res);

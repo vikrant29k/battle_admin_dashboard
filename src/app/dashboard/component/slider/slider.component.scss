@@ -1,12 +1,56 @@
 .slider{
   display: flex;
   flex-direction: column;
-  // gap: 1rem;
+  justify-content: space-between;
   margin-block-start: 2rem;
+  color: #cc0000;
+    .menu{
+      cursor: pointer;
+      // border-bottom: 1px solid black;
+      box-shadow: 0px 5px 16px -6px #dedede;
+      text-align: center;
+      display: flex;
+      padding-left:20px;
+      p{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+
+  }
+}
+
+.slider-shrunk { /* Style for shrunk menu */
+  // width: 3.5rem; /* Adjust width for shrunk state */
+  height: 100%;
+  background-color: white;
+}
+.slider-visible { /* Style for open menu */
+  width: 15rem; /* Adjust width for open state */
+  height: 100%;
+  background-color: white;
+}
+.menu-switch-button{
+  margin: 20px 5px 0px 10px;
+  background-color: transparent;
+  border: none;
+  mat-icon{
+    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
+  }
+}
+.slider-bottom{
+  // width: 100%;
+  position: fixed;
+  bottom: 0;
   .menu{
+    color: #cc0000;
     cursor: pointer;
     // border-bottom: 1px solid black;
-    box-shadow: 0px 5px 16px -6px rgb(171 171 171);
+    box-shadow: none;
     text-align: center;
     display: flex;
     padding-left:20px;
@@ -16,25 +60,20 @@
       justify-content: center;
       gap: 10px;
     }
+
+
+}
+}
+@media only screen and (max-width: 1400px) {
+  .container{
+    width: 50%;
   }
 }
-.slider-shrunk { /* Style for shrunk menu */
-  // width: 3.5rem; /* Adjust width for shrunk state */
-  height: 100%;
-  background-color: #f5f5f5;
-}
-.slider-visible { /* Style for open menu */
-  width: 15rem; /* Adjust width for open state */
-  height: 100%;
-  background-color: #f5f5f5;
-}
-.menu-switch-button{
-  margin: 20px 5px 0px 5px;
-  background-color: transparent;
-  border: none;
-  mat-icon{
-    font-size: 2rem;
-    width: 2rem;
-    height: 2rem;
+@media only screen and (max-width: 480px) {
+  .slider-visible{
+   position: absolute;
+   z-index:2;
+    height:110%;
   }
+
 }

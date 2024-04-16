@@ -1,20 +1,22 @@
 <div class="container">
   <div class="newsList">
-  <h2 class="titleNewsList">News List</h2>
+    <div class="header-tag">
+      <h2>News</h2>
+      <p>Explore the Latest Wuerth Updates</p>
+     </div>
 
     <div class="contentNewsList">
       <ng-container *ngFor="let news of listOfNews">
         <mat-card class="card">
           <mat-card-header class="card-header">
             <mat-card-title style="overflow-wrap: anywhere;" class="card-title"><h2>{{ news.title }}</h2></mat-card-title>
-            <!-- <mat-card-subtitle class="timestamp"></mat-card-subtitle> -->
           </mat-card-header>
           <mat-card-content class="card-content">
-            <p style="overflow-wrap: break-word;" [innerHTML]="news.content"></p>
+            <p [class.content-text]="true" [innerHTML]="news.content"></p>
           </mat-card-content>
           <mat-card-actions class="card-action">
             <div class="action-button">
-              <button mat-raised-button color="primary" (click)="updateNews(news)">Update</button>
+              <button mat-raised-button style=" background-color: #009EE0;color: white;" (click)="updateNews(news)">Update</button>
               <button mat-raised-button color="warn" (click)="deleteNews(news._id)">Delete</button>
             </div>
             <div class="likes">Total Likes {{news.reaction}}</div>

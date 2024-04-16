@@ -1,16 +1,26 @@
 <div class="auth-container">
-  <div class="header">
-    <img
-      src="https://challenge.wuerth.com/dist/images/wuerth-logo.png"
-      width="200"
-    />
+<div class="container" id="container" [class.active]="!visible">
+  <div class="form-container sign-up">
+    <app-sign-up></app-sign-up>
+
   </div>
-  <div class="content">
-    <div class="sub-head">
-      <h1>Ready To Set Battles?</h1>
-    </div>
-    <div class="main-content">
-      <router-outlet></router-outlet>
+  <div class="form-container sign-in">
+    <app-login></app-login>
+  </div>
+  <div class="toggle-container">
+    <div class="toggle">
+      <div class="toggle-panel toggle-left" id="panel" >
+        <img src="../../assets/wuerth-logo.png" />
+        <button class="hidden" id="login" (click)="visible=!visible">
+          {{ !visible ? 'Login In' : 'Sign Up' }}
+        </button>
+      </div>
+      <!-- <div class="toggle-panel toggle-right">
+        <img src="../../assets/wuerth-logo.png"/>
+        <button class="hidden" id="register">Sign Up</button>
+      </div> -->
     </div>
   </div>
 </div>
+</div>
+

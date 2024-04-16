@@ -15,7 +15,7 @@ const routes: Routes = [
       {
         path:'',
         pathMatch: "full",
-        redirectTo:'scoreboard'
+        redirectTo:'import-file'
       },
         {
           path:'scoreboard',

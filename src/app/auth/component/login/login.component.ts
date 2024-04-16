@@ -91,7 +91,7 @@ export class LoginComponent {
         );
       }
     } else {
-      this.toastr.error('Please fill all fields');
+      this.toastr.error('Enter all fields');
     }
   }
   onInputBox(event: any) {

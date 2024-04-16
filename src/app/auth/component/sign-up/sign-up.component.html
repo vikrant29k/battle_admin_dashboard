@@ -1,5 +1,3 @@
-<!-- Import Angular Material modules in your component or module where you use this code -->
-<!-- Example: import { MatInputModule, MatButtonModule } from '@angular/material'; -->
 
 <div class="card">
   <h2 class="form-title">Sign Up</h2>
@@ -27,9 +25,9 @@
         formControlName="email"
       />
     </mat-form-field>
-
-    <mat-form-field class="form-group">
-      <mat-label>Company Number</mat-label>
+<!-- <div class="companyDetails"> -->
+    <mat-form-field class="form-group cNumber">
+      <mat-label>UID</mat-label>
       <mat-select name="companyNumber" formControlName="companyNumber" placeholder="Ex. 1111" required
                   (selectionChange)="onCompanySelection($event)">
         <input class="filter" type="number" aria-label="Filter companies" placeholder="Filter" (keyup)="filterCompanies($event)">
@@ -40,7 +38,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="form-group">
+    <mat-form-field class="form-group cName">
       <mat-label>Company Name</mat-label>
       <mat-select name="companyName" formControlName="companyName" placeholder="Ex. IN-Würth India" required
                   (selectionChange)="onCompanySelection($event)">
@@ -51,7 +49,7 @@
         <mat-option *ngIf="!filteredCompaniesName?.length">No companies found</mat-option>
       </mat-select>
     </mat-form-field>
-
+  <!-- </div> -->
    </div>
 
     <div class="form-submit">
