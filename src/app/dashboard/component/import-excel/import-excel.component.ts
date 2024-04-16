@@ -17,14 +17,9 @@ export class ImportExcelComponent {
   fileSelectedSpinner: boolean = false;
   confirm: boolean = false;
   constructor( private toastr: ToastrService,private  excelService: ExcelService) {}
-   cleanString(str:any) {
-    return str.replace(/[^\w\s]/gi, '').replace(/\s+/g, ' ').trim();
-  }
 
-  // Clean all strings in the array
-   cleanArray(arr:any) {
-    return arr.map((a:any)=>this.cleanString(a));
-  }
+
+
   onFileSelected(event: any): void {
     console.log("file", event)
     this.file = event.target.files[0];
@@ -54,7 +49,10 @@ export class ImportExcelComponent {
       });
       const worksheetName: string = workbook.SheetNames[0];
       const worksheet: XLSX.WorkSheet = workbook.Sheets[worksheetName];
-      const data: any[] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+      var data: any[] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        if (data[0][12]=="Language\r\nISO-639-1" || data[0][12]=="Language\nISO-639-1") {
+          data[0][12] = "Language ISO-639-1";
+      }
 
       // Convert the array of arrays into an array of objects
       const allowedHeaders = [
@@ -70,20 +68,15 @@ export class ImportExcelComponent {
         'Game-Leader (GL)',
         'Battle Partner Team name (ASM level)',
         'Time zone (correlated to CET)',
-        'Language\r\nISO-639-1',
+        'Language ISO-639-1',
         'Battle Partner Company No',
         'Battle Partner Company Name',
       ];
 
       const headers = data[0]
 
-      let cleanedAllowed =  this.cleanArray(allowedHeaders)
-      let cleanedHeader = this.cleanArray(headers)
-      console.log('headers---', headers);
 
-      console.log("allowed --", cleanedAllowed)
-
-      let headersSame = this.arraysAreEqual(cleanedHeader, cleanedAllowed);
+      let headersSame = this.arraysAreEqual(headers, allowedHeaders);
 
       if (headersSame) {
         console.log('arrays is same');
@@ -116,7 +109,7 @@ export class ImportExcelComponent {
         this.validateColumn(columnData, 'Company Target LC Total') ||
         this.validateColumn(columnData, 'Currency') ||
         this.validateColumn(columnData, 'Time zone (correlated to CET)') ||
-        this.validateColumn(columnData, `Language\r\nISO-639-1`) ||
+        this.validateColumn(columnData, `Language ISO-639-1`) ||
         this.validateColumn(columnData, 'Battle Partner Company No') ||
         this.validateColumn(columnData, 'Battle Partner Company Name') ||
         this.validateColumn(columnData, 'Target / Sales Rep LC') ||
@@ -176,8 +169,8 @@ export class ImportExcelComponent {
           commonFieldObject.Currency = obj.Currency;
           commonFieldObject['Time zone (correlated to CET)'] =
             obj['Time zone (correlated to CET)'];
-          commonFieldObject['Language\r\nISO-639-1'] =
-            obj['Language\r\nISO-639-1'];
+          commonFieldObject['Language ISO-639-1'] =
+            obj['Language ISO-639-1'];
           commonFieldObject['Battle Partner Company No'] =
             obj['Battle Partner Company No'];
           commonFieldObject['Battle Partner Company Name'] =
@@ -189,7 +182,7 @@ export class ImportExcelComponent {
           delete obj['Company Target LC Total'];
           delete obj.Currency;
           delete obj['Time zone (correlated to CET)'];
-          delete obj['Language\r\nISO-639-1'];
+          delete obj['Language ISO-639-1'];
           delete obj['Battle Partner Company No'];
           delete obj['Battle Partner Company Name'];
 
@@ -336,7 +329,7 @@ export class ImportExcelComponent {
 
   validateColumn(columnData: any, columnName: string): any {
     try {
-      const columnArray = columnData[columnName];
+      var columnArray = columnData[columnName];
 
       if (columnName === 'E-Mail') {
 
@@ -405,24 +398,24 @@ export class ImportExcelComponent {
       //
 
       //validate total value of Target / Sales Rep LC is equal to Company Target LC Total
-      const Target_Sales_Rep_LC_total = columnData['Target / Sales Rep LC'];
-      let total_value = 0;
-      Target_Sales_Rep_LC_total.map((num: number, i: number) => {
-        total_value += num;
-      });
+      // const Target_Sales_Rep_LC_total = columnData['Target / Sales Rep LC'];
+      // let total_value = 0;
+      // Target_Sales_Rep_LC_total.map((num: number, i: number) => {
+      //   total_value += num;
+      // });
 
-      const Company_Target_LC_Total = columnData['Company Target LC Total'];
-      Company_Target_LC_Total.map((val: number, i: number) => {
-        if (val !== total_value) {
-          this.fileError = true;
-          this.toastr.error(
-            'Target / Sales Rep LC total not equal to Company Target LC Total'
-          );
-          throw new Error(
-            'Target / Sales Rep LC total not equal to Company Target LC Total'
-          );
-        }
-      });
+      // const Company_Target_LC_Total = columnData['Company Target LC Total'];
+      // Company_Target_LC_Total.map((val: number, i: number) => {
+      //   if (val !== total_value) {
+      //     this.fileError = true;
+      //     this.toastr.error(
+      //       'Target / Sales Rep LC total not equal to Company Target LC Total'
+      //     );
+      //     throw new Error(
+      //       'Target / Sales Rep LC total not equal to Company Target LC Total'
+      //     );
+      //   }
+      // });
 
       // check column values in string
       if (
@@ -459,7 +452,12 @@ export class ImportExcelComponent {
         return;
       }
 
-
+      if (columnName === 'Company Name') {
+        columnArray = columnArray.map((val:any) => {
+            return val.replace(/Wüerth/g, "Würth");
+        });
+    }
+    
 
       const firstValue = columnArray[0];
 
