@@ -42,7 +42,7 @@ export class AuthService {
     }
 
     setPassword(data: any): Observable<any> {
-      return this.http.patch(`${environment.baseUrl}user/admin-password`, data);
+      return this.http.patch(`${environment.baseUrl}user/set-password`, data);
     }
 
     login(data:any): Observable<any>{

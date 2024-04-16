@@ -44,17 +44,17 @@ export class SignUpComponent implements OnInit {
 
   onCompanySelection(event: any) {
     const selectedCompany = event.value;
-    debugger
+
     if (selectedCompany) {
       const company = this.companyData.find(company => company.uid === selectedCompany || company.name === selectedCompany);
       if (company) {
         if (event.source.ngControl.name === 'companyNumber') {
-          debugger
+
           this.signupForm.get('companyName')?.setValue(company.name);
-          debugger
+
         } else {
           this.signupForm.get('companyNumber')?.setValue(company.uid);
-          debugger
+
         }
       }
     }
@@ -80,7 +80,6 @@ export class SignUpComponent implements OnInit {
 
   submit(): void {
     this.signupForm
-    debugger
     // console.log('Form Data:', this.formData);
     if (
       this.signupForm.value.name == '' ||
@@ -89,7 +88,6 @@ export class SignUpComponent implements OnInit {
       this.signupForm.value.companyName == ''
     ) {
       this.toastr.error('Enter All Fields');
-      debugger
     } else {
       // Create the data object with form values
       const data = {
