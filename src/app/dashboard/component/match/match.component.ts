@@ -114,7 +114,6 @@ export class MatchComponent implements OnInit {
     this.http.get(`${environment.baseUrl}event`).subscribe({
       next: (res: any) => {
         if (res.success) {
-          // console.log('api res', res);
           this.matches = res.data;
         }
       },

@@ -38,7 +38,7 @@ const routes: Routes = [
           component:ImportExcelComponent
         },
         {
-          path:'match',
+          path:'event',
           component:MatchComponent
         }
 

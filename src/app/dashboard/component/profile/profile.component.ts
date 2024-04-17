@@ -20,8 +20,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ProfileComponent {
   @ViewChild('angularEditor') editor!: ElementRef;
-  // content:any;
-  // title:any
+
   newsContent = new FormGroup({
     content: new FormControl('', Validators.required),
     title: new FormControl('', Validators.required),
@@ -123,7 +122,7 @@ export class ProfileComponent {
                 if (res.statusCode == 200) {
                   console.log('password res', res);
                   this.profileUpdate();
-                  this.toastr.success("Password Updated Successfully")
+                  // this.toastr.success("Password Updated Successfully")
                   localStorage.clear()
                   this.router.navigate(['']);
                 }

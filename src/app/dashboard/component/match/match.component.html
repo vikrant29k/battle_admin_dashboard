@@ -1,7 +1,7 @@
 <div class="container">
   <div class="header-tag">
     <h1>Event Graphics</h1>
-    <p>Upload event graphics. Name the event, add logo/graphics </p>
+    <p>Upload Event Graphics. Name The Event, Add Logo/Graphics </p>
   </div>
   <div class="upload-section">
     <div class="file-selection">
@@ -40,7 +40,7 @@
             *ngIf="selectedImgLogo"
             [class.colorRed]="fileError"
             class="selected-file-name"
-            style="margin-bottom: 0%"
+
           >
             <b>Selected File:</b> {{ selectedImgLogo.name }}
           </p>
@@ -61,9 +61,7 @@
           </button>
           <p
             *ngIf="selectedImgBg"
-            [class.colorRed]="fileError"
             class="selected-file-name"
-            style="margin-bottom: 0%"
           >
             <b>Selected File:</b> {{ selectedImgBg.name }}
           </p>

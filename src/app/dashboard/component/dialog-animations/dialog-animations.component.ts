@@ -25,12 +25,11 @@ export class DialogAnimationsComponent implements OnInit {
   }
 
   onConfirm(): void {
-   this.changePasswordService.showOtherDiv.emit(false)
+    this.changePasswordService.showOtherDiv.emit(false);
     this.dialogRef.close(true);
   }
 
   onDismiss(): void {
-
     this.dialogRef.close(false);
   }
 }
