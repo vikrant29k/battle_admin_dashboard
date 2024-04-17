@@ -452,6 +452,22 @@ export class ImportExcelComponent {
           (value: any) => typeof value === 'number' || typeof value === 'string'
         );
 
+        // check 'Sales rep No' column value unique
+        let seenSet = new Set()
+        for(let val of columnArray){
+          if(val=="Superuser"){
+            continue;
+          }
+          if(seenSet.has(val)){
+            this.toastr.error(
+              `${val} is already exist in Sales rep No. check and remove duplicate entry`
+            );
+            this.fileError = true;
+            throw new Error( `${val} is already exist in Sales rep No. check and remove duplicate entry`);
+          }
+          seenSet.add(val)
+        }
+
         if (!allValuesInNumberOrString) {
           console.error(
             `Error: Not all values in the "${columnName}" column are numbers or string.`
