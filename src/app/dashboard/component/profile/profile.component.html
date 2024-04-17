@@ -1,7 +1,7 @@
 <div class="profile-container">
   <div class="header-tag">
     <h2>Profile</h2>
-    <p>Access your profile info, edit, change password.</p>
+    <p>Access Your Profile Info, Edit, Change Password.</p>
   </div>
   <div class="card">
     <form class="form-container" [formGroup]="profileForm">
@@ -34,7 +34,7 @@
 
       <div class="form-submit">
           <button mat-raised-button color="primary" class="btn" (click)="editBtn?editBtnClick():saveBtnClick()">{{editBtn?'Edit':'Save'}}</button>
-          <button mat-raised-button color="warn" class="btn" (click)="openDialog('0ms', '0ms')">
+          <button mat-raised-button color="primary" class="btn" (click)="openDialog('0ms', '0ms')">
             Change Password
           </button>
       </div>

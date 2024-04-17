@@ -109,13 +109,13 @@ export class ProfileComponent {
             token: localStorage.getItem('token'),
           };
           this.http
-            .patch(`${environment.baseUrl}user/admin-password`, password)
+            .patch(`${environment.baseUrl}user/set-password`, password)
             .subscribe({
               next: (res: any) => {
                 if (res.statusCode == 200) {
                   console.log('password res', res);
                   this.profileUpdate();
-                  this.toastr.success("Password Updated Successfully")
+                  // this.toastr.success("Password Updated Successfully")
                   this.router.navigate(['']);
                 }
               },
@@ -142,7 +142,7 @@ export class ProfileComponent {
     if (this.profileForm.valid) {
       let data = this.profileForm.value;
       delete data.email;
-      this.http.patch(`${environment.baseUrl}company`, data).subscribe({
+      this.http.patch(`${environment.baseUrl}user/admin-update`, data).subscribe({
         next: (res: any) => {
           if (res.statusCode == 200) {
             console.log('api res', res);
