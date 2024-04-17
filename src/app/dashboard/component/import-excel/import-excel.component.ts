@@ -127,58 +127,6 @@ export class ImportExcelComponent {
         throw new Error('validation failed');
       }
 
-      // validate two columns Company Name and Battle Partner Company Name
-
-      let teamNameColumn = columnData['Team name (ASM level)'];
-      let battlePartnerTeamNameColumn =
-        columnData['Battle Partner Team name (ASM level)'];
-      // console.log('team names', teamNameColumn, battlePartnerTeamNameColumn);
-
-      // let filteredTeamNameColumn = teamNameColumn.filter((val:any,i:number)=>{
-      //   return val!=="Superuser"
-      // })
-      // let filteredBattlePartnerTeamNameColumn = teamNameColumn.filter((val:any,i:number)=>{
-      //   return val!=="Superuser"
-      // })
-
-      const missingValues = teamNameColumn.filter(
-        (val) => !battlePartnerTeamNameColumn.includes(val)
-      );
-
-      const missingValues1 = battlePartnerTeamNameColumn.filter(
-        (val) => !teamNameColumn.includes(val)
-      );
-
-      if (missingValues.length === 0) {
-        // console.log('All values in the first array exist in the second array.');
-      } else {
-        // console.log(
-        //   'Not all values in the first array exist in the second array.'
-        // );
-        let mess = `Team name (ASM level) ${missingValues} not present in Battle Partner Team name (ASM level)`;
-        this.toastr.error(mess);
-        this.fileError = true;
-        this.fileErrorMessage = mess;
-        this.fileSelectedSpinner = false;
-        return;
-      }
-
-      if (missingValues1.length === 0) {
-        // console.log('All values in the second array exist in the first array.');
-      } else {
-        // console.log(
-        //   'Not all values in the second array exist in the first array.'
-        // );
-        let mess = `Battle Partner Team name (ASM level) ${missingValues1} not present in Team name (ASM level)`;
-        this.toastr.error(mess);
-        this.fileError = true;
-        this.fileErrorMessage = mess;
-        this.fileSelectedSpinner = false;
-        return;
-      }
-
-      // console.log("team names", filteredTeamNameColumn, filteredBattlePartnerTeamNameColumn)
-
       // Convert the array of arrays into an array of objects
       const result = dataArray.reduce((acc: any[], row: any[]) => {
         // Check if all values in the row are undefined
@@ -270,6 +218,23 @@ export class ImportExcelComponent {
           let values: any = [];
           let teamName = '';
           arr.map((obj, i) => {
+            if (
+              obj['Company Unit (Region or Division...)'] == 'Superuser' ||
+              obj['Team name (ASM level)'] == 'Superuser' ||
+              obj['Sales rep No'] == 'Superuser' ||
+              obj['Battle Partner Team name (ASM level)'] == 'Superuser' ||
+              obj['Battle Partner Team name (ASM level)'] == 'Superuser'
+            ) {
+              if (!(obj['Game-Leader (GL)'] == 'SU')) {
+                this.toastr.error(
+                  'For Superuser You need to enter SU in Game-Leader (GL) column'
+                );
+                throw new Error(
+                  'For Superuser You need to enter SU in Game-Leader (GL) column'
+                );
+              }
+            }
+
             if (obj['Game-Leader (GL)'] == 'SU') {
               // console.log('obj', obj['Game-Leader (GL)']);
               if (obj['Company Unit (Region or Division...)'] !== 'Superuser') {
@@ -316,18 +281,6 @@ export class ImportExcelComponent {
                   'superuser name should be Superuser in Battle Partner Team name (ASM level)'
                 );
               }
-            } else {
-              if (
-                obj['Team name (ASM level)'] ==
-                obj['Battle Partner Team name (ASM level)']
-              ) {
-                this.toastr.error(
-                  "Team name (ASM level) and Battle Partner Team name (ASM level) can't same"
-                );
-                throw new Error(
-                  "Team name (ASM level) and Battle Partner Team name (ASM level) can't same"
-                );
-              }
             }
 
             values.push(obj['Game-Leader (GL)']);
@@ -363,7 +316,7 @@ export class ImportExcelComponent {
 
           if (stringCountforMoreGL > 1) {
             // console.log('game leader not found, team name', teamName);
-            this.toastr.error('more than one game leader found in', teamName);
+            this.toastr.error(`more than one game leader found in ${teamName}`);
             this.fileError = true;
             this.fileErrorMessage = `more than one game leader found in ${teamName}`;
             this.fileSelectedSpinner = false;
@@ -383,6 +336,58 @@ export class ImportExcelComponent {
         }
         // });
       }
+
+      // validate two columns Company Name and Battle Partner Company Name
+
+      let teamNameColumn = columnData['Team name (ASM level)'];
+      let battlePartnerTeamNameColumn =
+        columnData['Battle Partner Team name (ASM level)'];
+      // console.log('team names', teamNameColumn, battlePartnerTeamNameColumn);
+
+      // let filteredTeamNameColumn = teamNameColumn.filter((val:any,i:number)=>{
+      //   return val!=="Superuser"
+      // })
+      // let filteredBattlePartnerTeamNameColumn = teamNameColumn.filter((val:any,i:number)=>{
+      //   return val!=="Superuser"
+      // })
+
+      const missingValues = teamNameColumn.filter(
+        (val) => !battlePartnerTeamNameColumn.includes(val)
+      );
+
+      const missingValues1 = battlePartnerTeamNameColumn.filter(
+        (val) => !teamNameColumn.includes(val)
+      );
+
+      if (missingValues.length === 0) {
+        // console.log('All values in the first array exist in the second array.');
+      } else {
+        // console.log(
+        //   'Not all values in the first array exist in the second array.'
+        // );
+        let mess = `Team name (ASM level) ${missingValues} not present in Battle Partner Team name (ASM level)`;
+        this.toastr.error(mess);
+        this.fileError = true;
+        this.fileErrorMessage = mess;
+        this.fileSelectedSpinner = false;
+        return;
+      }
+
+      if (missingValues1.length === 0) {
+        // console.log('All values in the second array exist in the first array.');
+      } else {
+        // console.log(
+        //   'Not all values in the second array exist in the first array.'
+        // );
+        let mess = `Battle Partner Team name (ASM level) ${missingValues1} not present in Team name (ASM level)`;
+        this.toastr.error(mess);
+        this.fileError = true;
+        this.fileErrorMessage = mess;
+        this.fileSelectedSpinner = false;
+        return;
+      }
+
+      // console.log("team names", filteredTeamNameColumn, filteredBattlePartnerTeamNameColumn)
 
       this.finalResult = {
         teamsData: teamArrays,
