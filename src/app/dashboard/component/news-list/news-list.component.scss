@@ -5,11 +5,23 @@
   align-items: center;
   // height: 100%;
   .newsList{
-    width: 95%;
-    // height: 100%;
-    .titleNewsList{
-      font-size: 2.5rem;
-      color: white;
+    width: 100%;
+    .header-tag{
+      width: 100%;
+      background-color: #cc0000;
+      text-align: center;
+      margin-block-end: 2rem;
+      h2{
+        color: #ffffff;
+        margin: 0;
+        font-size: 2rem;
+        padding: 10px;
+       }
+       p{
+        font-size: 1.5rem;
+        margin: 0;
+        color: white;
+      }
     }
     .contentNewsList{
       display: flex;
@@ -20,14 +32,29 @@
       height:70vh;
       overflow-y:scroll;
       gap: 2rem;
+
+      @media (max-height: 650px) {
+        height: 60vh;
+      }
       .card{
+        box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.75);
+        &:hover{
+          box-shadow: 0px 0px 10px 0px #cc0000;
+        }
         margin-block: 1rem;
         width: 75%;
        .card-header{
-        box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.75);
+        border-bottom: 2px solid #959595;
        }
        .card-content{
+        word-wrap: break-word;
         padding: 10px ;
+        .content-text{
+          img{
+            width: 5rem !important;
+          }
+        }
+
 
        }
        .card-action{
@@ -54,13 +81,64 @@
       }
 
       &::-webkit-scrollbar-thumb {
-        background-color: #3aa6ff;
+        background-color: #cc0000;
         // border-radius: 5px;\.
       }
 
       &::-webkit-scrollbar-thumb:hover {
-        background-color: #1e5eff;
+        background-color: #e70909;
       }
     }
   }
+}
+
+@media only screen and (max-width:460px){
+  .titleNewsList{
+    font-weight: 200;
+  }
+  .container{
+    .newsList{
+      .header-tag{
+        h2{
+          font-size: 1.8rem;
+          font-weight: 200;
+        }
+        p{
+          font-size: 1rem;
+        }
+      }
+      .contentNewsList{
+        height: 70vh;
+        .card{
+          width: 90%;
+          .card-header{
+            padding: 0px 10px;
+            h2{
+              font-size: 1.3rem;
+              font-weight: 200;
+            }
+          }
+          .card-content{
+            word-wrap: break-word;
+
+            .content-text{
+              img{
+                width: 200;
+              }
+            }
+
+          }
+          .card-action{
+            .likes{
+              font-size: 0.9rem;
+            }
+          }
+          .card-footer{
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+  }
+
 }

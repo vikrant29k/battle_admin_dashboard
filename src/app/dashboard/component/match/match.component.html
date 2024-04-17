@@ -1,0 +1,147 @@
+<div class="container">
+  <div class="header-tag">
+    <h1>Event Graphics</h1>
+    <p>Upload event graphics. Name the event, add logo/graphics </p>
+  </div>
+  <div class="upload-section">
+    <div class="file-selection">
+      <mat-form-field class="form-group">
+        <mat-label>Event Name</mat-label>
+        <input
+          matInput
+          #matchName
+          type="text"
+          name="name"
+          placeholder="Enter Match Name"
+          required
+        />
+      </mat-form-field>
+
+      <!-- <div>
+                    <input type="text" placeholder="Enter Match Name">
+                </div> -->
+
+      <div class="file-chooser">
+        <div class="file-logo-image">
+          <label for="logo">Logo Image</label>
+          <input
+            name="logo"
+            type="file"
+            #fileInputLogo
+            style="display: none"
+            accept="image/*"
+            (change)="onFileSelectedLogo($event)"
+          />
+
+          <button mat-raised-button color="primary" class="choose-button" (click)="fileInputLogo.click()">
+            Choose a Image
+          </button>
+          <p
+            *ngIf="selectedImgLogo"
+            [class.colorRed]="fileError"
+            class="selected-file-name"
+            style="margin-bottom: 0%"
+          >
+            <b>Selected File:</b> {{ selectedImgLogo.name }}
+          </p>
+        </div>
+        <div class="file-bg-image">
+          <label for="bg">Background Image</label>
+          <input
+            name="bg"
+            type="file"
+            #fileInputBg
+            style="display: none"
+            accept="image/*"
+            (change)="onFileSelectedBg($event)"
+          />
+
+          <button mat-raised-button color="primary" class="choose-button" (click)="fileInputBg.click()">
+            Choose a Image
+          </button>
+          <p
+            *ngIf="selectedImgBg"
+            [class.colorRed]="fileError"
+            class="selected-file-name"
+            style="margin-bottom: 0%"
+          >
+            <b>Selected File:</b> {{ selectedImgBg.name }}
+          </p>
+        </div>
+      </div>
+
+      <br />
+      <div class="confirm-button">
+        <button mat-raised-button (click)="onFileUpload(matchName.value)" *ngIf="!updateBtn">
+          Confirm
+        </button>
+        <button mat-raised-button  (click)="updateMatch(matchName.value)" *ngIf="updateBtn">
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="table">
+    <div class="tableContainer">
+      <table>
+        <thead class="header">
+          <tr>
+            <td>Select</td>
+            <td>Event Name</td>
+            <td>Logo Image</td>
+            <td>Background Image</td>
+            <td>Action</td>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let match of matches">
+            <tr>
+              <td>
+                <input
+                  [checked]="match.isActive"
+                  type="radio"
+                  name="selectedMatch"
+                  (change)="updateActiveMatch(match)"
+                />
+              </td>
+              <td>{{ match.eventName }}</td>
+              <td>
+                <img
+                  id="img"
+                  [src]="baseUrl + 'images/' + match.avatar"
+                  alt="Image"
+                />
+              </td>
+              <td>
+                <img
+                  id="img"
+                  [src]="baseUrl + 'images/' + match.bgAvatar"
+                  alt="Image"
+                />
+              </td>
+              <!-- <td>{{ match.isActive ? 'Yes' : 'No' }}</td> -->
+              <td>
+                <button
+                  mat-icon-button
+                  matTooltip="Delete"
+                  (click)="deleteMatch(match)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  matTooltip="Edit"
+                  (click)="updateMatchBtn(match)"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+

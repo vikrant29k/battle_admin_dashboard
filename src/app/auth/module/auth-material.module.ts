@@ -15,8 +15,9 @@ import { MatNativeDateModule } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { FormsModule } from "@angular/forms";
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTooltipModule } from "@angular/material/tooltip";
 const materials = [
-    MatMenuModule,
+    MatMenuModule,MatTooltipModule,
     FormsModule,
     MatNativeDateModule,
     MatProgressBarModule,

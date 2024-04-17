@@ -1,13 +1,17 @@
 .card {
   text-align: center;
-  padding: 20px;
-  background-image: url('../../../../assets/backgound.png');
-  border-radius: 20px;
+  width: 100%;
+  // padding: 20px;
+  // background-image: url('../../../../assets/backgound.png');
+  background-color: rgb(255, 255, 255);
+  // border-radius: 20px;
+  // margin-bottom: 50px;
 }
 
 .form-title {
   text-align: center;
-  color: white;
+  color: #cc0000;
+  font-size: 2rem;
 }
 
 .form-container {
@@ -16,15 +20,66 @@
   flex-direction: column;
   align-items: center;
   .sub-container{
-    width: 70%;
+    width: 80%;
   }
+}
+
+.signUp{
+  font-size: 1.3rem;
+  font-weight: 600;
 }
 
 .form-group {
   width: 100%;
-  margin-bottom: 15px;
+  // margin-bottom: 15px;
 }
 
 .form-submit {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 50%;
   text-align: center;
+}
+.filter{
+  width: 100%;
+  border: none;
+  &::placeholder{
+    color: rgb(151, 151, 151);
+  }
+}
+.companyDetails{
+  display: flex;
+  flex-direction: row;
+  .cNumber{
+    width: 35%;
+  }
+  .cName{
+    width: 65%
+  }
+}
+@media only screen and (max-width: 480px) {
+  .form-title {
+    text-align: center;
+    color: #cc0000;
+    font-size: 1.3rem;
+  }
+  .signUp{
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  .form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1rem;
+    .sub-container{
+      width: 80%;
+      mat-form-field{
+        height: 4.2rem;
+        font-size: 0.85rem;
+      }
+    }
+  }
 }

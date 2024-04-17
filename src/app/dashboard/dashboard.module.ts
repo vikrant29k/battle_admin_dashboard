@@ -14,8 +14,9 @@ import { ProfileComponent } from './component/profile/profile.component';
 import { DialogAnimationsComponent } from './component/dialog-animations/dialog-animations.component';
 
 import { ImportExcelComponent } from './component/import-excel/import-excel.component';
+import { MatchComponent } from './component/match/match.component';
 @NgModule({
-  declarations: [DashboardComponent, SliderComponent, ScoreboardComponent, HeaderComponent, NewsUpdateComponent, NewsListComponent, ProfileComponent, DialogAnimationsComponent, ImportExcelComponent],
+  declarations: [DashboardComponent, SliderComponent, ScoreboardComponent, HeaderComponent, NewsUpdateComponent, NewsListComponent, ProfileComponent, DialogAnimationsComponent, ImportExcelComponent, MatchComponent],
   imports: [
     CommonModule,DashboardRoutingModule,AngularEditorModule,HttpClientModule,DashboardMaterialModule
   ]

@@ -2,19 +2,36 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
   flex-direction: column;
+  .header-tag{
+    width: 100%;
+    background-color: #cc0000;
+    text-align: center;
+    margin-block-end: 2rem;
+    h2{
+      color: #ffffff;
+      margin: 0;
+      font-size: 2rem;
+      padding: 10px;
+     }
+     p{
+      margin: 0;
+      color: #ffffff;
+        font-size: 1.5rem;
+     }
+  }
 }
 .card {
-  width: 724px;
-  height: 575px;
- background-image: url("../../../../assets/backgound.png");
+  width: 60%;
+  padding-block: 20px;
+  background-color: white;
   border-radius: 20px;
+  margin-block-end: 2rem;
 }
 
 .form-title {
   text-align: center;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .form-container {
@@ -34,8 +51,10 @@
 
 .form-submit{
     display: flex;
-  justify-content: end;
-  align-items: end;
+    gap: 20px;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
 }
 .card-action{
   display: flex;
@@ -46,3 +65,23 @@
  .btn{
   font-size: 20px;
  }
+ @media only screen and (max-width: 480px)   {
+  .profile-container{
+       .header-tag{
+        h2{
+          font-size: 1.8rem;
+          font-weight: 200;
+        }
+        p{
+          font-size: 1rem;
+        }
+       }
+      }
+      .card{
+        width: 95%;
+      }
+      .form-submit{
+        align-items: center;
+        flex-direction: column;
+      }
+    }

@@ -10,13 +10,11 @@ export class DashboardComponent implements OnInit{
 
   constructor(private route:Router){}
 ngOnInit(): void {
-  
+
 }
 profile(event:any) {
   this.route.navigate(['/profile']);
 }
   // showMenu = true; // Initialize menu state to open
-  Logout(event:any) {
-    this.route.navigate(['login'])
-  }
+
 }

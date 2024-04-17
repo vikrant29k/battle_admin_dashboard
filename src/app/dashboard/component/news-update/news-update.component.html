@@ -1,10 +1,14 @@
 <div class="container">
+ <div class="header-tag">
+  <h2>Post News</h2>
+  <p>Post your source for Wuerth updates, images and video links</p>
+ </div>
 <form [formGroup]="newsContent">
   <mat-form-field appearance="fill" class="title">
     <mat-label>Title</mat-label>
       <input type="text" matInput formControlName="title">
   </mat-form-field>
-  <angular-editor formControlName="content" [config]="config" #editor></angular-editor>
-  <button mat-raised-button (click)="submitContent()">Post</button>
+  <angular-editor formControlName="content" id="angular-editor" class="angular-editor" [config]="config" #editor></angular-editor>
+  <button mat-raised-button color="primary" class="postNewsButton" (click)="submitContent()">Post</button>
 </form>
 </div>

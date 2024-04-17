@@ -5,20 +5,8 @@
 
   <div class="dashboard-content">
     <header class="dashboard-header">
-      <img
-        class="logo"
-        src="https://challenge.wuerth.com/dist/images/wuerth-logo.png"
-        alt="Your Application Logo"
-      />
-      <div class="profile-section">
-        <button mat-button [matMenuTriggerFor]="menu" class="icon-button">
-          <mat-icon class="large-icon">account_circle</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="profile($event)">Profile</button>
-          <button mat-menu-item (click)="Logout($event)">Logout</button>
-        </mat-menu>
-      </div>
+      <img class="logo" src="../../assets/wuerth-logo.png" alt="wuerth-logo"/>
+
     </header>
     <router-outlet></router-outlet>
   </div>

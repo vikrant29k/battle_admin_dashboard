@@ -17,4 +17,7 @@ export class SliderComponent {
   toggleMenu() {
     this.showMenu = !this.showMenu;
   }
+  logOut() {
+    localStorage.removeItem("token")
+  }
 }

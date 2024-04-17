@@ -1,9 +1,7 @@
-<!-- Import Angular Material modules in your component or module where you use this code -->
-<!-- Example: import { MatInputModule, MatButtonModule } from '@angular/material'; -->
 
 <div class="card">
   <h2 class="form-title">Sign Up</h2>
-  <form #signupForm="ngForm" (submit)="submit()" class="form-container">
+  <form [formGroup]="signupForm" (submit)="submit()" class="form-container">
    <div class="sub-container">
     <mat-form-field class="form-group">
       <mat-label>Name</mat-label>
@@ -13,7 +11,7 @@
         name="name"
         placeholder="Enter Your Name"
         required
-        [(ngModel)]="formData.name"
+        formControlName="name"
       />
     </mat-form-field>
     <mat-form-field class="form-group">
@@ -24,37 +22,38 @@
         name="email"
         placeholder="Enter Your Email"
         required
-        [(ngModel)]="formData.email"
+        formControlName="email"
       />
     </mat-form-field>
-
-    <mat-form-field class="form-group">
-      <mat-label>Company Number</mat-label>
-      <input
-        matInput
-        type="number"
-        name="companyNumber"
-        placeholder="Enter Company Number"
-        required
-        [(ngModel)]="formData.companyNumber"
-      />
+<!-- <div class="companyDetails"> -->
+    <mat-form-field class="form-group cNumber">
+      <mat-label>UID</mat-label>
+      <mat-select name="companyNumber" formControlName="companyNumber" placeholder="Ex. 1111" required
+                  (selectionChange)="onCompanySelection($event)">
+        <input class="filter" type="number" aria-label="Filter companies" placeholder="Filter" (keyup)="filterCompanies($event)">
+        <mat-option *ngFor="let company of filteredCompanies" [value]="company.uid">
+          {{ company.uid }}
+        </mat-option>
+        <mat-option *ngIf="!filteredCompanies?.length">No companies found</mat-option>
+      </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="form-group">
+    <mat-form-field class="form-group cName">
       <mat-label>Company Name</mat-label>
-      <input
-        matInput
-        type="text"
-        name="companyName"
-        placeholder="Enter Company Name"
-        required
-        [(ngModel)]="formData.companyName"
-      />
+      <mat-select name="companyName" formControlName="companyName" placeholder="Ex. IN-Würth India" required
+                  (selectionChange)="onCompanySelection($event)">
+        <input class="filter" type="text" aria-label="Filter companies" placeholder="Filter" (keyup)="filterCompaniesName($event)">
+        <mat-option *ngFor="let company of filteredCompaniesName" [value]="company.name">
+          {{ company.name }}
+        </mat-option>
+        <mat-option *ngIf="!filteredCompaniesName?.length">No companies found</mat-option>
+      </mat-select>
     </mat-form-field>
+  <!-- </div> -->
    </div>
 
     <div class="form-submit">
-      <button type="submit" mat-raised-button color="primary">Sign Up</button>
+      <button type="submit" class="signUp" mat-raised-button color="primary">Sign Up</button>
     </div>
   </form>
 </div>
