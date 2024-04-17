@@ -12,7 +12,7 @@
           #matchName
           type="text"
           name="name"
-          placeholder="Enter Match Name"
+          placeholder="Enter Event Name"
           required
         />
       </mat-form-field>
@@ -124,7 +124,7 @@
                 <button
                   mat-icon-button
                   matTooltip="Delete"
-                  (click)="deleteMatch(match)"
+                  (click)="openDialog('0ms', '0ms',match)"
                 >
                   <mat-icon>delete</mat-icon>
                 </button>

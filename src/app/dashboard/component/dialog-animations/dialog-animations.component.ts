@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProfileComponent } from '../profile/profile.component';
 import { ChangepasswordService } from 'src/app/services/changepassword.service';
 
@@ -8,14 +8,22 @@ import { ChangepasswordService } from 'src/app/services/changepassword.service';
   templateUrl: './dialog-animations.component.html',
   styleUrls: ['./dialog-animations.component.scss'],
 })
-export class DialogAnimationsComponent {
-  title: string = 'Reset Password!!';
-  message: string = 'Do you want to reset your password?';
+export class DialogAnimationsComponent implements OnInit {
+  title: string = '';
+  message: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<DialogAnimationsComponent>,
-    public changePasswordService: ChangepasswordService
+    public changePasswordService: ChangepasswordService,
+    @Inject(MAT_DIALOG_DATA) public data:any
   ) {}
+
+  ngOnInit(): void {
+    console.log("dialog data", this.data)
+    this.title = this.data.title
+    this.message = this.data.message
+  }
+
   onConfirm(): void {
    this.changePasswordService.showOtherDiv.emit(false)
     this.dialogRef.close(true);

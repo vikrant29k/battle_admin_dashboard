@@ -16,12 +16,13 @@ export class ImportExcelComponent {
   finalResult: any;
   fileSelectedSpinner: boolean = false;
   confirm: boolean = false;
-  constructor( private toastr: ToastrService,private  excelService: ExcelService) {}
-
-
+  constructor(
+    private toastr: ToastrService,
+    private excelService: ExcelService
+  ) {}
 
   onFileSelected(event: any): void {
-    console.log("file", event)
+    // console.log('file', event);
     this.file = event.target.files[0];
     this.selectedFile = this.file;
 
@@ -29,14 +30,13 @@ export class ImportExcelComponent {
       this.file?.type !== 'application/vnd.ms-excel' &&
       !this.file?.name.endsWith('.xlsx')
     ) {
-
       // File format is not supported
       this.toastr.error('Please select an Excel file (.xlsx).');
       this.fileError = true;
       this.fileErrorMessage = 'Please select an Excel file (.xlsx).';
       return;
     }
-    this.disableConfirmButotn=false
+    this.disableConfirmButotn = false;
     this.fileSelectedSpinner = true;
 
     var commonFieldObject: any = {};
@@ -50,8 +50,11 @@ export class ImportExcelComponent {
       const worksheetName: string = workbook.SheetNames[0];
       const worksheet: XLSX.WorkSheet = workbook.Sheets[worksheetName];
       var data: any[] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-        if (data[0][12]=="Language\r\nISO-639-1" || data[0][12]=="Language\nISO-639-1") {
-          data[0][12] = "Language ISO-639-1";
+      if (
+        data[0][12] == 'Language\r\nISO-639-1' ||
+        data[0][12] == 'Language\nISO-639-1'
+      ) {
+        data[0][12] = 'Language ISO-639-1';
       }
 
       // Convert the array of arrays into an array of objects
@@ -73,15 +76,14 @@ export class ImportExcelComponent {
         'Battle Partner Company Name',
       ];
 
-      const headers = data[0]
-
+      const headers = data[0];
 
       let headersSame = this.arraysAreEqual(headers, allowedHeaders);
 
       if (headersSame) {
-        console.log('arrays is same');
+        // console.log('arrays is same');
       } else {
-        console.log('array not same');
+        // console.log('array not same');
         this.toastr.error('Please Check Headers');
         this.fileError = true;
         this.fileSelectedSpinner = false;
@@ -124,6 +126,58 @@ export class ImportExcelComponent {
         this.fileSelectedSpinner = false;
         throw new Error('validation failed');
       }
+
+      // validate two columns Company Name and Battle Partner Company Name
+
+      let teamNameColumn = columnData['Team name (ASM level)'];
+      let battlePartnerTeamNameColumn =
+        columnData['Battle Partner Team name (ASM level)'];
+      // console.log('team names', teamNameColumn, battlePartnerTeamNameColumn);
+
+      // let filteredTeamNameColumn = teamNameColumn.filter((val:any,i:number)=>{
+      //   return val!=="Superuser"
+      // })
+      // let filteredBattlePartnerTeamNameColumn = teamNameColumn.filter((val:any,i:number)=>{
+      //   return val!=="Superuser"
+      // })
+
+      const missingValues = teamNameColumn.filter(
+        (val) => !battlePartnerTeamNameColumn.includes(val)
+      );
+
+      const missingValues1 = battlePartnerTeamNameColumn.filter(
+        (val) => !teamNameColumn.includes(val)
+      );
+
+      if (missingValues.length === 0) {
+        // console.log('All values in the first array exist in the second array.');
+      } else {
+        // console.log(
+        //   'Not all values in the first array exist in the second array.'
+        // );
+        let mess = `Team name (ASM level) ${missingValues} not present in Battle Partner Team name (ASM level)`;
+        this.toastr.error(mess);
+        this.fileError = true;
+        this.fileErrorMessage = mess;
+        this.fileSelectedSpinner = false;
+        return;
+      }
+
+      if (missingValues1.length === 0) {
+        // console.log('All values in the second array exist in the first array.');
+      } else {
+        // console.log(
+        //   'Not all values in the second array exist in the first array.'
+        // );
+        let mess = `Battle Partner Team name (ASM level) ${missingValues1} not present in Team name (ASM level)`;
+        this.toastr.error(mess);
+        this.fileError = true;
+        this.fileErrorMessage = mess;
+        this.fileSelectedSpinner = false;
+        return;
+      }
+
+      // console.log("team names", filteredTeamNameColumn, filteredBattlePartnerTeamNameColumn)
 
       // Convert the array of arrays into an array of objects
       const result = dataArray.reduce((acc: any[], row: any[]) => {
@@ -169,8 +223,7 @@ export class ImportExcelComponent {
           commonFieldObject.Currency = obj.Currency;
           commonFieldObject['Time zone (correlated to CET)'] =
             obj['Time zone (correlated to CET)'];
-          commonFieldObject['Language ISO-639-1'] =
-            obj['Language ISO-639-1'];
+          commonFieldObject['Language ISO-639-1'] = obj['Language ISO-639-1'];
           commonFieldObject['Battle Partner Company No'] =
             obj['Battle Partner Company No'];
           commonFieldObject['Battle Partner Company Name'] =
@@ -191,7 +244,7 @@ export class ImportExcelComponent {
         return acc;
       }, []);
 
-      console.log('Excel data:', result);
+      // console.log('Excel data:', result);
 
       // Create an object to store arrays of objects with the same team name
       const teamObject: { [teamName: string]: any[] } = {};
@@ -208,109 +261,128 @@ export class ImportExcelComponent {
 
       const teamArrays = Object.values(teamObject);
 
-      teamArrays.map((arr, i) => {
-        // try {
-        let values: any = [];
-        let teamName = '';
-        arr.map((obj, i) => {
-          if (obj['Game-Leader (GL)'] == 'SU') {
-            // console.log('obj', obj['Game-Leader (GL)']);
-            if (obj['Company Unit (Region or Division...)'] !== 'Superuser') {
-              this.toastr.error(
-                'superuser name should be Superuser in Company Unit (Region or Division...)'
-              );
-              this.fileError = true;
-              this.fileErrorMessage = `superuser name should be Superuser in Company Unit (Region or Division...)`;
-              this.fileSelectedSpinner = false;
-              throw new Error(
-                'superuser name should be Superuser in Company Unit (Region or Division...)'
-              );
+      // teamArrays.map((arr, i) => {
+      for (let i = 0; i < teamArrays.length; i++) {
+        let arr = teamArrays[i];
+
+        // console.log('arrrrrr', arr);
+        try {
+          let values: any = [];
+          let teamName = '';
+          arr.map((obj, i) => {
+            if (obj['Game-Leader (GL)'] == 'SU') {
+              // console.log('obj', obj['Game-Leader (GL)']);
+              if (obj['Company Unit (Region or Division...)'] !== 'Superuser') {
+                this.toastr.error(
+                  'superuser name should be Superuser in Company Unit (Region or Division...)'
+                );
+                this.fileError = true;
+                this.fileErrorMessage = `superuser name should be Superuser in Company Unit (Region or Division...)`;
+                this.fileSelectedSpinner = false;
+                throw new Error(
+                  'superuser name should be Superuser in Company Unit (Region or Division...)'
+                );
+              }
+              if (obj['Team name (ASM level)'] !== 'Superuser') {
+                this.toastr.error(
+                  'superuser name should be Superuser in Team name (ASM level)'
+                );
+                this.fileError = true;
+                this.fileErrorMessage = `superuser name should be Superuser in Team name (ASM level)`;
+                this.fileSelectedSpinner = false;
+                throw new Error(
+                  'superuser name should be Superuser in Team name (ASM level)'
+                );
+              }
+              if (obj['Sales rep No'] !== 'Superuser') {
+                this.toastr.error(
+                  'superuser name should be Superuser in Sales rep No'
+                );
+                this.fileError = true;
+                this.fileErrorMessage = `superuser name should be Superuser in Sales rep No`;
+                this.fileSelectedSpinner = false;
+                throw new Error(
+                  'superuser name should be Superuser in Sales rep No'
+                );
+              }
+              if (obj['Battle Partner Team name (ASM level)'] !== 'Superuser') {
+                this.toastr.error(
+                  'superuser name should be Superuser in Battle Partner Team name (ASM level)'
+                );
+                this.fileError = true;
+                this.fileErrorMessage = `superuser name should be Superuser in Battle Partner Team name (ASM level)`;
+                this.fileSelectedSpinner = false;
+                throw new Error(
+                  'superuser name should be Superuser in Battle Partner Team name (ASM level)'
+                );
+              }
+            } else {
+              if (
+                obj['Team name (ASM level)'] ==
+                obj['Battle Partner Team name (ASM level)']
+              ) {
+                this.toastr.error(
+                  "Team name (ASM level) and Battle Partner Team name (ASM level) can't same"
+                );
+                throw new Error(
+                  "Team name (ASM level) and Battle Partner Team name (ASM level) can't same"
+                );
+              }
             }
-            if (obj['Team name (ASM level)'] !== 'Superuser') {
-              this.toastr.error(
-                'superuser name should be Superuser in Team name (ASM level)'
-              );
-              this.fileError = true;
-              this.fileErrorMessage = `superuser name should be Superuser in Team name (ASM level)`;
-              this.fileSelectedSpinner = false;
-              throw new Error(
-                'superuser name should be Superuser in Team name (ASM level)'
-              );
-            }
-            if (obj['Sales rep No'] !== 'Superuser') {
-              this.toastr.error(
-                'superuser name should be Superuser in Sales rep No'
-              );
-              this.fileError = true;
-              this.fileErrorMessage = `superuser name should be Superuser in Sales rep No`;
-              this.fileSelectedSpinner = false;
-              throw new Error(
-                'superuser name should be Superuser in Sales rep No'
-              );
-            }
-            if (obj['Battle Partner Team name (ASM level)'] !== 'Superuser') {
-              this.toastr.error(
-                'superuser name should be Superuser in Battle Partner Team name (ASM level)'
-              );
-              this.fileError = true;
-              this.fileErrorMessage = `superuser name should be Superuser in Battle Partner Team name (ASM level)`;
-              this.fileSelectedSpinner = false;
-              throw new Error(
-                'superuser name should be Superuser in Battle Partner Team name (ASM level)'
-              );
-            }
+
+            values.push(obj['Game-Leader (GL)']);
+            teamName = obj['Team name (ASM level)'];
+          });
+          //     console.log('values =>', values);
+          // var atleastOneString = values.every(
+          //     //   (value: any) => typeof value === 'number'
+          //     // );
+
+          //     // var values = [1, 'su', 'three', 'four', 5];
+
+          var stringCount = values.reduce((count: any, value: any) => {
+            return typeof value === 'string' ? count + 1 : count;
+          }, 0);
+
+          if (stringCount === 0) {
+            // console.log('game leader not found, team name', teamName);
+            this.toastr.error('game leader not found', teamName);
+            this.fileError = true;
+            this.fileErrorMessage = `game leader not found, team name ${teamName}`;
+            this.fileSelectedSpinner = false;
+            throw new Error(`game leader not found, team name,${teamName}`);
+          } else {
+            // console.log('No error. team leader found');
           }
 
-          values.push(obj['Game-Leader (GL)']);
-          teamName = obj['Team name (ASM level)'];
-        });
-        //     console.log('values =>', values);
-        // var atleastOneString = values.every(
-        //     //   (value: any) => typeof value === 'number'
-        //     // );
+          var stringCountforMoreGL = values.reduce((count: any, value: any) => {
+            return typeof value === 'string' && value !== 'SU'
+              ? count + 1
+              : count;
+          }, 0);
 
-        //     // var values = [1, 'su', 'three', 'four', 5];
+          if (stringCountforMoreGL > 1) {
+            // console.log('game leader not found, team name', teamName);
+            this.toastr.error('more than one game leader found in', teamName);
+            this.fileError = true;
+            this.fileErrorMessage = `more than one game leader found in ${teamName}`;
+            this.fileSelectedSpinner = false;
+            throw new Error(`more than one game leader found in,${teamName}`);
+          } else {
+            // console.log('No error. team leader found');
+          }
 
-        var stringCount = values.reduce((count: any, value: any) => {
-          return typeof value === 'string' ? count + 1 : count;
-        }, 0);
-
-        if (stringCount === 0) {
-          console.log('game leader not found, team name', teamName);
-          this.toastr.error('game leader not found', teamName);
+          //     ///////
+        } catch (error: any) {
+          console.error('error while validating', error.message);
+          this.fileErrorMessage = error.message;
           this.fileError = true;
-          this.fileErrorMessage = `game leader not found, team name ${teamName}`;
           this.fileSelectedSpinner = false;
-          throw new Error(`game leader not found, team name,${teamName}`);
-        } else {
-          console.log('No error. team leader found');
+          // break;
+          return;
         }
-
-        var stringCountforMoreGL = values.reduce((count: any, value: any) => {
-          return typeof value === 'string' && value !== 'SU'
-            ? count + 1
-            : count;
-        }, 0);
-
-        if (stringCountforMoreGL > 1) {
-          // console.log('game leader not found, team name', teamName);
-          this.toastr.error('more than one game leader found in', teamName);
-          this.fileError = true;
-          this.fileErrorMessage = `more than one game leader found in ${teamName}`;
-          this.fileSelectedSpinner = false;
-          throw new Error(`more than one game leader found in,${teamName}`);
-        } else {
-          console.log('No error. team leader found');
-        }
-
-        //     ///////
-        // } catch (error: any) {
-        //   console.error('error while validating', error.message);
-        //   this.fileErrorMessage = error.message;
-        //   this.fileError = true;
-        //   this.fileSelectedSpinner = false;
-        // }
-      });
+        // });
+      }
 
       this.finalResult = {
         teamsData: teamArrays,
@@ -318,13 +390,13 @@ export class ImportExcelComponent {
       };
       this.fileError = false;
       this.fileSelectedSpinner = false;
-      console.log('Final Result:', this.finalResult);
+      // console.log('Final Result:', this.finalResult);
 
-      console.log('Column data:', columnData);
+      // console.log('Column data:', columnData);
     };
 
     fileReader.readAsBinaryString(this.file);
-    event.target.value=''
+    event.target.value = '';
   }
 
   validateColumn(columnData: any, columnName: string): any {
@@ -332,7 +404,6 @@ export class ImportExcelComponent {
       var columnArray = columnData[columnName];
 
       if (columnName === 'E-Mail') {
-
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         for (const [index, email] of columnArray.entries()) {
           if (!emailRegex.test(email)) {
@@ -453,11 +524,10 @@ export class ImportExcelComponent {
       }
 
       if (columnName === 'Company Name') {
-        columnArray = columnArray.map((val:any) => {
-            return val.replace(/Wüerth/g, "Würth");
+        columnArray = columnArray.map((val: any) => {
+          return val.replace(/Wüerth/g, 'Würth');
         });
-    }
-    
+      }
 
       const firstValue = columnArray[0];
 
@@ -500,38 +570,36 @@ export class ImportExcelComponent {
 
     return true; // Arrays are equal
   }
-disableConfirmButotn:boolean=true
+  disableConfirmButotn: boolean = true;
   onFileUpload(): void {
     if (!this.fileError) {
-      console.log(this.finalResult,"DATA THATS BEEND SEND TO THE API")
-      this.excelService.importExcel(this.finalResult)
-        .subscribe(
-          (res: any) => {
-
-            console.log('File upload response:', res);
-            if (res.statusCode == 200) {
-              // alert("Import Successful");
-              this.toastr.success(res.message);
-              this.selectedFile = null;
-              this.file = null;
-            } else {
-              this.toastr.success(res.message);
-              this.selectedFile = null;
-              this.file = null;
-            }
-            this.disableConfirmButotn=true
-          },
-          (error) => {
-            this.confirm = false;
+      // console.log(this.finalResult);
+      this.excelService.importExcel(this.finalResult).subscribe(
+        (res: any) => {
+          // console.log('File upload response:', res);
+          if (res.statusCode == 200) {
+            // alert("Import Successful");
+            this.toastr.success(res.message);
+            this.selectedFile = null;
             this.file = null;
-            console.error('Error uploading file:', error);
-            if (error.error.message) {
-              this.toastr.error(error.error.message);
-            } else {
-              this.toastr.error('server error');
-            }
+          } else {
+            this.toastr.success(res.message);
+            this.selectedFile = null;
+            this.file = null;
           }
-        );
+          this.disableConfirmButotn = true;
+        },
+        (error) => {
+          this.confirm = false;
+          this.file = null;
+          console.error('Error uploading file:', error);
+          if (error.error.message) {
+            this.toastr.error(error.error.message);
+          } else {
+            this.toastr.error('server error');
+          }
+        }
+      );
     } else {
       this.confirm = false;
       if (!this.selectedFile) {

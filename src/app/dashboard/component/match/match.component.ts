@@ -1,7 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environment/enviroment';
+import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
 
 @Component({
   selector: 'app-match',
@@ -19,9 +21,43 @@ export class MatchComponent implements OnInit {
 
   matches: any = [];
 
-  constructor(private http: HttpClient, private toastr: ToastrService) {}
+  activeEventDialogData = {
+    title: 'Delete Active Event',
+    message: 'Are you sure you want to delete the active event?',
+  };
+
+  deleteEventDialogData = {
+    title: 'Delete Event',
+    message: 'Are you sure you want to delete this event?',
+  };
+
+  constructor(
+    private http: HttpClient,
+    private toastr: ToastrService,
+    public dialog: MatDialog
+  ) {}
   ngOnInit(): void {
     this.getAllMatches();
+  }
+
+  openDialog(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string,
+    match: any
+  ): void {
+    const dialogRef = this.dialog.open(DialogAnimationsComponent, {
+      width: '250px',
+      enterAnimationDuration,
+      data: match.isActive
+        ? this.activeEventDialogData
+        : this.deleteEventDialogData,
+      exitAnimationDuration,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.deleteMatch(match);
+      }
+    });
   }
 
   onFileSelectedLogo(event: any): void {
@@ -38,9 +74,9 @@ export class MatchComponent implements OnInit {
     if (match) {
       // console.log('match', match);
       let data = new FormData();
-      if (this.selectedImgLogo &&  this.selectedImgBg) {
+      if (this.selectedImgLogo && this.selectedImgBg) {
         data.append('avatar', this.selectedImgLogo);
-        data.append('bgAvatar',this.selectedImgBg)
+        data.append('bgAvatar', this.selectedImgBg);
       } else {
         this.toastr.error('Please select both the image');
         return;
@@ -130,20 +166,20 @@ export class MatchComponent implements OnInit {
   updateMatchBtn(match: any) {
     console.log('update match btn', match);
     this.matchNameInput.nativeElement.value = match.eventName;
-    this.selectedImgLogo = {name: match.avatar} ;
-    this.selectedImgBg =  {name:match.bgAvatar}
+    this.selectedImgLogo = { name: match.avatar };
+    this.selectedImgBg = { name: match.bgAvatar };
     this.updateBtn = true;
     this.matchIdForUpdate = match._id;
   }
 
   updateMatch(matchName: any) {
-
     let data = new FormData();
     data.append('eventName', matchName);
-    if (this.selectedImgLogo.type!==undefined) {
-      console.log(this.selectedImgBg,this.selectedImgLogo)
-      data.append('avatar', this.selectedImgLogo.name);
-      data.append('bgAvatar',this.selectedImgBg.name)
+    if (this.selectedImgLogo.type !== undefined) {
+      data.append('avatar', this.selectedImgLogo);
+    }
+    if (this.selectedImgBg.type !== undefined) {
+      data.append('bgAvatar', this.selectedImgBg);
     }
 
     this.http
