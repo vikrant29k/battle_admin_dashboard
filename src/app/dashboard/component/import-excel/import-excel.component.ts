@@ -19,6 +19,9 @@ export class ImportExcelComponent {
   fileSelectedSpinner: boolean = false;
   confirm: boolean = false;
   tableData: any[] = [];
+  headers: any;
+  dataArray: any;
+  commonFieldObject: any = {};
   tableHeaders: any = [];
   excelFileLineIndexForEditDialog!: number;
 
@@ -44,6 +47,7 @@ export class ImportExcelComponent {
         console.log('result', result);
         this.tableData.splice(this.excelFileLineIndexForEditDialog, 1);
         this.tableData.splice(this.excelFileLineIndexForEditDialog, 0, result);
+        this.convertobjectToArray(this.tableData)
       }
     });
   }
@@ -66,7 +70,7 @@ export class ImportExcelComponent {
     this.disableConfirmButotn = false;
     this.fileSelectedSpinner = true;
 
-    var commonFieldObject: any = {};
+    this.commonFieldObject;
     const fileReader: FileReader = new FileReader();
 
     fileReader.onload = (e: any) => {
@@ -104,10 +108,10 @@ export class ImportExcelComponent {
         'Battle Partner Company Name',
       ];
 
-      const headers = data[0];
-      this.tableHeaders = headers;
+      this.headers = data[0];
+      this.tableHeaders = this.headers;
 
-      let headersSame = this.arraysAreEqual(headers, allowedHeaders);
+      let headersSame = this.arraysAreEqual(this.headers, allowedHeaders);
 
       if (headersSame) {
         // console.log('arrays is same');
@@ -119,352 +123,342 @@ export class ImportExcelComponent {
         return;
       }
 
-      const dataArray = data.slice(1); // Exclude the header row
+      this.dataArray = data.slice(1); // Exclude the header row
 
-      console.log('dataarry', dataArray);
-
-      const validateAndFinalResult = () => {
-        // Extract column data
-        const columnData: { [key: string]: any[] } = {};
-        headers.forEach((header: string, index: number) => {
-          const columnValues = dataArray.map((row: any[]) => row[index]);
-          const filteredColumnValues = columnValues.filter(
-            (value: any) => value !== undefined
-          );
-          columnData[header] = filteredColumnValues;
-        });
-
-        // Validate the "Company No" column
-        if (
-          this.validateColumn(columnData, 'Company No') ||
-          this.validateColumn(columnData, 'Company Name') ||
-          this.validateColumn(columnData, 'Company Target LC Total') ||
-          this.validateColumn(columnData, 'Currency') ||
-          this.validateColumn(columnData, 'Time zone (correlated to CET)') ||
-          this.validateColumn(columnData, `Language ISO-639-1`) ||
-          this.validateColumn(columnData, 'Battle Partner Company No') ||
-          this.validateColumn(columnData, 'Battle Partner Company Name') ||
-          this.validateColumn(columnData, 'Target / Sales Rep LC') ||
-          this.validateColumn(columnData, 'Sales rep No') ||
-          this.validateColumn(columnData, 'E-Mail') ||
-          this.validateColumn(
-            columnData,
-            'Company Unit (Region or Division...)'
-          ) ||
-          this.validateColumn(columnData, 'Team name (ASM level)')
-        ) {
-          this.fileSelectedSpinner = false;
-          throw new Error('validation failed');
-        }
-
-        // Convert the array of arrays into an array of objects
-        const result = dataArray.reduce((acc: any[], row: any[]) => {
-          // Check if all values in the row are undefined
-          // console.log('this is a excel row', row);
-          const isEmpty = row.every((value: any) => value === undefined);
-          // If the row is not empty, convert it to an object and add it to the result
-          if (!isEmpty) {
-            // console.log('second column', row[2]);
-            // console.log('this is a excel row', row);
-            let obj1: any = {};
-            headers.forEach((header: any, index: any) => {
-              obj1[header] = row[index];
-            });
-            // console.log("obj 1",obj1)
-            this.tableData.push(obj1);
-
-            const obj: any = {};
-            // headers.forEach((header: any, index: any) => {
-            //   obj[header] = row[index];
-
-            //   if (obj[header] == undefined && header !== 'Game-Leader (GL)') {
-            //     this.toastr.error(`fill all fields in ${header}`);
-            //     this.fileError = true;
-            //   }
-            // });
-
-            try {
-              headers.forEach((header: any, index: any) => {
-                obj[header] = row[index];
-
-                // console.log("obj", obj)
-
-                if (
-                  obj[header] === undefined &&
-                  header !== 'Game-Leader (GL)'
-                ) {
-                  this.toastr.error(`Fill all fields in ${header}`);
-                  this.fileErrorMessage = `Fill all fields in ${header}`;
-                  this.fileError = true;
-                  this.fileSelectedSpinner = false;
-                  throw new Error(`Error: Missing value in "${header}" field`);
-                }
-              });
-            } catch (error: any) {
-              console.error(error.message);
-              throw error;
-            }
-
-            // Assign values to commonFieldObject outside the loop
-            commonFieldObject['Company No'] = obj['Company No'];
-            commonFieldObject['Company Name'] = obj['Company Name'];
-            commonFieldObject['Company Target LC Total'] =
-              obj['Company Target LC Total'];
-            commonFieldObject.Currency = obj.Currency;
-            commonFieldObject['Time zone (correlated to CET)'] =
-              obj['Time zone (correlated to CET)'];
-            commonFieldObject['Language ISO-639-1'] = obj['Language ISO-639-1'];
-            commonFieldObject['Battle Partner Company No'] =
-              obj['Battle Partner Company No'];
-            commonFieldObject['Battle Partner Company Name'] =
-              obj['Battle Partner Company Name'];
-
-            // Remove assigned fields from the current object
-            delete obj['Company No'];
-            delete obj['Company Name'];
-            delete obj['Company Target LC Total'];
-            delete obj.Currency;
-            delete obj['Time zone (correlated to CET)'];
-            delete obj['Language ISO-639-1'];
-            delete obj['Battle Partner Company No'];
-            delete obj['Battle Partner Company Name'];
-
-            acc.push(obj);
-          }
-          return acc;
-        }, []);
-
-        // console.log('Excel data:', result);
-
-        // Create an object to store arrays of objects with the same team name
-        const teamObject: { [teamName: string]: any[] } = {};
-
-        // Iterate through the dataArray and populate the teamObject
-        result.forEach((obj: any) => {
-          const teamName = obj['Team name (ASM level)'];
-          if (teamObject[teamName]) {
-            teamObject[teamName].push(obj);
-          } else {
-            teamObject[teamName] = [obj];
-          }
-        });
-
-        const teamArrays = Object.values(teamObject);
-
-        // teamArrays.map((arr, i) => {
-        for (let i = 0; i < teamArrays.length; i++) {
-          let arr = teamArrays[i];
-
-          // console.log('arrrrrr', arr);
-          try {
-            let values: any = [];
-            let teamName = '';
-            arr.map((obj, i) => {
-              if (
-                obj['Company Unit (Region or Division...)'].toLowerCase() ==
-                  'superuser' ||
-                obj['Team name (ASM level)'].toLowerCase() == 'superuser' ||
-                (typeof obj['Sales rep No'] === 'string' &&
-                  obj['Sales rep No'].toLowerCase() == 'superuser') ||
-                obj['Battle Partner Team name (ASM level)'].toLowerCase() ==
-                  'superuser' ||
-                obj['Battle Partner Team name (ASM level)'].toLowerCase() ==
-                  'superuser'
-              ) {
-                if (!(obj['Game-Leader (GL)'] == 'SU')) {
-                  this.toastr.error(
-                    'For Superuser You need to enter SU in Game-Leader (GL) column'
-                  );
-                  throw new Error(
-                    'For Superuser You need to enter SU in Game-Leader (GL) column'
-                  );
-                }
-              }
-
-              if (obj['Game-Leader (GL)'] == 'SU') {
-                // console.log('obj', obj['Game-Leader (GL)']);
-                if (
-                  obj['Company Unit (Region or Division...)'].toLowerCase() !==
-                  'superuser'
-                ) {
-                  this.toastr.error(
-                    'superuser name should be Superuser in Company Unit (Region or Division...)'
-                  );
-                  this.fileError = true;
-                  this.fileErrorMessage = `superuser name should be Superuser in Company Unit (Region or Division...)`;
-                  this.fileSelectedSpinner = false;
-                  throw new Error(
-                    'superuser name should be Superuser in Company Unit (Region or Division...)'
-                  );
-                }
-                if (
-                  obj['Team name (ASM level)'].toLowerCase() !== 'superuser'
-                ) {
-                  this.toastr.error(
-                    'superuser name should be Superuser in Team name (ASM level)'
-                  );
-                  this.fileError = true;
-                  this.fileErrorMessage = `superuser name should be Superuser in Team name (ASM level)`;
-                  this.fileSelectedSpinner = false;
-                  throw new Error(
-                    'superuser name should be Superuser in Team name (ASM level)'
-                  );
-                }
-                if (obj['Sales rep No'].toLowerCase() !== 'superuser') {
-                  this.toastr.error(
-                    'superuser name should be Superuser in Sales rep No'
-                  );
-                  this.fileError = true;
-                  this.fileErrorMessage = `superuser name should be Superuser in Sales rep No`;
-                  this.fileSelectedSpinner = false;
-                  throw new Error(
-                    'superuser name should be Superuser in Sales rep No'
-                  );
-                }
-                if (
-                  obj['Battle Partner Team name (ASM level)'].toLowerCase() !==
-                  'superuser'
-                ) {
-                  this.toastr.error(
-                    'superuser name should be Superuser in Battle Partner Team name (ASM level)'
-                  );
-                  this.fileError = true;
-                  this.fileErrorMessage = `superuser name should be Superuser in Battle Partner Team name (ASM level)`;
-                  this.fileSelectedSpinner = false;
-                  throw new Error(
-                    'superuser name should be Superuser in Battle Partner Team name (ASM level)'
-                  );
-                }
-              }
-
-              values.push(obj['Game-Leader (GL)']);
-              teamName = obj['Team name (ASM level)'];
-            });
-            //     console.log('values =>', values);
-            // var atleastOneString = values.every(
-            //     //   (value: any) => typeof value === 'number'
-            //     // );
-
-            //     // var values = [1, 'su', 'three', 'four', 5];
-
-            var stringCount = values.reduce((count: any, value: any) => {
-              return typeof value === 'string' ? count + 1 : count;
-            }, 0);
-
-            if (stringCount === 0) {
-              // console.log('game leader not found, team name', teamName);
-              this.toastr.error('game leader not found', teamName);
-              this.fileError = true;
-              this.fileErrorMessage = `game leader not found, team name ${teamName}`;
-              this.fileSelectedSpinner = false;
-              throw new Error(`game leader not found, team name,${teamName}`);
-            } else {
-              // console.log('No error. team leader found');
-            }
-
-            var stringCountforMoreGL = values.reduce(
-              (count: any, value: any) => {
-                return typeof value === 'string' && value !== 'SU'
-                  ? count + 1
-                  : count;
-              },
-              0
-            );
-
-            if (stringCountforMoreGL > 1) {
-              // console.log('game leader not found, team name', teamName);
-              this.toastr.error(
-                `more than one game leader found in ${teamName}`
-              );
-              this.fileError = true;
-              this.fileErrorMessage = `more than one game leader found in ${teamName}`;
-              this.fileSelectedSpinner = false;
-              throw new Error(`more than one game leader found in,${teamName}`);
-            } else {
-              // console.log('No error. team leader found');
-            }
-
-            //     ///////
-          } catch (error: any) {
-            console.error('error while validating', error.message);
-            this.fileErrorMessage = error.message;
-            this.fileError = true;
-            this.fileSelectedSpinner = false;
-            // break;
-            return;
-          }
-          // });
-        }
-
-        // validate two columns Company Name and Battle Partner Company Name
-
-        let teamNameColumn = columnData['Team name (ASM level)'];
-        let battlePartnerTeamNameColumn =
-          columnData['Battle Partner Team name (ASM level)'];
-        // console.log('team names', teamNameColumn, battlePartnerTeamNameColumn);
-
-        // let filteredTeamNameColumn = teamNameColumn.filter((val:any,i:number)=>{
-        //   return val!=="Superuser"
-        // })
-        // let filteredBattlePartnerTeamNameColumn = teamNameColumn.filter((val:any,i:number)=>{
-        //   return val!=="Superuser"
-        // })
-
-        const missingValues = teamNameColumn.filter(
-          (val) => !battlePartnerTeamNameColumn.includes(val)
-        );
-
-        const missingValues1 = battlePartnerTeamNameColumn.filter(
-          (val) => !teamNameColumn.includes(val)
-        );
-
-        if (missingValues.length === 0) {
-          // console.log('All values in the first array exist in the second array.');
-        } else {
-          // console.log(
-          //   'Not all values in the first array exist in the second array.'
-          // );
-          let mess = `Team name (ASM level) ${missingValues} not present in Battle Partner Team name (ASM level)`;
-          this.toastr.error(mess);
-          this.fileError = true;
-          this.fileErrorMessage = mess;
-          this.fileSelectedSpinner = false;
-          return;
-        }
-
-        if (missingValues1.length === 0) {
-          // console.log('All values in the second array exist in the first array.');
-        } else {
-          // console.log(
-          //   'Not all values in the second array exist in the first array.'
-          // );
-          let mess = `Battle Partner Team name (ASM level) ${missingValues1} not present in Team name (ASM level)`;
-          this.toastr.error(mess);
-          this.fileError = true;
-          this.fileErrorMessage = mess;
-          this.fileSelectedSpinner = false;
-          return;
-        }
-
-        // console.log("team names", filteredTeamNameColumn, filteredBattlePartnerTeamNameColumn)
-
-        this.finalResult = {
-          teamsData: teamArrays,
-          commonFields: commonFieldObject,
-        };
-        this.fileError = false;
-        this.fileSelectedSpinner = false;
-        console.log('Final Result:', this.finalResult);
-        console.log('table data', this.tableData);
-        // console.log('Column data:', columnData);
-      };
+      console.log('dataarry', this.dataArray);
+      debugger
+      this.validateAndFinalResult();
     };
 
     fileReader.readAsBinaryString(this.file);
-    this.validateAndFinalResult()
+    
     event.target.value = '';
     this.tableData = [];
   }
+
+  validateAndFinalResult = () => {
+    // Extract column data
+    const columnData: { [key: string]: any[] } = {};
+    this.headers.forEach((header: string, index: number) => {
+      const columnValues = this.dataArray.map((row: any[]) => row[index]);
+      const filteredColumnValues = columnValues.filter(
+        (value: any) => value !== undefined
+      );
+      columnData[header] = filteredColumnValues;
+    });
+
+    // Validate the "Company No" column
+    if (
+      this.validateColumn(columnData, 'Company No') ||
+      this.validateColumn(columnData, 'Company Name') ||
+      this.validateColumn(columnData, 'Company Target LC Total') ||
+      this.validateColumn(columnData, 'Currency') ||
+      this.validateColumn(columnData, 'Time zone (correlated to CET)') ||
+      this.validateColumn(columnData, `Language ISO-639-1`) ||
+      this.validateColumn(columnData, 'Battle Partner Company No') ||
+      this.validateColumn(columnData, 'Battle Partner Company Name') ||
+      this.validateColumn(columnData, 'Target / Sales Rep LC') ||
+      this.validateColumn(columnData, 'Sales rep No') ||
+      this.validateColumn(columnData, 'E-Mail') ||
+      this.validateColumn(columnData, 'Company Unit (Region or Division...)') ||
+      this.validateColumn(columnData, 'Team name (ASM level)')
+    ) {
+      this.fileSelectedSpinner = false;
+      throw new Error('validation failed');
+    }
+
+    // Convert the array of arrays into an array of objects
+    const result = this.dataArray.reduce((acc: any[], row: any[]) => {
+      // Check if all values in the row are undefined
+      // console.log('this is a excel row', row);
+      const isEmpty = row.every((value: any) => value === undefined);
+      // If the row is not empty, convert it to an object and add it to the result
+      if (!isEmpty) {
+        // console.log('second column', row[2]);
+        // console.log('this is a excel row', row);
+        let obj1: any = {};
+        this.headers.forEach((header: any, index: any) => {
+          obj1[header] = row[index];
+        });
+        // console.log("obj 1",obj1)
+        this.tableData.push(obj1);
+
+        const obj: any = {};
+        // headers.forEach((header: any, index: any) => {
+        //   obj[header] = row[index];
+
+        //   if (obj[header] == undefined && header !== 'Game-Leader (GL)') {
+        //     this.toastr.error(`fill all fields in ${header}`);
+        //     this.fileError = true;
+        //   }
+        // });
+
+        try {
+          this.headers.forEach((header: any, index: any) => {
+            obj[header] = row[index];
+
+            // console.log("obj", obj)
+
+            if (obj[header] === undefined && header !== 'Game-Leader (GL)') {
+              this.toastr.error(`Fill all fields in ${header}`);
+              this.fileErrorMessage = `Fill all fields in ${header}`;
+              this.fileError = true;
+              this.fileSelectedSpinner = false;
+              throw new Error(`Error: Missing value in "${header}" field`);
+            }
+          });
+        } catch (error: any) {
+          console.error(error.message);
+          throw error;
+        }
+
+        // Assign values to commonFieldObject outside the loop
+        this.commonFieldObject['Company No'] = obj['Company No'];
+        this.commonFieldObject['Company Name'] = obj['Company Name'];
+        this.commonFieldObject['Company Target LC Total'] =
+          obj['Company Target LC Total'];
+        this.commonFieldObject.Currency = obj.Currency;
+        this.commonFieldObject['Time zone (correlated to CET)'] =
+          obj['Time zone (correlated to CET)'];
+        this.commonFieldObject['Language ISO-639-1'] =
+          obj['Language ISO-639-1'];
+        this.commonFieldObject['Battle Partner Company No'] =
+          obj['Battle Partner Company No'];
+        this.commonFieldObject['Battle Partner Company Name'] =
+          obj['Battle Partner Company Name'];
+
+        // Remove assigned fields from the current object
+        delete obj['Company No'];
+        delete obj['Company Name'];
+        delete obj['Company Target LC Total'];
+        delete obj.Currency;
+        delete obj['Time zone (correlated to CET)'];
+        delete obj['Language ISO-639-1'];
+        delete obj['Battle Partner Company No'];
+        delete obj['Battle Partner Company Name'];
+
+        acc.push(obj);
+      }
+      return acc;
+    }, []);
+
+    // console.log('Excel data:', result);
+
+    // Create an object to store arrays of objects with the same team name
+    const teamObject: { [teamName: string]: any[] } = {};
+
+    // Iterate through the dataArray and populate the teamObject
+    result.forEach((obj: any) => {
+      const teamName = obj['Team name (ASM level)'];
+      if (teamObject[teamName]) {
+        teamObject[teamName].push(obj);
+      } else {
+        teamObject[teamName] = [obj];
+      }
+    });
+
+    const teamArrays = Object.values(teamObject);
+
+    // teamArrays.map((arr, i) => {
+    for (let i = 0; i < teamArrays.length; i++) {
+      let arr = teamArrays[i];
+
+      // console.log('arrrrrr', arr);
+      try {
+        let values: any = [];
+        let teamName = '';
+        arr.map((obj, i) => {
+          if (
+            obj['Company Unit (Region or Division...)'].toLowerCase() ==
+              'superuser' ||
+            obj['Team name (ASM level)'].toLowerCase() == 'superuser' ||
+            (typeof obj['Sales rep No'] === 'string' &&
+              obj['Sales rep No'].toLowerCase() == 'superuser') ||
+            obj['Battle Partner Team name (ASM level)'].toLowerCase() ==
+              'superuser' ||
+            obj['Battle Partner Team name (ASM level)'].toLowerCase() ==
+              'superuser'
+          ) {
+            if (!(obj['Game-Leader (GL)'] == 'SU')) {
+              this.toastr.error(
+                'For Superuser You need to enter SU in Game-Leader (GL) column'
+              );
+              throw new Error(
+                'For Superuser You need to enter SU in Game-Leader (GL) column'
+              );
+            }
+          }
+
+          if (obj['Game-Leader (GL)'] == 'SU') {
+            // console.log('obj', obj['Game-Leader (GL)']);
+            if (
+              obj['Company Unit (Region or Division...)'].toLowerCase() !==
+              'superuser'
+            ) {
+              this.toastr.error(
+                'superuser name should be Superuser in Company Unit (Region or Division...)'
+              );
+              this.fileError = true;
+              this.fileErrorMessage = `superuser name should be Superuser in Company Unit (Region or Division...)`;
+              this.fileSelectedSpinner = false;
+              throw new Error(
+                'superuser name should be Superuser in Company Unit (Region or Division...)'
+              );
+            }
+            if (obj['Team name (ASM level)'].toLowerCase() !== 'superuser') {
+              this.toastr.error(
+                'superuser name should be Superuser in Team name (ASM level)'
+              );
+              this.fileError = true;
+              this.fileErrorMessage = `superuser name should be Superuser in Team name (ASM level)`;
+              this.fileSelectedSpinner = false;
+              throw new Error(
+                'superuser name should be Superuser in Team name (ASM level)'
+              );
+            }
+            if (obj['Sales rep No'].toLowerCase() !== 'superuser') {
+              this.toastr.error(
+                'superuser name should be Superuser in Sales rep No'
+              );
+              this.fileError = true;
+              this.fileErrorMessage = `superuser name should be Superuser in Sales rep No`;
+              this.fileSelectedSpinner = false;
+              throw new Error(
+                'superuser name should be Superuser in Sales rep No'
+              );
+            }
+            if (
+              obj['Battle Partner Team name (ASM level)'].toLowerCase() !==
+              'superuser'
+            ) {
+              this.toastr.error(
+                'superuser name should be Superuser in Battle Partner Team name (ASM level)'
+              );
+              this.fileError = true;
+              this.fileErrorMessage = `superuser name should be Superuser in Battle Partner Team name (ASM level)`;
+              this.fileSelectedSpinner = false;
+              throw new Error(
+                'superuser name should be Superuser in Battle Partner Team name (ASM level)'
+              );
+            }
+          }
+
+          values.push(obj['Game-Leader (GL)']);
+          teamName = obj['Team name (ASM level)'];
+        });
+        //     console.log('values =>', values);
+        // var atleastOneString = values.every(
+        //     //   (value: any) => typeof value === 'number'
+        //     // );
+
+        //     // var values = [1, 'su', 'three', 'four', 5];
+
+        var stringCount = values.reduce((count: any, value: any) => {
+          return typeof value === 'string' ? count + 1 : count;
+        }, 0);
+
+        if (stringCount === 0) {
+          // console.log('game leader not found, team name', teamName);
+          this.toastr.error('game leader not found', teamName);
+          this.fileError = true;
+          this.fileErrorMessage = `game leader not found, team name ${teamName}`;
+          this.fileSelectedSpinner = false;
+          throw new Error(`game leader not found, team name,${teamName}`);
+        } else {
+          // console.log('No error. team leader found');
+        }
+
+        var stringCountforMoreGL = values.reduce((count: any, value: any) => {
+          return typeof value === 'string' && value !== 'SU'
+            ? count + 1
+            : count;
+        }, 0);
+
+        if (stringCountforMoreGL > 1) {
+          // console.log('game leader not found, team name', teamName);
+          this.toastr.error(`more than one game leader found in ${teamName}`);
+          this.fileError = true;
+          this.fileErrorMessage = `more than one game leader found in ${teamName}`;
+          this.fileSelectedSpinner = false;
+          throw new Error(`more than one game leader found in,${teamName}`);
+        } else {
+          // console.log('No error. team leader found');
+        }
+
+        //     ///////
+      } catch (error: any) {
+        console.error('error while validating', error.message);
+        this.fileErrorMessage = error.message;
+        this.fileError = true;
+        this.fileSelectedSpinner = false;
+        // break;
+        return;
+      }
+      // });
+    }
+
+    // validate two columns Company Name and Battle Partner Company Name
+
+    let teamNameColumn = columnData['Team name (ASM level)'];
+    let battlePartnerTeamNameColumn =
+      columnData['Battle Partner Team name (ASM level)'];
+    // console.log('team names', teamNameColumn, battlePartnerTeamNameColumn);
+
+    // let filteredTeamNameColumn = teamNameColumn.filter((val:any,i:number)=>{
+    //   return val!=="Superuser"
+    // })
+    // let filteredBattlePartnerTeamNameColumn = teamNameColumn.filter((val:any,i:number)=>{
+    //   return val!=="Superuser"
+    // })
+
+    const missingValues = teamNameColumn.filter(
+      (val) => !battlePartnerTeamNameColumn.includes(val)
+    );
+
+    const missingValues1 = battlePartnerTeamNameColumn.filter(
+      (val) => !teamNameColumn.includes(val)
+    );
+
+    if (missingValues.length === 0) {
+      // console.log('All values in the first array exist in the second array.');
+    } else {
+      // console.log(
+      //   'Not all values in the first array exist in the second array.'
+      // );
+      let mess = `Team name (ASM level) ${missingValues} not present in Battle Partner Team name (ASM level)`;
+      this.toastr.error(mess);
+      this.fileError = true;
+      this.fileErrorMessage = mess;
+      this.fileSelectedSpinner = false;
+      return;
+    }
+
+    if (missingValues1.length === 0) {
+      // console.log('All values in the second array exist in the first array.');
+    } else {
+      // console.log(
+      //   'Not all values in the second array exist in the first array.'
+      // );
+      let mess = `Battle Partner Team name (ASM level) ${missingValues1} not present in Team name (ASM level)`;
+      this.toastr.error(mess);
+      this.fileError = true;
+      this.fileErrorMessage = mess;
+      this.fileSelectedSpinner = false;
+      return;
+    }
+
+    // console.log("team names", filteredTeamNameColumn, filteredBattlePartnerTeamNameColumn)
+
+    this.finalResult = {
+      teamsData: teamArrays,
+      commonFields: this.commonFieldObject,
+    };
+    this.fileError = false;
+    this.fileSelectedSpinner = false;
+    console.log('Final Result:', this.finalResult);
+    console.log('table data', this.tableData);
+    // console.log('Column data:', columnData);
+  };
 
   validateColumn(columnData: any, columnName: string): any {
     try {
@@ -697,6 +691,10 @@ export class ImportExcelComponent {
         this.toastr.error(this.fileErrorMessage);
       }
     }
+  }
+
+  convertobjectToArray(tableData:any){
+
   }
 
   deleteLine(index: any) {
