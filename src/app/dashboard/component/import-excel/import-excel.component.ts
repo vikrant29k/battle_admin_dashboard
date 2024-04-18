@@ -126,7 +126,7 @@ export class ImportExcelComponent {
       this.dataArray = data.slice(1); // Exclude the header row
 
       console.log('dataarry', this.dataArray);
-      debugger
+      
       this.validateAndFinalResult();
     };
 
@@ -137,6 +137,7 @@ export class ImportExcelComponent {
   }
 
   validateAndFinalResult = () => {
+    debugger
     // Extract column data
     const columnData: { [key: string]: any[] } = {};
     this.headers.forEach((header: string, index: number) => {
@@ -694,7 +695,9 @@ export class ImportExcelComponent {
   }
 
   convertobjectToArray(tableData:any){
-
+    const arrayOfArrays = tableData.map((obj:any) => Object.values(obj));
+    this.dataArray = arrayOfArrays
+    this.validateAndFinalResult()
   }
 
   deleteLine(index: any) {
@@ -703,6 +706,7 @@ export class ImportExcelComponent {
   }
 
   editLine(index: any) {
+    
     console.log('line ', index);
     this.excelFileLineIndexForEditDialog = index;
     this.openDialog('0ms', '0ms', this.tableData[index]);
