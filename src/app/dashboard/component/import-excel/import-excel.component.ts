@@ -461,7 +461,7 @@ export class ImportExcelComponent {
     };
 
     fileReader.readAsBinaryString(this.file);
-    this.validateAndFinalResult()
+    // this.validateAndFinalResult()
     event.target.value = '';
     this.tableData = [];
   }
