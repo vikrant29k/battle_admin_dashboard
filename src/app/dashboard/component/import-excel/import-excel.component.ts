@@ -219,11 +219,15 @@ export class ImportExcelComponent {
           let teamName = '';
           arr.map((obj, i) => {
             if (
-              obj['Company Unit (Region or Division...)'] == 'Superuser' ||
-              obj['Team name (ASM level)'] == 'Superuser' ||
-              obj['Sales rep No'] == 'Superuser' ||
-              obj['Battle Partner Team name (ASM level)'] == 'Superuser' ||
-              obj['Battle Partner Team name (ASM level)'] == 'Superuser'
+              obj['Company Unit (Region or Division...)'].toLowerCase() ==
+                'superuser' ||
+              obj['Team name (ASM level)'].toLowerCase() == 'superuser' ||
+              (typeof obj['Sales rep No'] === 'string' &&
+                obj['Sales rep No'].toLowerCase() == 'superuser') ||
+              obj['Battle Partner Team name (ASM level)'].toLowerCase() ==
+                'superuser' ||
+              obj['Battle Partner Team name (ASM level)'].toLowerCase() ==
+                'superuser'
             ) {
               if (!(obj['Game-Leader (GL)'] == 'SU')) {
                 this.toastr.error(
@@ -237,7 +241,10 @@ export class ImportExcelComponent {
 
             if (obj['Game-Leader (GL)'] == 'SU') {
               // console.log('obj', obj['Game-Leader (GL)']);
-              if (obj['Company Unit (Region or Division...)'] !== 'Superuser') {
+              if (
+                obj['Company Unit (Region or Division...)'].toLowerCase() !==
+                'superuser'
+              ) {
                 this.toastr.error(
                   'superuser name should be Superuser in Company Unit (Region or Division...)'
                 );
@@ -248,7 +255,7 @@ export class ImportExcelComponent {
                   'superuser name should be Superuser in Company Unit (Region or Division...)'
                 );
               }
-              if (obj['Team name (ASM level)'] !== 'Superuser') {
+              if (obj['Team name (ASM level)'].toLowerCase() !== 'superuser') {
                 this.toastr.error(
                   'superuser name should be Superuser in Team name (ASM level)'
                 );
@@ -259,7 +266,7 @@ export class ImportExcelComponent {
                   'superuser name should be Superuser in Team name (ASM level)'
                 );
               }
-              if (obj['Sales rep No'] !== 'Superuser') {
+              if (obj['Sales rep No'].toLowerCase() !== 'superuser') {
                 this.toastr.error(
                   'superuser name should be Superuser in Sales rep No'
                 );
@@ -270,7 +277,10 @@ export class ImportExcelComponent {
                   'superuser name should be Superuser in Sales rep No'
                 );
               }
-              if (obj['Battle Partner Team name (ASM level)'] !== 'Superuser') {
+              if (
+                obj['Battle Partner Team name (ASM level)'].toLowerCase() !==
+                'superuser'
+              ) {
                 this.toastr.error(
                   'superuser name should be Superuser in Battle Partner Team name (ASM level)'
                 );
@@ -453,19 +463,23 @@ export class ImportExcelComponent {
         );
 
         // check 'Sales rep No' column value unique
-        let seenSet = new Set()
-        for(let val of columnArray){
-          if(val=="Superuser"){
-            continue;
+        let seenSet = new Set();
+        for (let val of columnArray) {
+          if (typeof val === 'string') {
+            if (val.toLowerCase() == 'superuser') {
+              continue;
+            }
           }
-          if(seenSet.has(val)){
+          if (seenSet.has(val)) {
             this.toastr.error(
               `${val} is already exist in Sales rep No. check and remove duplicate entry`
             );
             this.fileError = true;
-            throw new Error( `${val} is already exist in Sales rep No. check and remove duplicate entry`);
+            throw new Error(
+              `${val} is already exist in Sales rep No. check and remove duplicate entry`
+            );
           }
-          seenSet.add(val)
+          seenSet.add(val);
         }
 
         if (!allValuesInNumberOrString) {
