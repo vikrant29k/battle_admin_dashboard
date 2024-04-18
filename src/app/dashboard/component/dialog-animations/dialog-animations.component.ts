@@ -22,6 +22,7 @@ export class DialogAnimationsComponent implements OnInit {
     console.log("dialog data", this.data)
     this.title = this.data.title
     this.message = this.data.message
+    console.log("lineEditForm", this.data)
   }
 
   onConfirm(): void {

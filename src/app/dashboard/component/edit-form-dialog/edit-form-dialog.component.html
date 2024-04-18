@@ -1,0 +1,70 @@
+<div class="dialog-container">
+    <form [formGroup]="excelFileLineForm" (ngSubmit)="onConfirm()">
+      <mat-form-field class="form-group">
+        <mat-label>Company Number</mat-label>
+        <input matInput type="number" formControlName="Company No" placeholder="Enter Company Number" required />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <mat-label>Company Name</mat-label>
+        <input matInput type="text" formControlName="Company Name" placeholder="Enter Company Name" required />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <mat-label>Company Unit (Region or Division...)</mat-label>
+        <input matInput type="text" formControlName="Company Unit (Region or Division...)" placeholder="Enter Company Unit" required />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <mat-label>Team name (ASM level)</mat-label>
+        <input matInput type="text" formControlName="Team name (ASM level)" placeholder="Enter Team Name" required />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <mat-label>Company Target LC Total</mat-label>
+        <input matInput type="number" formControlName="Company Target LC Total" placeholder="Enter Company Target LC Total" required />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <mat-label>Target / Sales Rep LC</mat-label>
+        <input matInput type="number" formControlName="Target / Sales Rep LC" placeholder="Enter Target / Sales Rep LC" required />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <mat-label>Currency</mat-label>
+        <input matInput type="text" formControlName="Currency" placeholder="Enter Currency" required />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <mat-label>Sales rep No</mat-label>
+        <input matInput type="text" formControlName="Sales rep No" placeholder="Enter Sales rep No" required />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <mat-label>E-Mail</mat-label>
+        <input matInput type="email" formControlName="E-Mail" placeholder="Enter E-Mail" required />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <mat-label>Game-Leader (GL)</mat-label>
+        <input matInput type="text" formControlName="Game-Leader (GL)" placeholder="Enter Game-Leader (GL)" />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <mat-label>Battle Partner Team name (ASM level)</mat-label>
+        <input matInput type="text" formControlName="Battle Partner Team name (ASM level)" placeholder="Enter Battle Partner Team name (ASM level)" required />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <mat-label>Time zone (correlated to CET)</mat-label>
+        <input matInput type="text" formControlName="Time zone (correlated to CET)" placeholder="Enter Time zone (correlated to CET)" required />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <mat-label>Language ISO-639-1</mat-label>
+        <input matInput type="text" formControlName="Language ISO-639-1" placeholder="Enter Language ISO-639-1" required />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <mat-label>Battle Partner Company No</mat-label>
+        <input matInput type="number" formControlName="Battle Partner Company No" placeholder="Enter Battle Partner Company No" required />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <mat-label>Battle Partner Company Name</mat-label>
+        <input matInput type="text" formControlName="Battle Partner Company Name" placeholder="Enter Battle Partner Company Name" required />
+      </mat-form-field>
+  
+      <div mat-dialog-actions class="action-buttons">
+        <button mat-raised-button type="button" (click)="onDismiss()">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">OK</button>
+      </div>
+    </form>
+  </div>
+  
