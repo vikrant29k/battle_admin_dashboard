@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --aot --base-href /wuerth-admin/",
+    "build": "ng build --aot --base-href /wuerth-admin_dev/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

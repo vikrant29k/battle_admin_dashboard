@@ -19,7 +19,6 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent {
-  @ViewChild('angularEditor') editor!: ElementRef;
 
   newsContent = new FormGroup({
     content: new FormControl('', Validators.required),
