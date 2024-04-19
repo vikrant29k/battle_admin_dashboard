@@ -78,6 +78,7 @@
     .tableContainer {
       height: fit-content;
       min-width: 40rem;
+      width: max-content;
       overflow: auto;
       margin-top: 20px;
       display: flex;
@@ -88,7 +89,7 @@
       table {
         color: white;
         text-align: center;
-        width: 80%;
+        width: 100%;
         border-spacing: 0;
         thead {
           background-color: #959595;
@@ -96,7 +97,7 @@
           td {
             color: #ffffff;
             height: 40px;
-  
+            padding: 5px;
             border-right: 2px solid rgb(255, 255, 255);
             &:first-child{
               border-left: 2px solid white;

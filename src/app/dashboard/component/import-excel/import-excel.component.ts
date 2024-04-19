@@ -4,6 +4,7 @@ import { ExcelService } from 'src/app/services/importExcel.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EditFormDialogComponent } from '../edit-form-dialog/edit-form-dialog.component';
+import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
 
 @Component({
   selector: 'app-import-excel',
@@ -25,6 +26,11 @@ export class ImportExcelComponent {
   tableHeaders: any = [];
   excelFileLineIndexForEditDialog!: number;
 
+  editLineDialogData = {
+    title: 'Edit Line',
+    message: 'Are you sure you want to edit this line?',
+  };
+
   constructor(
     private toastr: ToastrService,
     private excelService: ExcelService,
@@ -44,10 +50,33 @@ export class ImportExcelComponent {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('result', result);
+        // console.log('result', result);
         this.tableData.splice(this.excelFileLineIndexForEditDialog, 1);
         this.tableData.splice(this.excelFileLineIndexForEditDialog, 0, result);
         this.convertobjectToArray(this.tableData);
+      }
+    });
+  }
+
+  openNewDialog(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
+    const dialogRef = this.dialog.open(DialogAnimationsComponent, {
+      width: '250px',
+      enterAnimationDuration,
+      data: this.editLineDialogData,
+      exitAnimationDuration,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('result', result);
+
+        this.openDialog(
+          '0ms',
+          '0ms',
+          this.tableData[this.excelFileLineIndexForEditDialog]
+        );
       }
     });
   }
@@ -125,7 +154,7 @@ export class ImportExcelComponent {
 
       this.dataArray = data.slice(1); // Exclude the header row
 
-      console.log('dataarry', this.dataArray);
+      // console.log('dataarry', this.dataArray);
 
       this.validateAndFinalResult();
     };
@@ -269,6 +298,24 @@ export class ImportExcelComponent {
         let values: any = [];
         let teamName = '';
         arr.map((obj, i) => {
+          if (
+            obj['Game-Leader (GL)'] !== undefined &&
+            obj['Game-Leader (GL)'] !== 'SU'
+          ) {
+            console.log('other value', obj);
+            if (obj['Game-Leader (GL)'] !== 'GL') {
+              this.toastr.error(
+                `Game-Leader (GL) column only GL and SU allowed. check sales rep no ${obj['Sales rep No']}`
+              );
+              this.fileErrorMessage = `Game-Leader (GL) column only GL and SU allowed. check check sales rep no ${obj['Sales rep No']}`;
+              this.fileError = true;
+              this.fileSelectedSpinner = false;
+              throw new Error(
+                `Game-Leader (GL) column only GL and SU allowed. check check sales rep no ${obj['Sales rep No']}`
+              );
+            }
+          }
+
           if (
             obj['Company Unit (Region or Division...)'].toLowerCase() ==
               'superuser' ||
@@ -426,7 +473,7 @@ export class ImportExcelComponent {
       // console.log(
       //   'Not all values in the first array exist in the second array.'
       // );
-      let mess = `Team name (ASM level) ${missingValues} not present in Battle Partner Team name (ASM level)`;
+      let mess = `Team name (ASM level) ${missingValues[0]} not present in Battle Partner Team name (ASM level)`;
       this.toastr.error(mess);
       this.fileError = true;
       this.fileErrorMessage = mess;
@@ -456,8 +503,8 @@ export class ImportExcelComponent {
     };
     this.fileError = false;
     this.fileSelectedSpinner = false;
-    console.log('Final Result:', this.finalResult);
-    console.log('table data', this.tableData);
+    // console.log('Final Result:', this.finalResult);
+    // console.log('table data', this.tableData);
     // console.log('Column data:', columnData);
   };
 
@@ -702,15 +749,15 @@ export class ImportExcelComponent {
   }
 
   deleteLine(index: any) {
-    console.log('line ', index);
+    // console.log('line ', index);
     this.tableData.splice(index, 1);
-    this.convertobjectToArray(this.tableData)
+    this.convertobjectToArray(this.tableData);
     this.validateAndFinalResult();
   }
 
   editLine(index: any) {
-    console.log('line ', index);
+    // console.log('line ', index);
     this.excelFileLineIndexForEditDialog = index;
-    this.openDialog('0ms', '0ms', this.tableData[index]);
+    this.openNewDialog('0ms', '0ms');
   }
 }
