@@ -9,16 +9,25 @@
   </div>
   <div class="toggle-container">
     <div class="toggle">
+
       <div class="toggle-panel toggle-left" id="panel" >
         <img src="assets/wuerth-logo.png" />
         <button class="hidden" id="login" (click)="visible=!visible">
-          {{ !visible ? 'Log In' : 'Sign Up' }}
+          {{ !visible ? loginText  : 'AUTH.SIGN_UP' | translate }}
         </button>
+        <div class="lang-drop-down">
+          <!-- <label for="lang">Select Language:</label> -->
+         <mat-form-field appearance="outline">
+          <mat-label>Language</mat-label>
+          <mat-select placeholder="Langu" name="lang" #langSelect [(ngModel)]="selectedLanguage" (selectionChange)="translate.use(langSelect.value)">
+            <mat-option *ngFor="let code of languageCodes"[value]="code"> {{ languages[code] }}</mat-option>
+          </mat-select>
+         </mat-form-field>
+        </div>
+
+
+
       </div>
-      <!-- <div class="toggle-panel toggle-right">
-        <img src="../../assets/wuerth-logo.png"/>
-        <button class="hidden" id="register">Sign Up</button>
-      </div> -->
     </div>
   </div>
 </div>

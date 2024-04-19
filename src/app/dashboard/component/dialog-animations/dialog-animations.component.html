@@ -6,10 +6,9 @@
 <div mat-dialog-content>
     <p>{{message}}</p>
 </div>
-
 <div mat-dialog-actions class="action-buttons">
-    <button mat-raised-button (click)="onDismiss()">No</button>
-    <button mat-raised-button color="primary" (click)="onConfirm()">Yes</button>
+  <button mat-raised-button (click)="onDismiss()">{{ 'DIALOG_BOX_POP_UP.NO_BUTTON' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="onConfirm()">{{ 'DIALOG_BOX_POP_UP.YES_BUTTON' | translate }}</button>
 </div>
 
 </div>
