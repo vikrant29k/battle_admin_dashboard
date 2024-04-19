@@ -47,7 +47,7 @@ export class ImportExcelComponent {
         console.log('result', result);
         this.tableData.splice(this.excelFileLineIndexForEditDialog, 1);
         this.tableData.splice(this.excelFileLineIndexForEditDialog, 0, result);
-        this.convertobjectToArray(this.tableData)
+        this.convertobjectToArray(this.tableData);
       }
     });
   }
@@ -126,18 +126,17 @@ export class ImportExcelComponent {
       this.dataArray = data.slice(1); // Exclude the header row
 
       console.log('dataarry', this.dataArray);
-      
+
       this.validateAndFinalResult();
     };
 
     fileReader.readAsBinaryString(this.file);
-    
+
     event.target.value = '';
     this.tableData = [];
   }
 
   validateAndFinalResult = () => {
-    debugger
     // Extract column data
     const columnData: { [key: string]: any[] } = {};
     this.headers.forEach((header: string, index: number) => {
@@ -168,6 +167,7 @@ export class ImportExcelComponent {
       throw new Error('validation failed');
     }
 
+    this.tableData = [];
     // Convert the array of arrays into an array of objects
     const result = this.dataArray.reduce((acc: any[], row: any[]) => {
       // Check if all values in the row are undefined
@@ -462,6 +462,7 @@ export class ImportExcelComponent {
   };
 
   validateColumn(columnData: any, columnName: string): any {
+    // debugger
     try {
       var columnArray = columnData[columnName];
 
@@ -694,25 +695,22 @@ export class ImportExcelComponent {
     }
   }
 
-  convertobjectToArray(tableData:any){
-    const arrayOfArrays = tableData.map((obj:any) => Object.values(obj));
-    this.dataArray = arrayOfArrays
-    this.validateAndFinalResult()
+  convertobjectToArray(tableData: any) {
+    const arrayOfArrays = tableData.map((obj: any) => Object.values(obj));
+    this.dataArray = arrayOfArrays;
+    this.validateAndFinalResult();
   }
 
   deleteLine(index: any) {
     console.log('line ', index);
     this.tableData.splice(index, 1);
+    this.convertobjectToArray(this.tableData)
+    this.validateAndFinalResult();
   }
 
   editLine(index: any) {
-    
     console.log('line ', index);
     this.excelFileLineIndexForEditDialog = index;
-    this.openDialog('0ms', '0ms', this.tableData[index]
-    
-    );
+    this.openDialog('0ms', '0ms', this.tableData[index]);
   }
-
-  
 }
