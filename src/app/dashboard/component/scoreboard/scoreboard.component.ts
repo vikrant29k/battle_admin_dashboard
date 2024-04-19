@@ -1,8 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environment/enviroment';
 import * as XLSX from 'xlsx';
+import { HourlyExcelEditFormDialogComponent } from '../hourly-excel-edit-form-dialog/hourly-excel-edit-form-dialog.component';
 
 @Component({
   selector: 'app-scoreboard',
@@ -10,7 +12,11 @@ import * as XLSX from 'xlsx';
   styleUrls: ['./scoreboard.component.scss'],
 })
 export class ScoreboardComponent {
-  constructor(private http: HttpClient, private toastr: ToastrService) {}
+  constructor(
+    private http: HttpClient,
+    private toastr: ToastrService,
+    public dialog: MatDialog
+  ) {}
   // file!: File;
   // selectedFile!: File;
   file: File | null = null;
@@ -22,15 +28,44 @@ export class ScoreboardComponent {
   fileErrorMessage!: string;
 
   fileData: any;
-  disableConfirmButotn:boolean=true
+  disableConfirmButotn: boolean = true;
+
+  dataArray: any;
+  headers: any;
+  excelFileLineIndexForEditDialog!: number;
+
+  openDialog(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
+    const dialogRef = this.dialog.open(HourlyExcelEditFormDialogComponent, {
+      width: '250px',
+      enterAnimationDuration,
+      data: this.fileData[this.excelFileLineIndexForEditDialog],
+      exitAnimationDuration,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const salesRepNo = parseInt(result['Sales rep no.']);
+        if (!isNaN(salesRepNo)) {
+          result['Sales rep no.'] = salesRepNo;
+        }
+
+        this.fileData.splice(this.excelFileLineIndexForEditDialog, 1);
+        this.fileData.splice(this.excelFileLineIndexForEditDialog, 0, result);
+        this.convertobjectToArray(this.fileData);
+      }
+    });
+  }
+
   onFileSelected(event: any): void {
     this.file = event.target.files[0];
     this.selectedFile = this.file;
-    console.log('file is', this.selectedFile);
+    // console.log('file is', this.selectedFile);
 
     const fileReader: FileReader = new FileReader();
     this.fileSelectedSpinner = true;
-      this.disableConfirmButotn=false
+    this.disableConfirmButotn = false;
     fileReader.onload = (e: any) => {
       const binaryString: string = e.target.result;
       const workbook: XLSX.WorkBook = XLSX.read(binaryString, {
@@ -42,11 +77,11 @@ export class ScoreboardComponent {
 
       // Convert the array of arrays into an array of objects
       const allowedHeaders = ['Company ID', 'Sales rep no.', 'Sales in LC'];
-      const headers = data[0];
+      this.headers = data[0];
 
-      console.log('headers', headers);
+      console.log('headers', this.headers);
 
-      let headersSame = this.arraysAreEqual(headers, allowedHeaders);
+      let headersSame = this.arraysAreEqual(this.headers, allowedHeaders);
 
       if (headersSame) {
         console.log('arrays is same');
@@ -59,98 +94,120 @@ export class ScoreboardComponent {
         return;
       }
 
-      const dataArray = data.slice(1); // Exclude the header row
+      this.dataArray = data.slice(1); // Exclude the header row
 
-      console.log('dataarry', dataArray);
+      console.log('dataarry', this.dataArray);
+      this.validateAndFinalResult();
+    };
+    this.file
+      ? fileReader.readAsBinaryString(this.file)
+      : (this.fileSelectedSpinner = false);
+    event.target.value = '';
+    this.fileData = [];
+    this.fileError = false;
+  }
 
-      // Extract column data
-      const columnData: { [key: string]: any[] } = {};
-      headers.forEach((header: string, index: number) => {
-        const columnValues = dataArray.map((row: any[]) => row[index]);
-        const filteredColumnValues = columnValues.filter(
-          (value: any) => value !== undefined
-        );
-        columnData[header] = filteredColumnValues;
-      });
+  validateAndFinalResult = () => {
+    // Extract column data
+    const columnData: { [key: string]: any[] } = {};
+    this.headers.forEach((header: string, index: number) => {
+      const columnValues = this.dataArray.map((row: any[]) => row[index]);
+      const filteredColumnValues = columnValues.filter(
+        (value: any) => value !== undefined
+      );
+      columnData[header] = filteredColumnValues;
+    });
 
-      // Validate the "Company No" column
-      if (
-        this.validateColumn(columnData, 'Company ID') ||
-        this.validateColumn(columnData, 'Sales rep no.') ||
-        this.validateColumn(columnData, 'Sales in LC')
-      ) {
-        this.fileSelectedSpinner = false;
-        throw new Error('validation failed');
-      }
+    // Validate the "Company No" column
+    if (
+      this.validateColumn(columnData, 'Company ID') ||
+      this.validateColumn(columnData, 'Sales rep no.') ||
+      this.validateColumn(columnData, 'Sales in LC')
+    ) {
+      this.fileSelectedSpinner = false;
+      throw new Error('validation failed');
+    }
 
-      this.fileData = dataArray.reduce((acc: any[], row: any[]) => {
-        // Check if all values in the row are undefined
-        // console.log('this is a excel row', row);
-        const isEmpty = row.every((value: any) => value === undefined);
-        // If the row is not empty, convert it to an object and add it to the result
-        if (!isEmpty) {
-          // console.log('second column', row[2]);
+    this.fileData = this.dataArray.reduce((acc: any[], row: any[]) => {
+      // Check if all values in the row are undefined
+      // console.log('this is a excel row', row);
+      const isEmpty = row.every((value: any) => value === undefined);
+      // If the row is not empty, convert it to an object and add it to the result
+      if (!isEmpty) {
+        // console.log('second column', row[2]);
 
-          const obj: any = {};
-          headers.forEach((header: any, index: any) => {
-            obj[header] = row[index];
+        const obj: any = {};
+        this.headers.forEach((header: any, index: any) => {
+          obj[header] = row[index];
 
-            // if (obj[header] == undefined) {
-            //   this.toastr.error(`fill all fields in ${header}`);
-            //   this.fileErrorMessage = `fill all fields in ${header}`
-            //   this.fileError = true;
-            // }
-
-            try {
-              headers.forEach((header: any, index: any) => {
-                obj[header] = row[index];
-
-                if (obj[header] === undefined) {
-                  this.toastr.error(`Fill all fields in ${header}`);
-                  this.fileErrorMessage = `Fill all fields in ${header}`;
-                  this.fileError = true;
-                  this.fileSelectedSpinner = false;
-                  throw new Error(`Error: Missing value in "${header}" field`);
-                }
-              });
-            } catch (error: any) {
-              console.error(error.message);
-              throw error;
-            }
-          });
+          // if (obj[header] == undefined) {
+          //   this.toastr.error(`fill all fields in ${header}`);
+          //   this.fileErrorMessage = `fill all fields in ${header}`
+          //   this.fileError = true;
+          // }
 
           try {
-            headers.forEach((header: any, index: any) => {
+            this.headers.forEach((header: any, index: any) => {
               obj[header] = row[index];
+
+              if (obj[header] === undefined) {
+                this.toastr.error(`Fill all fields in ${header}`);
+                this.fileErrorMessage = `Fill all fields in ${header}`;
+                this.fileError = true;
+                this.fileSelectedSpinner = false;
+                throw new Error(`Error: Missing value in "${header}" field`);
+              }
             });
           } catch (error: any) {
             console.error(error.message);
             throw error;
           }
+        });
 
-          acc.push(obj);
+        try {
+          this.headers.forEach((header: any, index: any) => {
+            obj[header] = row[index];
+          });
+        } catch (error: any) {
+          console.error(error.message);
+          throw error;
         }
-        return acc;
-      }, []);
 
-      this.fileSelectedSpinner = false;
-      console.log('Excel data:', this.fileData);
-    };
-    this.file
-      ? fileReader.readAsBinaryString(this.file)
-      : (this.fileSelectedSpinner = false);
-      event.target.value=''
-  }
+        acc.push(obj);
+      }
+      return acc;
+    }, []);
+
+    this.fileSelectedSpinner = false;
+    this.fileError = false;
+    console.log('Excel data:', this.fileData);
+  };
 
   validateColumn(columnData: any, columnName: string): any {
     try {
       const columnArray = columnData[columnName];
 
+      // check all values same
+      if (columnName === 'Company ID') {
+        const firstValue = columnArray[0];
+
+        const allValuesMatch = columnArray.every(
+          (value: any) => value === firstValue
+        );
+
+        if (!allValuesMatch) {
+          console.error(
+            `Error: Not all values in the "${columnName}" column are the same.`
+          );
+
+          this.toastr.error(`${columnName} need to same `);
+          this.fileError = true;
+          throw new Error(`${columnName} need to same `);
+        }
+      }
+
       // check if column values in numbers
-      if (
-        columnName == 'Company ID' ||
-        columnName == 'Sales in LC'
-      ) {
+      if (columnName == 'Company ID' || columnName == 'Sales in LC') {
         var allVAluesInNumber = columnArray.every(
           (value: any) => typeof value === 'number'
         );
@@ -162,15 +219,19 @@ export class ScoreboardComponent {
             `Please check all values in number column ${columnName}`
           );
           this.fileError = true;
-          throw new Error('column values not in number');
+          throw new Error(
+            `Please check all values in number column ${columnName}`
+          );
           return;
         }
       }
 
       // check all values in number or string
-      if(columnName == 'Sales rep no.'){
+      if (columnName == 'Sales rep no.') {
         var allValuesInNumberOrString = columnArray.every(
-          (value: any) => typeof value === 'number' || typeof value === 'string'
+          (value: any) =>
+            typeof value === 'number' ||
+            (typeof value === 'string' && value.toLowerCase() === 'superuser')
         );
 
         if (!allValuesInNumberOrString) {
@@ -178,11 +239,33 @@ export class ScoreboardComponent {
             `Error: Not all values in the "${columnName}" column are numbers or string.`
           );
           this.toastr.error(
-            `Please check all values in number or string in column ${columnName}`
+            `Please check all values in number in column ${columnName} or enter superuser`
           );
           this.fileError = true;
-          throw new Error('column values not in number or string');
+          throw new Error(
+            `Please check all values in number in column ${columnName} or enter superuser`
+          );
           return;
+        }
+
+        // check 'Sales rep No' column value unique
+        let seenSet = new Set();
+        for (let val of columnArray) {
+          if (typeof val === 'string') {
+            if (val.toLowerCase() == 'superuser') {
+              continue;
+            }
+          }
+          if (seenSet.has(val)) {
+            this.toastr.error(
+              `${val} is already exist in Sales rep No. check and remove duplicate entry`
+            );
+            this.fileError = true;
+            throw new Error(
+              `${val} is already exist in Sales rep No. check and remove duplicate entry`
+            );
+          }
+          seenSet.add(val);
         }
       }
     } catch (error: any) {
@@ -232,12 +315,13 @@ export class ScoreboardComponent {
                   this.selectedFile = null;
                   this.file = null;
                   this.toastr.success(res.message);
+                  this.fileData = []
                 } else {
                   this.toastr.success(res.message);
                   this.selectedFile = null;
                   this.file = null;
                 }
-                this.disableConfirmButotn=true
+                this.disableConfirmButotn = true;
               },
               (error: HttpErrorResponse) => {
                 this.confirm = false;
@@ -260,5 +344,17 @@ export class ScoreboardComponent {
     } else {
       this.toastr.error(this.fileErrorMessage);
     }
+  }
+
+  convertobjectToArray(filesData: any) {
+    const arrayOfArrays = filesData.map((obj: any) => Object.values(obj));
+    this.dataArray = arrayOfArrays;
+    this.validateAndFinalResult();
+  }
+
+  editLine(index: any) {
+    // console.log('line ', index);
+    this.excelFileLineIndexForEditDialog = index;
+    this.openDialog('0ms', '0ms');
   }
 }

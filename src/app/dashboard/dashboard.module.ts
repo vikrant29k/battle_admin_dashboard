@@ -16,8 +16,9 @@ import { DialogAnimationsComponent } from './component/dialog-animations/dialog-
 import { ImportExcelComponent } from './component/import-excel/import-excel.component';
 import { MatchComponent } from './component/match/match.component';
 import { EditFormDialogComponent } from './component/edit-form-dialog/edit-form-dialog.component';
+import { HourlyExcelEditFormDialogComponent } from './component/hourly-excel-edit-form-dialog/hourly-excel-edit-form-dialog.component';
 @NgModule({
-  declarations: [DashboardComponent, SliderComponent, ScoreboardComponent, HeaderComponent, NewsUpdateComponent, NewsListComponent, ProfileComponent, DialogAnimationsComponent, ImportExcelComponent, MatchComponent, EditFormDialogComponent],
+  declarations: [DashboardComponent, SliderComponent, ScoreboardComponent, HeaderComponent, NewsUpdateComponent, NewsListComponent, ProfileComponent, DialogAnimationsComponent, ImportExcelComponent, MatchComponent, EditFormDialogComponent, HourlyExcelEditFormDialogComponent],
   imports: [
     CommonModule,DashboardRoutingModule,AngularEditorModule,HttpClientModule,DashboardMaterialModule
   ]
