@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { ExcelService } from 'src/app/services/importExcel.service';
 import { ToastrService } from 'ngx-toastr';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EditFormDialogComponent } from '../edit-form-dialog/edit-form-dialog.component';
 
 @Component({
@@ -37,7 +37,7 @@ export class ImportExcelComponent {
     lineData: any
   ): void {
     const dialogRef = this.dialog.open(EditFormDialogComponent, {
-      width: '250px',
+      width: '900px',
       enterAnimationDuration,
       data: lineData,
       exitAnimationDuration,
@@ -709,6 +709,10 @@ export class ImportExcelComponent {
     
     console.log('line ', index);
     this.excelFileLineIndexForEditDialog = index;
-    this.openDialog('0ms', '0ms', this.tableData[index]);
+    this.openDialog('0ms', '0ms', this.tableData[index]
+    
+    );
   }
+
+  
 }
