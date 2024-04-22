@@ -50,7 +50,13 @@ export class ImportExcelComponent {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // console.log('result', result);
+        if (result['Sales rep No'].toLowerCase() !== 'superuser') {
+          const salesRepNo = parseInt(result['Sales rep No']);
+          if (!isNaN(salesRepNo)) {
+            result['Sales rep No'] = salesRepNo;
+          }
+        }
+
         this.tableData.splice(this.excelFileLineIndexForEditDialog, 1);
         this.tableData.splice(this.excelFileLineIndexForEditDialog, 0, result);
         this.convertobjectToArray(this.tableData);
@@ -70,7 +76,7 @@ export class ImportExcelComponent {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('result', result);
+        // console.log('result', result);
 
         this.openDialog(
           '0ms',
@@ -302,7 +308,7 @@ export class ImportExcelComponent {
             obj['Game-Leader (GL)'] !== undefined &&
             obj['Game-Leader (GL)'] !== 'SU'
           ) {
-            console.log('other value', obj);
+            // console.log('other value', obj);
             if (obj['Game-Leader (GL)'] !== 'GL') {
               this.toastr.error(
                 `Game-Leader (GL) column only GL and SU allowed. check sales rep no ${obj['Sales rep No']}`

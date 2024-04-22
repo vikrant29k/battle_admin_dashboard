@@ -77,7 +77,7 @@ export class ScoreboardComponent {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('result', result);
+        // console.log('result', result);
 
         this.openDialog('0ms', '0ms');
       }
@@ -105,14 +105,14 @@ export class ScoreboardComponent {
       const allowedHeaders = ['Company ID', 'Sales rep no.', 'Sales in LC'];
       this.headers = data[0];
 
-      console.log('headers', this.headers);
+      // console.log('headers', this.headers);
 
       let headersSame = this.arraysAreEqual(this.headers, allowedHeaders);
 
       if (headersSame) {
-        console.log('arrays is same');
+        // console.log('arrays is same');
       } else {
-        console.log('array not same');
+        // console.log('array not same');
         this.toastr.error('Please Check Headers');
         this.fileError = true;
         this.fileErrorMessage = 'Please Check Headers';
@@ -122,7 +122,7 @@ export class ScoreboardComponent {
 
       this.dataArray = data.slice(1); // Exclude the header row
 
-      console.log('dataarry', this.dataArray);
+      // console.log('dataarry', this.dataArray);
       this.validateAndFinalResult();
     };
     this.file
@@ -206,7 +206,7 @@ export class ScoreboardComponent {
 
     this.fileSelectedSpinner = false;
     this.fileError = false;
-    console.log('Excel data:', this.fileData);
+    // console.log('Excel data:', this.fileData);
   };
 
   validateColumn(columnData: any, columnName: string): any {
@@ -329,13 +329,13 @@ export class ScoreboardComponent {
           let data = {
             data: this.fileData,
           };
-          console.log('data for api ', data);
+          // console.log('data for api ', data);
           this.http
             .post(`${environment.baseUrl}sales/upload-hourly-sales-data`, data)
             .subscribe(
               (res: any) => {
                 this.confirm = false;
-                console.log('File upload response:', res);
+                // console.log('File upload response:', res);
                 if (res.statusCode == 200) {
                   // alert("Import Successful");
                   this.selectedFile = null;
