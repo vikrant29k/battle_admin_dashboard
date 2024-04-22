@@ -1,7 +1,7 @@
 <div class="container">
   <div class="header-tag">
     <h2>Sales Data</h2>
-    <p> Upload Hourly Excel File for Sales Updates</p>
+    <p>Upload Hourly Excel File for Sales Updates</p>
   </div>
 
   <div class="upload-section">
@@ -59,24 +59,28 @@
       <table>
         <thead>
           <tr>
-            <td *ngFor="let header of headers">{{header}}</td>
-            <td *ngIf="fileData?.length>0">Action</td>
+            <td *ngFor="let header of headers">{{ header }}</td>
+            <td *ngIf="fileData?.length > 0">Action</td>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of fileData; let i = index">
-            <td>{{item["Company ID"]}}</td>
-            <td>{{item["Sales rep no."]}}</td>
-            <td>{{item["Sales in LC"]}}</td>
-            <td class="action-column" style="position: sticky; right: 0;">
-              <button mat-icon-button matTooltip="Edit" (click)="editLine(i)" style="background-color: #f0f0f0;">
-                  <mat-icon>edit</mat-icon>
+            <td>{{ item["Company ID"] }}</td>
+            <td>{{ item["Sales rep no."] }}</td>
+            <td>{{ item["Sales in LC"] }}</td>
+            <td class="action-column" style="position: sticky; right: 0">
+              <button
+                mat-icon-button
+                matTooltip="Edit"
+                (click)="editLine(i)"
+                style="background-color: #f0f0f0"
+              >
+                <mat-icon>edit</mat-icon>
               </button>
-          </td>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-
 </div>
