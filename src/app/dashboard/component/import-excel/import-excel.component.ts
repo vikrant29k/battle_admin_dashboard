@@ -50,11 +50,9 @@ export class ImportExcelComponent {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        if (result['Sales rep No'].toLowerCase() !== 'superuser') {
-          const salesRepNo = parseInt(result['Sales rep No']);
-          if (!isNaN(salesRepNo)) {
-            result['Sales rep No'] = salesRepNo;
-          }
+        const salesRepNo = parseInt(result['Sales rep No']);
+        if (!isNaN(salesRepNo)) {
+          result['Sales rep No'] = salesRepNo;
         }
 
         this.tableData.splice(this.excelFileLineIndexForEditDialog, 1);
