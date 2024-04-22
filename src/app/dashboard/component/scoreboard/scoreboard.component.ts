@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environment/enviroment';
 import * as XLSX from 'xlsx';
 import { HourlyExcelEditFormDialogComponent } from '../hourly-excel-edit-form-dialog/hourly-excel-edit-form-dialog.component';
+import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
 
 @Component({
   selector: 'app-scoreboard',
@@ -34,12 +35,18 @@ export class ScoreboardComponent {
   headers: any;
   excelFileLineIndexForEditDialog!: number;
 
+  editLineDialogData = {
+    title: 'Edit Line',
+    message: 'Are you sure you want to edit this line?',
+  };
+
   openDialog(
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {
     const dialogRef = this.dialog.open(HourlyExcelEditFormDialogComponent, {
-      width: '250px',
+      width: '500px',
+      height:'600px',
       enterAnimationDuration,
       data: this.fileData[this.excelFileLineIndexForEditDialog],
       exitAnimationDuration,
@@ -54,6 +61,25 @@ export class ScoreboardComponent {
         this.fileData.splice(this.excelFileLineIndexForEditDialog, 1);
         this.fileData.splice(this.excelFileLineIndexForEditDialog, 0, result);
         this.convertobjectToArray(this.fileData);
+      }
+    });
+  }
+
+  openNewDialog(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
+    const dialogRef = this.dialog.open(DialogAnimationsComponent, {
+      width: '250px',
+      enterAnimationDuration,
+      data: this.editLineDialogData,
+      exitAnimationDuration,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('result', result);
+
+        this.openDialog('0ms', '0ms');
       }
     });
   }
@@ -355,6 +381,7 @@ export class ScoreboardComponent {
   editLine(index: any) {
     // console.log('line ', index);
     this.excelFileLineIndexForEditDialog = index;
-    this.openDialog('0ms', '0ms');
+    // this.openDialog('0ms', '0ms');
+    this.openNewDialog('0ms', '0ms')
   }
 }
