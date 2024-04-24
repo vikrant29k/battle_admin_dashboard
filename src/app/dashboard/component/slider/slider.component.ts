@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-slider',
   templateUrl: './slider.component.html',
@@ -7,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class SliderComponent {
   showMenu:boolean=false
-  constructor(private route:Router){
+  constructor(private route:Router,private toastr:ToastrService){
 
   }
   goToRoute(name:string){
@@ -19,5 +20,6 @@ export class SliderComponent {
   }
   logOut() {
     localStorage.removeItem("token")
+    this.toastr.success("Logout successfully")
   }
 }
