@@ -1,41 +1,39 @@
 <div class="profile-container">
   <div class="header-tag">
-    <h2>Profile</h2>
-    <p>Access your profile info, edit, change password.</p>
+    <h2>{{ 'PROFILE_PAGE.HEADER_TITLE' | translate }}</h2>
+    <p>{{ 'PROFILE_PAGE.HEADER_DESCRIPTION' | translate }}</p>
   </div>
   <div class="card">
     <form class="form-container" [formGroup]="profileForm">
       <div class="sub-container">
         <mat-form-field class="form-group">
-          <mat-label>Name</mat-label>
-          <input matInput type="text" name="name" placeholder="Enter Your Name" required formControlName="userName" />
+          <mat-label>{{ 'PROFILE_PAGE.NAME_LABEL' | translate }}</mat-label>
+          <input matInput type="text" name="name" placeholder="{{ 'PROFILE_PAGE.NAME_LABEL' | translate }}" required formControlName="userName" />
         </mat-form-field>
         <mat-form-field class="form-group">
-          <mat-label>Email</mat-label>
-          <input matInput type="email" name="email" placeholder="Enter Your Email" required formControlName="email" />
-        </mat-form-field>
-
-        <mat-form-field class="form-group">
-          <mat-label>Company Number</mat-label>
-          <input matInput type="number" name="companyNumber" placeholder="Enter Company Number" required
-            formControlName="uid" />
+          <mat-label>{{ 'PROFILE_PAGE.EMAIL_LABEL' | translate }}</mat-label>
+          <input matInput type="email" name="email" placeholder="{{ 'PROFILE_PAGE.EMAIL_LABEL' | translate }}" required formControlName="email" />
         </mat-form-field>
 
         <mat-form-field class="form-group">
-          <mat-label>Company Name</mat-label>
-          <input matInput type="text" name="companyName" placeholder="Enter Company Name" required
-            formControlName="name" />
+          <mat-label>{{ 'PROFILE_PAGE.COMPANY_NUMBER_LABEL' | translate }}</mat-label>
+          <input matInput type="number" name="companyNumber" placeholder="{{ 'PROFILE_PAGE.COMPANY_NUMBER_LABEL' | translate }}" required formControlName="uid" />
+        </mat-form-field>
+
+        <mat-form-field class="form-group">
+          <mat-label>{{ 'PROFILE_PAGE.COMPANY_NAME_LABEL' | translate }}</mat-label>
+          <input matInput type="text" name="companyName" placeholder="{{ 'PROFILE_PAGE.COMPANY_NAME_LABEL' | translate }}" required formControlName="name" />
         </mat-form-field>
         <mat-form-field class="form-group" *ngIf="!showpassword">
-          <mat-label>Change Password</mat-label>
-          <input matInput type="text" name="changepassword" placeholder="Enter new password" formControlName="newPassword" required />
+          <mat-label>{{ 'PROFILE_PAGE.CHANGE_PASSWORD_LABEL' | translate }}</mat-label>
+          <input matInput type="text" name="changepassword" placeholder="{{ 'PROFILE_PAGE.NEW_PASSWORD_LABEL' | translate }}" formControlName="newPassword" required />
         </mat-form-field>
       </div>
 
       <div class="form-submit">
-          <button mat-raised-button color="primary" class="btn" (click)="editBtn?editBtnClick():saveBtnClick()">{{editBtn?'Edit':'Save'}}</button>
-          <button mat-raised-button color="warn" class="btn" (click)="openDialog('0ms', '0ms')">
-            Change Password
+          <button mat-raised-button color="primary" class="btn" (click)="editBtn?editBtnClick():saveBtnClick()">{{ 'PROFILE_PAGE.EDIT_BUTTON' | translate }}</button>
+          <button mat-raised-button color="primary" class="btn" (click)="openDialog('0ms', '0ms')">
+            {{ 'PROFILE_PAGE.CHANGE_PASSWORD_LABEL' | translate }}
           </button>
       </div>
     </form>

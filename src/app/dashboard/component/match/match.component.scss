@@ -65,6 +65,17 @@
           border-radius: 4px;
           cursor: pointer;
         }
+        .selected-file-name{
+          b{
+            color: black;
+          }
+          margin: 0;
+          color: #959595;
+          max-width: 15rem;
+          font-size: 0.9rem;
+          max-height: 5rem;
+          overflow: auto;
+        }
       }
 
       .confirm-button {
@@ -177,8 +188,24 @@
       .file-selection{
         font-size: 1rem;
         .file-chooser{
+
           font-size: 1rem;
-          align-items: flex-end;
+          flex-direction: column;
+          label{
+            font-size: 1.2rem;
+          }
+          p{
+            font-weight: 100;
+          }
+          .selected-file-name{
+            b{
+              font-weight: 100;
+            }
+            margin: 0;
+            max-width: 15rem;
+            max-height: 5rem;
+            overflow: auto;
+          }
         }
       }
     }

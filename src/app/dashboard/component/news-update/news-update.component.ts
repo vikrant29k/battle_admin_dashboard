@@ -43,22 +43,27 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     private route: Router,
     private toastr: ToastrService
   ) {}
+    buttonName='Post'
   ngOnInit(): void {
     let data: any = this.updateService.news;
     this.newsId = data._id;
     if (this.newsId) {
+      this.buttonName='Update'
       console.log(data, 'hii');
       this.updateNews = true;
       this.newsContent.patchValue({
         content: data.content,
         title: data.title,
       });
+    }else{
+      this.buttonName='Post'
     }
   }
 
   config: AngularEditorConfig = {
     editable: true,
-
+    enableToolbar:false,
+    showToolbar: false,
     spellcheck: true,
     minHeight: '20rem',
     maxHeight: '20rem',

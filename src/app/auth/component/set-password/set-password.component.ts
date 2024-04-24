@@ -22,6 +22,10 @@ export class SetPasswordComponent implements OnInit {
     private aRoute: ActivatedRoute,
     private toastr: ToastrService
   ) {}
+  public showPassword: boolean = false;
+  public togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
   ngOnInit(): void {
     this.token = this.aRoute.snapshot.queryParams['token'];
   }

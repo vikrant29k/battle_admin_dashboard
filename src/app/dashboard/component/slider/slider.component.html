@@ -4,60 +4,60 @@
   </button>
   <div class="slider" >
     <div class="slider-top">
-      <span class="menu" (click)="goToRoute('import-file')">
+      <span class="menu" [ngStyle]="{'background-color': activeMenu=='import-file'?'#b5b5b5':''}" (click)="goToRoute('import-file')">
         <p>
           <ng-container *ngIf="showMenu; else nohome">
-            <mat-icon>home</mat-icon> Home
+            <mat-icon>home</mat-icon> {{ 'DASHBOARD_SIDEBAR.MENU_HOME' | translate }}
           </ng-container>
           <ng-template #nohome>
             <mat-icon>home</mat-icon>
           </ng-template>
         </p>
       </span>
-        <span class="menu" (click)="goToRoute('news-update')">
+        <span class="menu" [ngStyle]="{'background-color': activeMenu=='news-update'?'#b5b5b5':''}" (click)="goToRoute('news-update')">
           <p>
             <ng-container *ngIf="showMenu; else nonews">
-              <mat-icon>newspaper</mat-icon> News
+              <mat-icon>newspaper</mat-icon> {{ 'DASHBOARD_SIDEBAR.MENU_POST_NEWS' | translate }}
             </ng-container>
             <ng-template #nonews>
               <mat-icon>newspaper</mat-icon>
             </ng-template>
           </p>
       </span>
-      <span class="menu" (click)="goToRoute('news-list')">
+      <span class="menu" [ngStyle]="{'background-color': activeMenu=='news-list'?'#b5b5b5':''}" (click)="goToRoute('news-list')">
         <p>
           <ng-container *ngIf="showMenu; else nonewslist">
-            <mat-icon>list</mat-icon> News List
+            <mat-icon>list</mat-icon> {{ 'DASHBOARD_SIDEBAR.MENU_NEWS_LIST' | translate }}
           </ng-container>
           <ng-template #nonewslist>
             <mat-icon>list</mat-icon>
           </ng-template>
         </p>
     </span>
-      <span class="menu" (click)="goToRoute('scoreboard')">
+      <span class="menu" [ngStyle]="{'background-color': activeMenu=='scoreboard'?'#b5b5b5':''}" (click)="goToRoute('scoreboard')">
         <p>
           <ng-container *ngIf="showMenu; else noexcel">
-            <mat-icon>note_add</mat-icon> Upload Hourly File
+            <mat-icon>note_add</mat-icon> {{ 'DASHBOARD_SIDEBAR.MENU_UPLOAD_HOUR_FILE' | translate }}
           </ng-container>
           <ng-template #noexcel>
             <mat-icon>note_add</mat-icon>
           </ng-template>
         </p>
       </span>
-      <span class="menu" (click)="goToRoute('match')">
+      <span class="menu" [ngStyle]="{'background-color': activeMenu=='event'?'#b5b5b5':''}" (click)="goToRoute('event')">
         <p>
           <ng-container *ngIf="showMenu; else match">
-            <mat-icon>image</mat-icon> Event Graphics
+            <mat-icon>image</mat-icon> {{ 'DASHBOARD_SIDEBAR.MENU_EVENT_GRAPHICS' | translate }}
           </ng-container>
           <ng-template #match>
             <mat-icon>image</mat-icon>
           </ng-template>
         </p>
       </span>
-      <span class="menu" routerLink="/profile">
+      <span class="menu"[ngStyle]="{'background-color': activeMenu=='profile'?'#b5b5b5':''}" (click)="goToRoute('profile')">
         <p>
           <ng-container *ngIf="showMenu; else profile">
-           <mat-icon class="large-icon">account_circle</mat-icon> Profile
+           <mat-icon class="large-icon">account_circle</mat-icon> {{ 'DASHBOARD_SIDEBAR.MENU_PROFILE' | translate }}
           </ng-container>
           <ng-template #profile>
             <mat-icon class="large-icon">account_circle</mat-icon>
@@ -69,10 +69,10 @@
 
   </div>
   <div class="slider-bottom" >
-    <span class="menu" (click)="logOut()" routerLink="/auth/login">
+    <span class="menu"  (click)="logOut()" routerLink="/auth/login">
       <p>
         <ng-container *ngIf="showMenu; else logout">
-         <mat-icon class="large-icon">logout</mat-icon> Logout
+         <mat-icon class="large-icon">logout</mat-icon> {{ 'DASHBOARD_SIDEBAR.MENU_LOGOUT' | translate }}
         </ng-container>
         <ng-template #logout>
           <mat-icon class="large-icon">logout</mat-icon>

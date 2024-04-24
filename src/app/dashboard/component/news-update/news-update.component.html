@@ -1,14 +1,14 @@
 <div class="container">
- <div class="header-tag">
-  <h2>{{updateNews ? 'Update':'Post'}} News</h2>
-  <p>Post your source for Wuerth updates, images and video links</p>
+  <div class="header-tag">
+   <h2>{{ 'POST_NEWS_PAGE.HEADER_TITLE' | translate }}</h2>
+   <p>{{ 'POST_NEWS_PAGE.HEADER_DESCRIPTION' | translate }}</p>
+  </div>
+ <form [formGroup]="newsContent">
+   <mat-form-field appearance="fill" class="title">
+     <mat-label>{{ 'POST_NEWS_PAGE.TITLE_LABEL' | translate }}</mat-label>
+       <input type="text" matInput formControlName="title">
+   </mat-form-field>
+   <angular-editor formControlName="content" id="angular-editor" class="angular-editor" [config]="config" #editor></angular-editor>
+   <button mat-raised-button color="primary" class="postNewsButton" (click)="submitContent()">{{ 'POST_NEWS_PAGE.POST_BUTTON' | translate }}</button>
+ </form>
  </div>
-<form [formGroup]="newsContent">
-  <mat-form-field appearance="fill" class="title">
-    <mat-label>Title</mat-label>
-      <input type="text" matInput formControlName="title">
-  </mat-form-field>
-  <angular-editor formControlName="content" id="angular-editor" class="angular-editor" [config]="config" #editor></angular-editor>
-  <button mat-raised-button color="primary" class="postNewsButton" (click)="submitContent()" >{{updateNews ? 'Update':'Post'}}</button>
-</form>
-</div>

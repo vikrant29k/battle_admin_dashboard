@@ -1,0 +1,50 @@
+.dialog-container {
+    text-align: center;
+    padding: 19px 90px;
+  
+    .action-buttons {
+      display: flex;
+      justify-content: space-evenly;
+    }
+  
+    .header-tag {
+      width: 100%;
+      background-color: #cc0000;
+      text-align: center;
+      margin-block-end: 2rem;
+  
+      h2 {
+        color: #ffffff;
+        margin: 0;
+        font-size: 2rem;
+        padding: 10px;
+      }
+    }
+  
+    .form-group {
+      margin: 10px;
+    }
+    // .card{
+    //   overflow-y: auto; /* Make it scrollable vertically */
+    // }
+  
+    .custom-form {
+      max-height: 400px; /* Set a maximum height for the container */
+     
+      display: flex;
+      flex-direction: column;
+      gap: 20px; /* Add space between form fields */
+    }
+  
+    /* Styles for form fields */
+    .mat-form-field {
+      width: 100%;
+    }
+  
+    /* Styles for dialog actions */
+    .action-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px; /* Add space above the buttons */
+    }
+  }

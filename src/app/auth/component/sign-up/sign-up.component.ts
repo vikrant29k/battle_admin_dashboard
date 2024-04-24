@@ -3,7 +3,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
 import { CompanyService } from 'src/app/services/company/company.service';
 interface Company {
   uid: number;
@@ -106,10 +105,7 @@ export class SignUpComponent implements OnInit {
           console.log('API Response:', response);
           if (response.success) {
             this.toastr.success(response.message);
-            this.signupForm.value.name = '';
-            this.signupForm.value.email = '';
-            this.signupForm.value.companyNumber = null;
-            this.signupForm.value.companyName = '';
+            this.signupForm.reset()
           }
         },
         error: (error: HttpErrorResponse) => {

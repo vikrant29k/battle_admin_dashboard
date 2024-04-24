@@ -83,5 +83,21 @@
       .form-submit{
         align-items: center;
         flex-direction: column;
+        button{
+          font-size: 1rem;
+          font-weight: 100;
+          width: 80%;
+        }
       }
+      .form-container{
+        .sub-container{
+          width: 80%;
+        }
+      }
+      .form-group {
+        margin-bottom: 0px;
+        font-size: 0.9rem;
+
+      }
+
     }

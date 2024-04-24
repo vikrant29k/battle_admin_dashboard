@@ -19,9 +19,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent {
-  @ViewChild('angularEditor') editor!: ElementRef;
-  // content:any;
-  // title:any
+
   newsContent = new FormGroup({
     content: new FormControl('', Validators.required),
     title: new FormControl('', Validators.required),
@@ -58,6 +56,10 @@ export class ProfileComponent {
   showOtherDiv: boolean = false;
   inputValue: string = '';
   showpassword = this.changepass.showOtherDiv;
+  dialogData = {
+    title:"Reset Password!!",
+    message:"Do you want to reset your password?"
+  }
   openDialog(
     enterAnimationDuration: string,
     exitAnimationDuration: string
@@ -65,6 +67,7 @@ export class ProfileComponent {
     this.dialog.open(DialogAnimationsComponent, {
       width: '250px',
       enterAnimationDuration,
+      data:(this.dialogData),
       exitAnimationDuration,
     });
 
@@ -90,6 +93,8 @@ export class ProfileComponent {
   editBtnClick() {
     this.profileForm.enable();
     this.profileForm.get('email')?.disable();
+    this.profileForm.get('uid')?.disable();
+    this.profileForm.get('name')?.disable();
     this.editBtn = false;
   }
 
@@ -110,13 +115,14 @@ export class ProfileComponent {
             token: localStorage.getItem('token'),
           };
           this.http
-            .patch(`${environment.baseUrl}user/admin-password`, password)
+            .patch(`${environment.baseUrl}user/set-password`, password)
             .subscribe({
               next: (res: any) => {
                 if (res.statusCode == 200) {
                   console.log('password res', res);
                   this.profileUpdate();
-                  this.toastr.success("Password Updated Successfully")
+                  // this.toastr.success("Password Updated Successfully")
+                  localStorage.clear()
                   this.router.navigate(['']);
                 }
               },
@@ -142,8 +148,9 @@ export class ProfileComponent {
     console.log(this.profileForm.valid);
     if (this.profileForm.valid) {
       let data = this.profileForm.value;
+      delete data.newPassword
       delete data.email;
-      this.http.patch(`${environment.baseUrl}company`, data).subscribe({
+      this.http.patch(`${environment.baseUrl}user/admin-update`, data).subscribe({
         next: (res: any) => {
           if (res.statusCode == 200) {
             console.log('api res', res);

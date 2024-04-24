@@ -25,7 +25,7 @@
 .container button.hidden{
   padding: 10px 45px;
   border: 1px solid transparent;
-  border-radius: 8px;
+  border-radius: 5px;
   font-weight: 600;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -33,9 +33,13 @@
   cursor: pointer;
   background-color: transparent;
   // border-color: #000000;
-  border: 3px solid #000000;
+  border: 2px solid #000000;
   font-size: 1.2rem;
-  color: rgb(0, 0, 0);
+  color: #cc0000;
+  &:hover{
+    border: 2px solid #cc0000;
+    color: #000000;
+  }
 }
 
 
@@ -155,16 +159,22 @@
   // right:0;
   transform: translateX(0%);
 }
+.lang-drop-down {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-block: 20px 0;
+  width: 60%;
+  mat-label{
+    font-size: 1.1rem;
+    color: #cc0000;
+  }
+}
 
-// .toggle-right{
-//   right: 0;
-//   border: 2px solid black;
-//   transform: translateX(0);
+// .mat-select {
+//   min-width: 200px; /* Adjust width as needed */
 // }
 
-// .container.active .toggle-right{
-//   transform: translateX(-200%);
-// }
 /* Media Queries for Responsiveness */
 @media only screen and (max-width: 1400px) {
   .container {

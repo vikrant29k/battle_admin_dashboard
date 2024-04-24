@@ -1,28 +1,61 @@
 <div class="container">
   <div class="header-tag">
-  <h1>Hello Admin!!</h1>
-  <p>Upload your company battle structure here</p>
-</div>
-  <!-- <h3 class="header-title">Import File</h3> -->
+    <h1>{{ 'UPLOAD_SECTION.HELLO_ADMIN' | translate }}</h1>
+    <p>{{ 'UPLOAD_SECTION.UPLOAD_COMPANY_STRUCTURE' | translate }}</p>
+  </div>
   <div class="upload-section">
-    <!-- <h2 class="header-title">Upload File</h2> -->
     <div class="file-selection">
-      <h3>Select a file to upload from your computer or device</h3>
+      <h3>{{ 'UPLOAD_SECTION.SELECT_FILE' | translate }}</h3>
       <div class="file-chooser">
         <input type="file" #fileInput style="display: none" accept=".xlsx, .xls" (change)="onFileSelected($event)">
-
-        <button class="choose-button" (click)="fileInput.click()" *ngIf="!fileSelectedSpinner">Choose a File</button>
+        <button class="choose-button" (click)="fileInput.click()" *ngIf="!fileSelectedSpinner">{{ 'UPLOAD_SECTION.CHOOSE_FILE' | translate }}</button>
         <mat-spinner style="width: 50px;" *ngIf="fileSelectedSpinner"></mat-spinner>
       </div>
-      <!-- Display the selected file name -->
-      <p *ngIf="selectedFile" [class.colorRed]="fileError" class="selected-file-name" style="margin-bottom: 0%;" >Selected File: {{
-        selectedFile.name }}</p>
-
+      <p *ngIf="selectedFile" [class.colorRed]="fileError" class="selected-file-name" style="margin-bottom: 0%;" >{{ 'UPLOAD_SECTION.SELECTED_FILE' | translate }}{{ selectedFile.name }}</p>
       <br />
       <div class="confirm-button">
-        <button mat-raised-button (click)="onFileUpload()" [disabled]="disableConfirmButotn">Confirm</button>
+        <button mat-raised-button (click)="onFileUpload()" [disabled]="disableConfirmButotn">{{ 'UPLOAD_SECTION.CONFIRM_BUTTON' | translate }}</button>
         <mat-spinner style="width: 50px;" *ngIf="confirm"></mat-spinner>
       </div>
+    </div>
+  </div>
+  <div class="table">
+    <div class="tableContainer">
+      <table>
+        <thead>
+          <tr>
+            <td *ngFor="let header of tableHeaders">{{header}}</td>
+            <td *ngIf="tableData.length>0">Action</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of tableData; let i = index">
+            <td>{{item["Company No"]}}</td>
+            <td>{{item["Company Name"]}}</td>
+            <td>{{item["Company Unit (Region or Division...)"]}}</td>
+            <td>{{item["Team name (ASM level)"]}}</td>
+            <td>{{item["Company Target LC Total"]}}</td>
+            <td>{{item["Target / Sales Rep LC"]}}</td>
+            <td>{{item["Currency"]}}</td>
+            <td>{{item["Sales rep No"]}}</td>
+            <td>{{item["E-Mail"]}}</td>
+            <td>{{item["Game-Leader (GL)"]}}</td>
+            <td>{{item["Battle Partner Team name (ASM level)"]}}</td>
+            <td>{{item["Time zone (correlated to CET)"]}}</td>
+            <td>{{item["Language ISO-639-1"]}}</td>
+            <td>{{item["Battle Partner Company No"]}}</td>
+            <td>{{item["Battle Partner Company Name"]}}</td>
+            <td>
+              <!-- <button mat-icon-button matTooltip="Delete" (click)="deleteLine(i)">
+                <mat-icon>delete</mat-icon>
+              </button> -->
+              <button mat-icon-button matTooltip="Edit" (click)="editLine(i)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

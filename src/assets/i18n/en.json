@@ -1,0 +1,119 @@
+{
+  "AUTH":{
+    "LOG_IN":"Log In",
+    "LOG_IN_FORM":{
+      "ADMIN_LOGIN": "Admin Login",
+      "EMAIL_LABEL": "E-Mail",
+      "PASSWORD_LABEL": "Password",
+      "TOGGLE_PASSWORD_VISIBILITY": "Toggle password visibility",
+      "EMAIL_REQUIRED_ERROR": "Email address is required",
+      "INVALID_EMAIL_ERROR": "Invalid email address",
+      "PASSWORD_REQUIRED_ERROR": "Password is required",
+      "PASSWORD_MINLENGTH_ERROR": "Password must be at least 8 characters long",
+      "FORGOT_PASSWORD_LINK": "Forgot Password?"
+    },
+    "SIGN_UP":"Sign Up",
+    "SIGN_UP_FORM": {
+      "FORM_TITLE": "Sign Up",
+      "NAME_LABEL": "Name",
+      "EMAIL_LABEL": "Email",
+      "UID_LABEL": "UID",
+      "COMPANY_NAME_LABEL": "Company Name",
+      "SUBMIT_BUTTON": "Sign Up"
+    }
+  },
+    "UPLOAD_SECTION": {
+      "HELLO_ADMIN": "Hello Admin!!",
+      "UPLOAD_COMPANY_STRUCTURE": "Upload Your Company Battle Structure Here",
+      "SELECT_FILE": "Select a file to upload from your computer or device",
+      "CHOOSE_FILE": "Choose a File",
+      "SELECTED_FILE": "Selected File: ",
+      "CONFIRM_BUTTON": "Confirm"
+    },
+    "POST_NEWS_PAGE": {
+      "HEADER_TITLE": "Post News",
+      "HEADER_DESCRIPTION": "Post Your Source For Wuerth Updates, Images And Video Links",
+      "TITLE_LABEL": "Title",
+      "POST_BUTTON": "Post News"
+    },
+    "NEWS_LIST_PAGE": {
+      "HEADER_TITLE": "News",
+      "HEADER_DESCRIPTION": "Explore The Latest Wuerth Updates",
+      "UPDATE_BUTTON": "Update",
+      "DELETE_BUTTON": "Delete",
+      "LIKES_LABEL": "Total Likes"
+    },
+
+      "UPLOAD_EXCEL": {
+        "HEADER_TITLE": "Sales Data",
+        "HEADER_DESCRIPTION": "Upload Hourly Excel File for Sales Updates",
+        "SELECT_FILE": "Select a file to upload from your computer or device",
+        "CHOOSE_FILE_BUTTON": "Choose a File",
+        "SELECTED_FILE_LABEL": "Selected File: ",
+        "CONFIRM_BUTTON": "Confirm"
+      },
+      "EVENT_UPLOAD_PAGE": {
+        "HEADER_TITLE": "Event Graphics",
+        "HEADER_DESCRIPTION": "Upload Event Graphics. Name The Event, Add Logo/Graphics",
+        "EVENT_NAME_LABEL": "Event Name",
+        "LOGO_IMAGE_LABEL": "Logo Image",
+        "BACKGROUND_IMAGE_LABEL": "Background Image",
+        "CHOOSE_IMAGE_BUTTON": "Choose an Image",
+        "SELECTED_FILE_LABEL": "Selected File:",
+        "CONFIRM_BUTTON": "Confirm",
+        "UPDATE_BUTTON": "Update",
+        "TABLE_HEADERS": {
+          "SELECT": "Select",
+          "EVENT_NAME": "Event Name",
+          "LOGO_IMAGE": "Logo Image",
+          "BACKGROUND_IMAGE": "Background Image",
+          "ACTION": "Action"
+        },
+        "TOOLTIPS": {
+          "DELETE": "Delete",
+          "EDIT": "Edit"
+        }
+      },
+      "PROFILE_PAGE": {
+        "HEADER_TITLE": "Profile",
+        "HEADER_DESCRIPTION": "Access Your Profile Info, Edit, Change Password.",
+        "NAME_LABEL": "Name",
+        "EMAIL_LABEL": "Email",
+        "COMPANY_NUMBER_LABEL": "Company Number",
+        "COMPANY_NAME_LABEL": "Company Name",
+        "CHANGE_PASSWORD_LABEL": "Change Password",
+        "NEW_PASSWORD_LABEL": "Enter new password",
+        "SAVE_BUTTON": "Save",
+        "EDIT_BUTTON": "Edit"
+      },
+      "FORGOT_PASSWORD": {
+        "BACK_TO_LOGIN": "Back To Login",
+        "FORGOT_PASSWORD_TITLE": "Forgot Password",
+        "FORGOT_PASSWORD_DESCRIPTION": "Lost your password? No worries! Just enter your email and we'll send a link.",
+        "EMAIL_LABEL": "Email",
+        "FORGOT_PASSWORD_BUTTON": "Forgot Password"
+      },
+      "SET_PASSWORD_PAGE": {
+        "BACK_TO_LOGIN": "Back To Login",
+        "SET_PASSWORD_TITLE": "Set Password",
+        "PASSWORD_LABEL": "Password",
+        "CONFIRM_PASSWORD_LABEL": "Confirm Password",
+        "SET_PASSWORD_BUTTON": "Set Password",
+        "PASSWORD_TOOLTIP": "Password should have minimum 8 characters, at least one uppercase letter, one lowercase letter, one digit, and one special character."
+      },
+      "DIALOG_BOX_POP_UP": {
+        "NO_BUTTON": "No",
+        "YES_BUTTON": "Yes"
+      },
+      "DASHBOARD_SIDEBAR": {
+        "MENU_HOME": "Home",
+        "MENU_POST_NEWS": "Post News",
+        "MENU_NEWS_LIST": "News List",
+        "MENU_UPLOAD_HOUR_FILE": "Upload Hourly File",
+        "MENU_EVENT_GRAPHICS": "Event Graphics",
+        "MENU_PROFILE": "Profile",
+        "MENU_LOGOUT": "Logout"
+      }
+
+
+}

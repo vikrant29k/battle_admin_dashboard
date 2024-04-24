@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,13 +9,15 @@ import { Route, Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit{
 
-  constructor(private route:Router){}
+
+  constructor(public translate: TranslateService){
+    let lang:any=localStorage.getItem('lang')
+    console.log(lang,"asdwqerqwr")
+    translate.use(lang);
+  }
 ngOnInit(): void {
 
 }
-profile(event:any) {
-  this.route.navigate(['/profile']);
-}
-  // showMenu = true; // Initialize menu state to open
+
 
 }
