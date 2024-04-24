@@ -1,0 +1,116 @@
+{
+  "AUTH": {
+    "LOG_IN": "Anmeldung",
+    "LOG_IN_FORM":{
+      "ADMIN_LOGIN": "Admin Anmeldung",
+      "EMAIL_LABEL": "E-Mail",
+      "PASSWORD_LABEL": "Passwort",
+      "TOGGLE_PASSWORD_VISIBILITY": "Passwort Sichtbarkeit umschalten",
+      "EMAIL_REQUIRED_ERROR": "E-Mail Adresse wird benötigt",
+      "INVALID_EMAIL_ERROR": "Ungültige E-Mail Adresse",
+      "PASSWORD_REQUIRED_ERROR": "Passwort wird benötigt",
+      "PASSWORD_MINLENGTH_ERROR": "Passwort muss mindestens 8 Zeichen lang sein",
+      "FORGOT_PASSWORD_LINK": "Passwort vergessen?"
+    },
+    "SIGN_UP": "Registrieren",
+    "SIGN_UP_FORM": {
+      "FORM_TITLE": "Registrierung",
+      "NAME_LABEL": "Name",
+      "EMAIL_LABEL": "E-Mail",
+      "UID_LABEL": "UID",
+      "COMPANY_NAME_LABEL": "Firmenname",
+      "SUBMIT_BUTTON": "Registrieren"
+    }
+  },
+  "UPLOAD_SECTION": {
+      "HELLO_ADMIN": "Hallo Admin!!",
+      "UPLOAD_COMPANY_STRUCTURE": "Laden Sie hier Ihre Unternehmenskampfstruktur hoch",
+      "SELECT_FILE": "Wählen Sie eine Datei zum Hochladen von Ihrem Computer oder Gerät aus",
+      "CHOOSE_FILE": "Wählen Sie eine Datei aus",
+      "SELECTED_FILE": "Ausgewählte Datei: ",
+      "CONFIRM_BUTTON": "Bestätigen"
+    },
+    "POST_NEWS_PAGE": {
+      "HEADER_TITLE": "Nachrichten veröffentlichen",
+      "HEADER_DESCRIPTION": "Veröffentlichen Sie Ihre Quelle für Wuerth-Updates, Bilder und Videolinks",
+      "TITLE_LABEL": "Titel",
+      "POST_BUTTON": "Nachrichten veröffentlichen"
+    },
+    "NEWS_LIST_PAGE": {
+      "HEADER_TITLE": "Nachrichten",
+      "HEADER_DESCRIPTION": "Erkunden Sie die neuesten Wuerth-Updates",
+      "UPDATE_BUTTON": "Aktualisieren",
+      "DELETE_BUTTON": "Löschen",
+      "LIKES_LABEL": "Gesamt-Likes"
+    },
+    "UPLOAD_EXCEL": {
+      "HEADER_TITLE": "Verkaufsdaten",
+      "HEADER_DESCRIPTION": "Stundenweise Excel-Datei für Verkaufsaktualisierungen hochladen",
+      "SELECT_FILE": "Wählen Sie eine Datei zum Hochladen von Ihrem Computer oder Gerät aus",
+      "CHOOSE_FILE_BUTTON": "Wählen Sie eine Datei aus",
+      "SELECTED_FILE_LABEL": "Ausgewählte Datei: ",
+      "CONFIRM_BUTTON": "Bestätigen"
+    },
+    "EVENT_UPLOAD_PAGE": {
+      "HEADER_TITLE": "Veranstaltungsgrafiken",
+      "HEADER_DESCRIPTION": "Veranstaltungsgrafiken hochladen. Benennen Sie die Veranstaltung, fügen Sie Logo/Grafiken hinzu",
+      "EVENT_NAME_LABEL": "Veranstaltungsname",
+      "LOGO_IMAGE_LABEL": "Logo-Bild",
+      "BACKGROUND_IMAGE_LABEL": "Hintergrundbild",
+      "CHOOSE_IMAGE_BUTTON": "Bild auswählen",
+      "SELECTED_FILE_LABEL": "Ausgewählte Datei:",
+      "CONFIRM_BUTTON": "Bestätigen",
+      "UPDATE_BUTTON": "Aktualisieren",
+      "TABLE_HEADERS": {
+        "SELECT": "Auswählen",
+        "EVENT_NAME": "Veranstaltungsname",
+        "LOGO_IMAGE": "Logo-Bild",
+        "BACKGROUND_IMAGE": "Hintergrundbild",
+        "ACTION": "Aktion"
+      },
+      "TOOLTIPS": {
+        "DELETE": "Löschen",
+        "EDIT": "Bearbeiten"
+      }
+    },
+    "PROFILE_PAGE": {
+      "HEADER_TITLE": "Profil",
+      "HEADER_DESCRIPTION": "Greifen Sie auf Ihre Profilinformationen zu, bearbeiten Sie diese und ändern Sie Ihr Passwort.",
+      "NAME_LABEL": "Name",
+      "EMAIL_LABEL": "E-Mail",
+      "COMPANY_NUMBER_LABEL": "Firmennummer",
+      "COMPANY_NAME_LABEL": "Firmenname",
+      "CHANGE_PASSWORD_LABEL": "Passwort ändern",
+      "NEW_PASSWORD_LABEL": "Neues Passwort eingeben",
+      "SAVE_BUTTON": "Speichern",
+      "EDIT_BUTTON": "Bearbeiten"
+    },
+    "FORGOT_PASSWORD": {
+      "BACK_TO_LOGIN": "Zurück zum Login",
+      "FORGOT_PASSWORD_TITLE": "Passwort vergessen",
+      "FORGOT_PASSWORD_DESCRIPTION": "Passwort vergessen? Kein Problem! Geben Sie einfach Ihre E-Mail-Adresse ein und wir senden Ihnen einen Link.",
+      "EMAIL_LABEL": "E-Mail",
+      "FORGOT_PASSWORD_BUTTON": "Passwort vergessen"
+    },
+    "SET_PASSWORD_PAGE": {
+      "BACK_TO_LOGIN": "Zurück zum Login",
+      "SET_PASSWORD_TITLE": "Passwort festlegen",
+      "PASSWORD_LABEL": "Passwort",
+      "CONFIRM_PASSWORD_LABEL": "Passwort bestätigen",
+      "SET_PASSWORD_BUTTON": "Passwort festlegen",
+      "PASSWORD_TOOLTIP": "Das Passwort muss mindestens 8 Zeichen lang sein, mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Ziffer und ein Sonderzeichen enthalten."
+    },
+    "DIALOG_BOX_POP_UP": {
+      "NO_BUTTON": "Nein",
+      "YES_BUTTON": "Ja"
+    },
+    "DASHBOARD_SIDEBAR": {
+      "MENU_HOME": "Startseite",
+      "MENU_POST_NEWS": "Neuigkeiten posten",
+      "MENU_NEWS_LIST": "Nachrichtenliste",
+      "MENU_UPLOAD_HOUR_FILE": "Stündliche Datei hochladen",
+      "MENU_EVENT_GRAPHICS": "Eventgrafiken",
+      "MENU_PROFILE": "Profil",
+      "MENU_LOGOUT": "Ausloggen"
+    }
+}

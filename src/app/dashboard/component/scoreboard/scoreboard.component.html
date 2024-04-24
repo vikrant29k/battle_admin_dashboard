@@ -1,13 +1,13 @@
 <div class="container">
   <div class="header-tag">
-    <h2>Sales Data</h2>
-    <p>Upload Hourly Excel File for Sales Updates</p>
+    <h2>{{ 'UPLOAD_EXCEL.HEADER_TITLE' | translate }}</h2>
+    <p>{{ 'UPLOAD_EXCEL.HEADER_DESCRIPTION' | translate }}</p>
+
   </div>
 
   <div class="upload-section">
-    <!-- <h2 class="header-title">Upload File</h2> -->
     <div class="file-selection">
-      <h3>Select a file to upload from your computer or device</h3>
+      <h3>{{ 'UPLOAD_EXCEL.SELECT_FILE' | translate }}</h3>
       <div class="file-chooser">
         <input
           type="file"
@@ -23,21 +23,20 @@
           (click)="fileInput.click()"
           *ngIf="!fileSelectedSpinner"
         >
-          Choose a File
+          {{ 'UPLOAD_EXCEL.CHOOSE_FILE_BUTTON' | translate }}
         </button>
         <mat-spinner
           style="width: 50px"
           *ngIf="fileSelectedSpinner"
         ></mat-spinner>
       </div>
-      <!-- Display the selected file name -->
       <p
         *ngIf="selectedFile"
         [class.colorRed]="fileError"
         class="selected-file-name"
         style="margin-bottom: 0%"
       >
-        Selected File: {{ selectedFile.name }}
+        {{ 'UPLOAD_EXCEL.SELECTED_FILE_LABEL' | translate }}{{ selectedFile.name }}
       </p>
 
       <br />
@@ -47,7 +46,7 @@
           (click)="onFileUpload()"
           [disabled]="disableConfirmButotn"
         >
-          Confirm
+          {{ 'UPLOAD_EXCEL.CONFIRM_BUTTON' | translate }}
         </button>
         <mat-spinner style="width: 50px" *ngIf="confirm"></mat-spinner>
       </div>

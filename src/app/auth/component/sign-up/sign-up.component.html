@@ -1,59 +1,65 @@
-
 <div class="card">
-  <h2 class="form-title">Sign Up</h2>
+  <h2 class="form-title">{{ 'AUTH.SIGN_UP_FORM.FORM_TITLE' | translate }}</h2>
   <form [formGroup]="signupForm" (submit)="submit()" class="form-container">
-   <div class="sub-container">
-    <mat-form-field class="form-group">
-      <mat-label>Name</mat-label>
-      <input
-        matInput
-        type="text"
-        name="name"
-        placeholder="Enter Your Name"
-        required
-        formControlName="name"
-      />
-    </mat-form-field>
-    <mat-form-field class="form-group">
-      <mat-label>Email</mat-label>
-      <input
-        matInput
-        type="email"
-        name="email"
-        placeholder="Enter Your Email"
-        required
-        formControlName="email"
-      />
-    </mat-form-field>
-<!-- <div class="companyDetails"> -->
-    <mat-form-field class="form-group cNumber">
-      <mat-label>UID</mat-label>
-      <mat-select name="companyNumber" formControlName="companyNumber" placeholder="Ex. 1111" required
-                  (selectionChange)="onCompanySelection($event)">
-        <input class="filter" type="number" aria-label="Filter companies" placeholder="Filter" (keyup)="filterCompanies($event)">
-        <mat-option *ngFor="let company of filteredCompanies" [value]="company.uid">
-          {{ company.uid }}
-        </mat-option>
-        <mat-option *ngIf="!filteredCompanies?.length">No companies found</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field class="form-group cName">
-      <mat-label>Company Name</mat-label>
-      <mat-select name="companyName" formControlName="companyName" placeholder="Ex. IN-Würth India" required
-                  (selectionChange)="onCompanySelection($event)">
-        <input class="filter" type="text" aria-label="Filter companies" placeholder="Filter" (keyup)="filterCompaniesName($event)">
-        <mat-option *ngFor="let company of filteredCompaniesName" [value]="company.name">
-          {{ company.name }}
-        </mat-option>
-        <mat-option *ngIf="!filteredCompaniesName?.length">No companies found</mat-option>
-      </mat-select>
-    </mat-form-field>
-  <!-- </div> -->
-   </div>
+    <div class="sub-container">
+      <mat-form-field class="form-group">
+        <mat-label>{{ 'AUTH.SIGN_UP_FORM.NAME_LABEL' | translate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          name="name"
+          placeholder="{{ 'AUTH.SIGN_UP_FORM.NAME_LABEL' | translate }}"
+          required
+          formControlName="name"
+        />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <mat-label>{{ 'AUTH.SIGN_UP_FORM.EMAIL_LABEL' | translate }}</mat-label>
+        <input
+          matInput
+          type="email"
+          name="email"
+          placeholder="{{ 'AUTH.SIGN_UP_FORM.EMAIL_LABEL' | translate }}"
+          required
+          formControlName="email"
+        />
+      </mat-form-field>
+      <mat-form-field class="form-group cNumber">
+        <mat-label>{{ 'AUTH.SIGN_UP_FORM.UID_LABEL' | translate }}</mat-label>
+        <mat-select
+          name="companyNumber"
+          formControlName="companyNumber"
+          placeholder="{{ 'AUTH.SIGN_UP_FORM.UID_LABEL' | translate }}"
+          required
+          (selectionChange)="onCompanySelection($event)"
+        >
+          <input class="filter" type="number" aria-label="Filter companies" placeholder="Filter" (keyup)="filterCompanies($event)" />
+          <mat-option *ngFor="let company of filteredCompanies" [value]="company.uid">
+            {{ company.uid }}
+          </mat-option>
+          <mat-option *ngIf="!filteredCompanies?.length">No companies found</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="form-group cName">
+        <mat-label>{{ 'AUTH.SIGN_UP_FORM.COMPANY_NAME_LABEL' | translate }}</mat-label>
+        <mat-select
+          name="companyName"
+          formControlName="companyName"
+          placeholder="{{ 'AUTH.SIGN_UP_FORM.COMPANY_NAME_LABEL' | translate }}"
+          required
+          (selectionChange)="onCompanySelection($event)"
+        >
+          <input class="filter" type="text" aria-label="Filter companies" placeholder="Filter" (keyup)="filterCompaniesName($event)" />
+          <mat-option *ngFor="let company of filteredCompaniesName" [value]="company.name">
+            {{ company.name }}
+          </mat-option>
+          <mat-option *ngIf="!filteredCompaniesName?.length">No companies found</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
     <div class="form-submit">
-      <button type="submit" class="signUp" mat-raised-button color="primary">Sign Up</button>
+      <button type="submit" class="signUp" mat-raised-button color="primary" translate="AUTH.SIGN_UP_FORM.SUBMIT_BUTTON"></button>
     </div>
   </form>
 </div>

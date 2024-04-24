@@ -7,9 +7,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthComponent } from './auth.component';
 import { RouterModule } from '@angular/router';
 import { AuthRoutingModule } from './module/auth-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthMaterialModule } from './module/auth-material.module';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,15 @@ import { ForgotPasswordComponent } from './component/forgot-password/forgot-pass
     ReactiveFormsModule,
     RouterModule,
     AuthRoutingModule,
-    HttpClientModule,AuthMaterialModule
+    HttpClientModule,AuthMaterialModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => new TranslateHttpLoader(http),
+        deps: [HttpClient]
+      }
+    })
+
   ],
 })
 export class AuthModule {}

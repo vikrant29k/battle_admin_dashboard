@@ -1,9 +1,9 @@
 <div class="container">
   <div class="newsList">
     <div class="header-tag">
-      <h2>News</h2>
-      <p>Explore The Latest Wuerth Updates</p>
-     </div>
+      <h2>{{ 'NEWS_LIST_PAGE.HEADER_TITLE' | translate }}</h2>
+      <p>{{ 'NEWS_LIST_PAGE.HEADER_DESCRIPTION' | translate }}</p>
+    </div>
 
     <div class="contentNewsList">
       <ng-container *ngFor="let news of listOfNews">
@@ -16,10 +16,10 @@
           </mat-card-content>
           <mat-card-actions class="card-action">
             <div class="action-button">
-              <button mat-raised-button style=" background-color: #009EE0;color: white;" (click)="updateNews(news)">Update</button>
-              <button mat-raised-button color="warn" (click)="deleteNews(news._id)">Delete</button>
+              <button mat-raised-button style=" background-color: #009EE0;color: white;" (click)="updateNews(news)">{{ 'NEWS_LIST_PAGE.UPDATE_BUTTON' | translate }}</button>
+              <button mat-raised-button color="warn" (click)="deleteNews(news._id)">{{ 'NEWS_LIST_PAGE.DELETE_BUTTON' | translate }}</button>
             </div>
-            <div class="likes">Total Likes {{news.reaction}}</div>
+            <div class="likes">{{ 'NEWS_LIST_PAGE.LIKES_LABEL' | translate }} {{ news.reaction }}</div>
           </mat-card-actions>
           <mat-card-footer align="right" class="card-footer">{{ getFormattedDate(news.updatedAt) }}</mat-card-footer>
         </mat-card>

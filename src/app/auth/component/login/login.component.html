@@ -1,9 +1,9 @@
 <div class="container">
-  <h2>Admin Login</h2>
+  <h2>{{ 'AUTH.LOG_IN_FORM.ADMIN_LOGIN' | translate }}</h2>
   <form [formGroup]="LoginForm" (ngSubmit)="onSubmit()" novalidate class="content">
     <div class="inputFields">
       <mat-form-field appearance="fill">
-        <mat-label>E-Mail</mat-label>
+        <mat-label>{{ 'AUTH.LOG_IN_FORM.EMAIL_LABEL' | translate }}</mat-label>
         <input
           matInput
           type="email"
@@ -16,18 +16,16 @@
           "
         >
           <span *ngIf="LoginForm.get('email')?.errors?.['required']"
-            >Email address is required</span
+            >{{ 'AUTH.LOG_IN_FORM.EMAIL_REQUIRED_ERROR' | translate }}</span
           >
           <span *ngIf="LoginForm.get('email')?.errors?.['email']"
-            >Invalid email address</span
+            >{{ 'AUTH.LOG_IN_FORM.INVALID_EMAIL_ERROR' | translate }}</span
           >
         </mat-error>
       </mat-form-field>
 
-
-
       <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
+        <mat-label>{{ 'AUTH.LOG_IN_FORM.PASSWORD_LABEL' | translate }}</mat-label>
         <input
           matInput
           type="{{ passwordHidden ? 'password' : 'text' }}"
@@ -38,7 +36,6 @@
           mat-icon-button
           matSuffix
           (click)="togglePasswordVisibility()"
-          aria-label="Toggle password visibility"
         >
           <mat-icon>{{
             passwordHidden ? "visibility_off" : "visibility"
@@ -51,16 +48,15 @@
           "
         >
           <span *ngIf="LoginForm.get('password')?.errors?.['required']"
-            >Password is required</span
+            >{{ 'AUTH.LOG_IN_FORM.PASSWORD_REQUIRED_ERROR' | translate }}</span
           >
           <span *ngIf="LoginForm.get('password')?.errors?.['minlength']"
-            >Password must be at least 8 characters long</span
+            >{{ 'AUTH.LOG_IN_FORM.PASSWORD_MINLENGTH_ERROR' | translate }}</span
           >
         </mat-error>
       </mat-form-field>
-      <span class="forgot-password" routerLink="/auth/forgot-password">Forgot Password ?</span>
-</div>
-
-<button type="submit" mat-raised-button color="primary" class="login">Log In</button>
+      <span class="forgot-password" routerLink="/auth/forgot-password">{{ 'AUTH.LOG_IN_FORM.FORGOT_PASSWORD_LINK' | translate }}</span>
+    </div>
+    <button type="submit" mat-raised-button color="primary" class="login">{{ 'AUTH.LOG_IN' | translate }}</button>
   </form>
 </div>
