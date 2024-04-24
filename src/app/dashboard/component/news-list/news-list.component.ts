@@ -8,6 +8,7 @@ import { Route, Router } from '@angular/router';
 import { environment } from 'src/environment/enviroment';
 import { NewsUpdateService } from 'src/app/services/newsUpdate.service';
 import { ToastrService } from 'ngx-toastr';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-news-list',
   templateUrl: './news-list.component.html',
@@ -18,7 +19,8 @@ export class NewsListComponent implements OnInit {
     private http: HttpClient,
     private updateService: NewsUpdateService,
     private route: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private sanitizer:DomSanitizer
   ) {}
   ngOnInit(): void {
     this.getListofNews();
@@ -63,5 +65,8 @@ export class NewsListComponent implements OnInit {
     if (news) {
       this.route.navigate(['/', 'news-update']);
     }
+  }
+  sanitizeHTML(content:string){
+    return this.sanitizer.bypassSecurityTrustHtml(content)
   }
 }
