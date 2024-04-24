@@ -17,6 +17,7 @@ import { MatchComponent } from './component/match/match.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+import { EditFormDialogComponent } from './component/edit-form-dialog/edit-form-dialog.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -29,7 +30,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     DialogAnimationsComponent,
     ImportExcelComponent,
     MatchComponent,
-  ],
+  EditFormDialogComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
