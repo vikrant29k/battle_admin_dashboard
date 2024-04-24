@@ -18,19 +18,10 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { EditFormDialogComponent } from './component/edit-form-dialog/edit-form-dialog.component';
+import { HourlyExcelEditFormDialogComponent } from './component/hourly-excel-edit-form-dialog/hourly-excel-edit-form-dialog.component';
 @NgModule({
-  declarations: [
-    DashboardComponent,
-    SliderComponent,
-    ScoreboardComponent,
-    HeaderComponent,
-    NewsUpdateComponent,
-    NewsListComponent,
-    ProfileComponent,
-    DialogAnimationsComponent,
-    ImportExcelComponent,
-    MatchComponent,
-  EditFormDialogComponent],
+
+  declarations: [DashboardComponent, SliderComponent, ScoreboardComponent, HeaderComponent, NewsUpdateComponent, NewsListComponent, ProfileComponent, DialogAnimationsComponent, ImportExcelComponent, MatchComponent, EditFormDialogComponent, HourlyExcelEditFormDialogComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
