@@ -47,7 +47,7 @@ export class NewsListComponent implements OnInit {
         // console.log(res)
         if (res.success) {
           // location.reload()
-          this.toastr.success('News Deleted Successfully');
+          this.toastr.success('News deleted successfully');
           this.getListofNews();
         }
       },
