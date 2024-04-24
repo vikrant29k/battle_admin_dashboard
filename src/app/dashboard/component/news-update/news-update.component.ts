@@ -37,6 +37,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
   });
   updateNews: boolean = false;
   newsId!: string;
+
   constructor(
     private http: HttpClient,
     private updateService: NewsUpdateService,
@@ -63,7 +64,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
   config: AngularEditorConfig = {
     editable: true,
     enableToolbar:false,
-    showToolbar: false,
+    showToolbar: true,
     spellcheck: true,
     minHeight: '20rem',
     maxHeight: '20rem',
@@ -139,6 +140,11 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     translate: 'no',
     sanitize: false,
     toolbarPosition: 'top',
+    toolbarHiddenButtons: [
+      [
+        'insertVideo',
+      ]
+    ]
   };
   submitContent() {
     if (this.newsContent.valid) {
@@ -182,6 +188,34 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     } else {
       this.toastr.error('Enter All Fields');
     }
+  }
+
+  // addVideo() {
+  //   const videoLink = prompt("Please enter the video link:");
+  //   if (videoLink) {
+  //     const videoEmbedCode = `<iframe src="${videoLink}" width="640" height="360" frameborder="0" allowfullscreen></iframe>`;
+  //     this.editor.executeCommand('insertHtml', videoEmbedCode);
+  //   }
+  // }
+
+  addVideo() {
+    const videoLink = prompt("Please enter the YouTube video URL:");
+    if (videoLink) {
+      const videoId = this.getYouTubeVideoId(videoLink);
+      if (videoId) {
+        const videoEmbedCode = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        // Execute command to insert the video embed code
+        this.editor.executeCommand('insertHtml', videoEmbedCode);
+      } else {
+        alert("Invalid YouTube video URL.");
+      }
+    }
+  }
+
+  getYouTubeVideoId(url: string): string | null {
+    const videoIdRegex = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/;
+    const match = url.match(videoIdRegex);
+    return match ? match[1] : null;
   }
 
   ngOnDestroy(): void {

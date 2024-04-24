@@ -8,7 +8,14 @@
      <mat-label>{{ 'POST_NEWS_PAGE.TITLE_LABEL' | translate }}</mat-label>
        <input type="text" matInput formControlName="title">
    </mat-form-field>
-   <angular-editor formControlName="content" id="angular-editor" class="angular-editor" [config]="config" #editor></angular-editor>
+   <angular-editor formControlName="content" id="angular-editor" class="angular-editor" [config]="config" #editor>
+    <ng-template #customButtons let-executeCommandFn="executeCommandFn">
+      <ae-toolbar-set>
+        <ae-button iconClass="fa fa-video-camera" title="Insert Video" (buttonClick)="addVideo()">
+        </ae-button>
+      </ae-toolbar-set>
+    </ng-template>
+  </angular-editor>
    <button mat-raised-button color="primary" class="postNewsButton" (click)="submitContent()">{{ 'POST_NEWS_PAGE.POST_BUTTON' | translate }}</button>
  </form>
  </div>
