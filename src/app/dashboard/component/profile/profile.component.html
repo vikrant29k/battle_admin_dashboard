@@ -31,11 +31,24 @@
       </div>
 
       <div class="form-submit">
-          <button mat-raised-button color="primary" class="btn" (click)="editBtn?editBtnClick():saveBtnClick()">{{ 'PROFILE_PAGE.EDIT_BUTTON' | translate }}</button>
-          <button mat-raised-button color="primary" class="btn" (click)="openDialog('0ms', '0ms')">
+          <button mat-raised-button color="primary" class="btn" (click)="editBtn?editBtnClick():saveBtnClick()"> {{  getButtonLabel() | translate }}</button>
+          <button mat-raised-button color="primary" class="btn" [disabled]="changePasswordBtnDisabled" (click)="openDialog('0ms', '0ms')">
             {{ 'PROFILE_PAGE.CHANGE_PASSWORD_LABEL' | translate }}
           </button>
       </div>
+<!-- 
+       <div class="form-submit">
+    
+        <button mat-raised-button color="primary" class="btn" *ngIf="editBtn" (click)="editBtnClick()">
+          {{ 'PROFILE_PAGE.EDIT_BUTTON' | translate }}
+        </button>
+        <button mat-raised-button color="primary" class="btn" *ngIf="!editBtn && !changePassword" (click)="openDialog('0ms', '0ms')">
+          {{ 'PROFILE_PAGE.CHANGE_PASSWORD_LABEL' | translate }}
+        </button>
+        <button mat-raised-button color="primary" class="btn" *ngIf="!editBtn && changePassword" (click)="saveBtnClick()">
+          {{ 'PROFILE_PAGE.SAVE_BUTTON' | translate }}
+        </button>
+      </div>  -->
     </form>
   </div>
 </div>

@@ -8,6 +8,7 @@ import { Route, Router } from '@angular/router';
 import { environment } from 'src/environment/enviroment';
 import { NewsUpdateService } from 'src/app/services/newsUpdate.service';
 import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-news-list',
   templateUrl: './news-list.component.html',
@@ -18,7 +19,7 @@ export class NewsListComponent implements OnInit {
     private http: HttpClient,
     private updateService: NewsUpdateService,
     private route: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) {}
   ngOnInit(): void {
     this.getListofNews();
@@ -61,7 +62,9 @@ export class NewsListComponent implements OnInit {
     console.log(news);
     this.updateService.news = news;
     if (news) {
+   
       this.route.navigate(['/', 'news-update']);
     }
   }
+
 }

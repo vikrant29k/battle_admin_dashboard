@@ -13,6 +13,7 @@ import { DialogAnimationsComponent } from '../dialog-animations/dialog-animation
 import { ChangepasswordService } from 'src/app/services/changepassword.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -29,6 +30,7 @@ export class ProfileComponent {
 
   editBtn: boolean = true;
   changePassword: boolean = false;
+ 
 
   ngOnInit(): void {
     this.changepass.showOtherDiv.subscribe((res: any) => {
@@ -43,6 +45,7 @@ export class ProfileComponent {
     });
 
     this.getProfileDetails();
+
   }
   constructor(
     public dialog: MatDialog,
@@ -50,11 +53,15 @@ export class ProfileComponent {
     private http: HttpClient,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private translate:TranslateService
   ) {}
 
   showOtherDiv: boolean = false;
   inputValue: string = '';
+  changePasswordBtnDisabled: boolean = false;
+  passwordDialogOpen: boolean = false;
+
   showpassword = this.changepass.showOtherDiv;
   dialogData = {
     title:"Reset Password!!",
@@ -72,6 +79,11 @@ export class ProfileComponent {
     });
 
     this.changePassword = true;
+    // this.editBtn = false;
+  }
+
+  getButtonLabel(): string {
+    return this.editBtn ?  'PROFILE_PAGE.EDIT_BUTTON':'PROFILE_PAGE.SAVE_BUTTON' ;
   }
 
   getProfileDetails() {
@@ -96,9 +108,15 @@ export class ProfileComponent {
     this.profileForm.get('uid')?.disable();
     this.profileForm.get('name')?.disable();
     this.editBtn = false;
+    this.changePasswordBtnDisabled = true; 
+    this.changePassword = false;
   }
 
+
+  
+
   saveBtnClick() {
+    // this.editBtn = true;
     if (this.profileForm.valid) {
       if (!this.showpassword) {
         if (this.profileForm.get('newPassword')?.value) {
@@ -158,6 +176,7 @@ export class ProfileComponent {
             this.editBtn = true;
             this.getProfileDetails();
             this.toastr.success('Profile update successfully');
+            // this.toastr.success("Password updated successfully")
           }
         },
         error: (err: HttpErrorResponse) => {

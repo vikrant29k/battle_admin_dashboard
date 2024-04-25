@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environment/enviroment';
@@ -12,6 +12,7 @@ import { DialogAnimationsComponent } from '../dialog-animations/dialog-animation
 })
 export class MatchComponent implements OnInit {
   @ViewChild('matchName') matchNameInput!: ElementRef;
+  @ViewChild('uploadSection') uploadSection!: ElementRef;
   selectedImgLogo: any = null;
   selectedImgBg: any = null;
   fileError: boolean = false;
@@ -34,7 +35,7 @@ export class MatchComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {}
   ngOnInit(): void {
     this.getAllMatches();
@@ -110,6 +111,11 @@ export class MatchComponent implements OnInit {
     }
   }
 
+
+ 
+  
+  
+  
   getAllMatches() {
     this.http.get(`${environment.baseUrl}event`).subscribe({
       next: (res: any) => {
@@ -152,6 +158,12 @@ export class MatchComponent implements OnInit {
         if (res.success) {
           // console.log('api res', res);
           this.toastr.success(res.message);
+         // Clear the form details when the record is deleted
+         this.matchNameInput.nativeElement.value = '';
+         this.selectedImgLogo = null;
+         this.selectedImgBg = null;
+         this.updateBtn = false;
+         this.matchIdForUpdate = '';
           this.getAllMatches();
         }
       },
@@ -164,14 +176,21 @@ export class MatchComponent implements OnInit {
 
   updateMatchBtn(match: any) {
     console.log('update match btn', match);
+
     this.matchNameInput.nativeElement.value = match.eventName;
     this.selectedImgLogo = { name: match.avatar };
     this.selectedImgBg = { name: match.bgAvatar };
     this.updateBtn = true;
     this.matchIdForUpdate = match._id;
+    if (this.uploadSection && this.uploadSection.nativeElement) {
+      this.uploadSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 
+
+
   updateMatch(matchName: any) {
+
     let data = new FormData();
     data.append('eventName', matchName);
     if (this.selectedImgLogo.type !== undefined) {
