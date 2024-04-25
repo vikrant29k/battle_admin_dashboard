@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --aot --base-href /wuerth-admin_dev/",
+    "build:prod": "ng build --aot --base-href /wuerth-admin/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

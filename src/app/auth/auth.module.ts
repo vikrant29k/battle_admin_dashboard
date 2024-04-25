@@ -31,7 +31,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
-        useFactory: (http: HttpClient) => new TranslateHttpLoader(http),
+        useFactory: (http: HttpClient) => new TranslateHttpLoader(http, 'assets/i18n/', '.json'),
         deps: [HttpClient]
       }
     })

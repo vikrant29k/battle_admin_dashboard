@@ -28,9 +28,9 @@ import { AuthModule } from './auth/auth.module';
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (http: HttpClient) => new TranslateHttpLoader(http),
+        useFactory: (http: HttpClient) => new TranslateHttpLoader(http, 'assets/i18n/', '.json'),
         deps: [HttpClient],
-      }
+      },
     })
   ],
   providers: [
