@@ -82,4 +82,11 @@
       }
     }
   }
+  .filter{
+    width: 98%;
+    height:1.7rem;
+    &::placeholder{
+      color: rgb(151, 151, 151);
+    }
+  }
 }

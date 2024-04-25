@@ -34,7 +34,13 @@
       "HEADER_TITLE": "Nachrichten veröffentlichen",
       "HEADER_DESCRIPTION": "Veröffentlichen Sie Ihre Quelle für Wuerth-Updates, Bilder und Videolinks",
       "TITLE_LABEL": "Titel",
-      "POST_BUTTON": "Nachrichten veröffentlichen"
+      "POST_BUTTON": " Veröffentlichen"
+    },
+    "UPDATE_NEWS_PAGE": {
+      "HEADER_TITLE": "Nachrichten aktualisieren",
+      "HEADER_DESCRIPTION": "Aktualisieren Sie Ihre Quelle für Wuerth-Updates, Bilder und Videolinks",
+      "TITLE_LABEL": "Titel",
+      "UPDATE_BUTTON": " Aktualisieren"
     },
     "NEWS_LIST_PAGE": {
       "HEADER_TITLE": "Nachrichten",

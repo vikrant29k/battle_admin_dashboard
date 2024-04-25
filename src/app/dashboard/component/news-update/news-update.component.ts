@@ -21,6 +21,7 @@ import { NewsUpdateService } from 'src/app/services/newsUpdate.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Observer, of, tap } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-news-update',
   templateUrl: './news-update.component.html',
@@ -42,25 +43,51 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private updateService: NewsUpdateService,
     private route: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,private translate:TranslateService
   ) {}
-  buttonName = 'Post';
+    buttonName='Post'
+  // ngOnInit(): void {
+  //   let data: any = this.updateService.news;
+  //   this.newsId = data._id;
+  //   if (this.newsId) {
+  //     this.buttonName='Update'
+  //     console.log(data, 'hii');
+  //     this.updateNews = true;
+  //     this.newsContent.patchValue({
+  //       content: data.content,
+  //       title: data.title,
+  //     });
+  //   }else{
+  //     this.buttonName='Post'
+  //   }
+  // }
+  headerTitle:any
   ngOnInit(): void {
     let data: any = this.updateService.news;
-    this.newsId = data._id;
+    this.newsId = data?._id; // Use optional chaining to avoid errors if data is null
+    this.translateTitle(); // Call translateTitle method
+    this.buttonName = this.getButtonLabel();
     if (this.newsId) {
-      this.buttonName = 'Update';
       console.log(data, 'hii');
       this.updateNews = true;
       this.newsContent.patchValue({
         content: data.content,
         title: data.title,
       });
-    } else {
-      this.buttonName = 'Post';
     }
   }
-
+  
+  getButtonLabel(): string {
+    return this.newsId ? 'UPDATE_NEWS_PAGE.UPDATE_BUTTON' : 'POST_NEWS_PAGE.POST_BUTTON';
+  }
+  translateTitle() {
+    const titleKey = this.newsId ? 'UPDATE_NEWS_PAGE.HEADER_TITLE' : 'POST_NEWS_PAGE.HEADER_TITLE';
+    this.translate.get(titleKey).subscribe((title: string) => {
+      this.headerTitle = title; // Assign translated title to headerTitle property
+    });
+  }
+  
+  
   config: AngularEditorConfig = {
     editable: true,
     enableToolbar: false,

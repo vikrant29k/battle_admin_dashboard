@@ -20,7 +20,7 @@ export class NewsListComponent implements OnInit {
     private updateService: NewsUpdateService,
     private route: Router,
     private toastr: ToastrService,
-    private sanitizer:DomSanitizer
+    private sanitizer:DomSanitizer,
   ) {}
   ngOnInit(): void {
     this.getListofNews();
@@ -63,6 +63,7 @@ export class NewsListComponent implements OnInit {
     console.log(news);
     this.updateService.news = news;
     if (news) {
+   
       this.route.navigate(['/', 'news-update']);
     }
   }

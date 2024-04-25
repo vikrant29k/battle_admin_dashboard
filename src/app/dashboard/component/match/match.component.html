@@ -3,7 +3,8 @@
     <h1>{{ 'EVENT_UPLOAD_PAGE.HEADER_TITLE' | translate }}</h1>
     <p>{{ 'EVENT_UPLOAD_PAGE.HEADER_DESCRIPTION' | translate }}</p>
   </div>
-  <div class="upload-section">
+  <div class="section">
+  <div class="upload-section" #uploadSection>
     <div class="file-selection">
       <mat-form-field class="form-group">
         <mat-label>{{ 'EVENT_UPLOAD_PAGE.EVENT_NAME_LABEL' | translate }}</mat-label>
@@ -70,7 +71,7 @@
                   <mat-icon>delete</mat-icon>
                 </button>
                 <button mat-icon-button matTooltip="{{ 'EVENT_UPLOAD_PAGE.TOOLTIPS.EDIT' | translate }}" (click)="updateMatchBtn(match)">
-                  <mat-icon>edit</mat-icon>
+                  <mat-icon >edit</mat-icon>
                 </button>
               </td>
             </tr>
@@ -79,4 +80,5 @@
       </table>
     </div>
   </div>
+</div>
 </div>

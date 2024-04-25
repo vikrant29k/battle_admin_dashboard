@@ -34,8 +34,15 @@
       "HEADER_TITLE": "Post News",
       "HEADER_DESCRIPTION": "Post Your Source For Wuerth Updates, Images And Video Links",
       "TITLE_LABEL": "Title",
-      "POST_BUTTON": "Post News"
+      "POST_BUTTON": "Post"
     },
+      "UPDATE_NEWS_PAGE": {
+        "HEADER_TITLE": "Update News",
+        "HEADER_DESCRIPTION": "Update Your Source For Wuerth Updates, Images And Video Links",
+        "TITLE_LABEL": "New Title",
+        "UPDATE_BUTTON": "Update"
+      },
+    
     "NEWS_LIST_PAGE": {
       "HEADER_TITLE": "News",
       "HEADER_DESCRIPTION": "Explore The Latest Wuerth Updates",

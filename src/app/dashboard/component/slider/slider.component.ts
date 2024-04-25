@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-slider',
   templateUrl: './slider.component.html',
@@ -10,7 +10,7 @@ export class SliderComponent {
   showMenu = false;
   activeMenu: string = localStorage.getItem('activeMenu') || 'import-file'; // Use localStorage for persistence
 
-  constructor(private route: Router) { }
+  constructor(private route: Router,private toastr:ToastrService) { }
 
   goToRoute(name: string) {
     this.route.navigate(['/dashboard', name]);
@@ -27,5 +27,6 @@ export class SliderComponent {
     localStorage.removeItem("token");
     localStorage.removeItem('activeMenu')
     this.route.navigate(['/auth/login']);
+    this.toastr.success('Logout successfully')
   }
 }
