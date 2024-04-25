@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environment/enviroment';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-set-password',
@@ -20,8 +21,12 @@ export class SetPasswordComponent implements OnInit {
     private router: ActivatedRoute,
     private route: Router,
     private aRoute: ActivatedRoute,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private translateService:TranslateService
+  ) {
+    let lang=localStorage.getItem('lang')||'en'
+    translateService.use(lang);
+  }
   public showPassword: boolean = false;
   public togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;

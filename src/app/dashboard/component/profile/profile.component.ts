@@ -1,4 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import {
   FormBuilder,
   FormControl,
@@ -31,6 +32,10 @@ export class ProfileComponent {
   changePassword: boolean = false;
 
   ngOnInit(): void {
+    this.translateService.get(['RESET_PASSWORD.RESET_PASSWORD_TITLE', 'RESET_PASSWORD.RESET_PASSWORD_MESSAGE']).subscribe(translations => {
+      this.dialogData.title = translations['RESET_PASSWORD.RESET_PASSWORD_TITLE'];
+      this.dialogData.message = translations['RESET_PASSWORD.RESET_PASSWORD_MESSAGE'];
+    });
     this.changepass.showOtherDiv.subscribe((res: any) => {
       this.showpassword = res;
     });
@@ -50,16 +55,17 @@ export class ProfileComponent {
     private http: HttpClient,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private translateService:TranslateService
   ) {}
 
   showOtherDiv: boolean = false;
   inputValue: string = '';
   showpassword = this.changepass.showOtherDiv;
   dialogData = {
-    title:"Reset Password!!",
-    message:"Do you want to reset your password?"
-  }
+    title: '',
+    message: ''
+  };
   openDialog(
     enterAnimationDuration: string,
     exitAnimationDuration: string
