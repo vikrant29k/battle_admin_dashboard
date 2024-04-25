@@ -1,23 +1,10 @@
 import { Component,OnInit } from '@angular/core';
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.scss'],
-  animations: [
-    trigger('slideAnimation', [
-      state('in', style({ opacity: 1 })),
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('2s ease-in-out', style({ opacity: 1 }))
-      ]),
-      transition(':leave', [
-        animate('2s ease-in-out', style({  opacity: 0 }))
-      ])
-    ])
-  ]
+  styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit{
 visible: boolean=true

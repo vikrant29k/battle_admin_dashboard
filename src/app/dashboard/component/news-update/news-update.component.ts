@@ -28,7 +28,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./news-update.component.scss'],
 })
 export class NewsUpdateComponent implements OnInit, OnDestroy {
-  @ViewChild('editor') editor: ElementRef|any;
+  @ViewChild('editor') editor: ElementRef | any;
   // content:any;
   // title:any
   images: any[] = [];
@@ -38,6 +38,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
   });
   updateNews: boolean = false;
   newsId!: string;
+
   constructor(
     private http: HttpClient,
     private updateService: NewsUpdateService,
@@ -89,8 +90,8 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
   
   config: AngularEditorConfig = {
     editable: true,
-    enableToolbar:false,
-    showToolbar: false,
+    enableToolbar: false,
+    showToolbar: true,
     spellcheck: true,
     minHeight: '20rem',
     maxHeight: '20rem',
@@ -112,8 +113,8 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
           image.onload = () => {
             let width = image.width;
             let height = image.height;
-            image.classList.add('insideNews')
-            image.className='insideNews'
+            image.classList.add('insideNews');
+            image.className = 'insideNews';
             // Resize the image if either dimension is greater than the maximum
             if (width > maxDimension || height > maxDimension) {
               // Calculate the new dimensions while maintaining aspect ratio
@@ -143,20 +144,17 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
               // Create FormData and append resized image
               const formData = new FormData();
               formData.append('file', blob, file.name);
-                this.updateService.uploadNews(formData)
-                  .subscribe(
-                    (response:any) => {
-                      console.log('Upload successful:', response.body.imageUrl);
-                      this.images.push(response.body.imageUrl);
-                     observer.next(response);
-                     observer.complete()
-                    },
-                    (error) => {
-                      console.error('Upload failed:', error);
-                    }
-                  );
-
-
+              this.updateService.uploadNews(formData).subscribe(
+                (response: any) => {
+                  console.log('Upload successful:', response.body.imageUrl);
+                  this.images.push(response.body.imageUrl);
+                  observer.next(response);
+                  observer.complete();
+                },
+                (error) => {
+                  console.error('Upload failed:', error);
+                }
+              );
             }, file.type);
           };
         }
@@ -166,6 +164,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     translate: 'no',
     sanitize: false,
     toolbarPosition: 'top',
+    toolbarHiddenButtons: [['insertVideo','toggleEditorMode']],
   };
   submitContent() {
     if (this.newsContent.valid) {
@@ -191,24 +190,53 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
           );
       } else {
         console.log('news adding', this.images);
-        this.updateService.postNews(this.newsContent.value)
-          .subscribe(
-            (res: any) => {
-              console.log(res);
-              if (res.statusCode == 200) {
-                this.toastr.success('News added successfully');
-                this.route.navigate(['/', 'dashboard', 'news-list']);
-              }
-            },
-            (error: HttpErrorResponse) => {
-              console.log('error in api', error);
-              this.toastr.error(error.error.message);
+        this.updateService.postNews(this.newsContent.value).subscribe(
+          (res: any) => {
+            console.log(res);
+            if (res.statusCode == 200) {
+              this.toastr.success('News added successfully');
+              this.route.navigate(['/', 'dashboard', 'news-list']);
             }
-          );
+          },
+          (error: HttpErrorResponse) => {
+            console.log('error in api', error);
+            this.toastr.error(error.error.message);
+          }
+        );
       }
     } else {
       this.toastr.error('Enter All Fields');
     }
+  }
+
+  // addVideo() {
+  //   const videoLink = prompt("Please enter the video link:");
+  //   if (videoLink) {
+  //     const videoEmbedCode = `<iframe src="${videoLink}" width="640" height="360" frameborder="0" allowfullscreen></iframe>`;
+  //     this.editor.executeCommand('insertHtml', videoEmbedCode);
+  //   }
+  // }
+
+  addVideo() {
+    const videoLink = prompt('Please enter the YouTube video URL:');
+    if (videoLink) {
+      const videoId = this.getYouTubeVideoId(videoLink);
+      if (videoId) {
+        const videoEmbedCode = `<div>
+                          <iframe src="https://www.youtube.com/embed/${videoId}" style="position: relative; width: 100%; max-width: 500px; min-height: 250px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>`;
+        this.editor.executeCommand('insertHtml', videoEmbedCode);
+      } else {
+        alert('Invalid YouTube video URL.');
+      }
+    }
+  }
+
+  getYouTubeVideoId(url: string): string | null {
+    const videoIdRegex =
+      /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/;
+    const match = url.match(videoIdRegex);
+    return match ? match[1] : null;
   }
 
   ngOnDestroy(): void {

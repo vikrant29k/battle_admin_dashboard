@@ -11,8 +11,8 @@
           <mat-card-header class="card-header">
             <mat-card-title style="overflow-wrap: anywhere;" class="card-title"><h2>{{ news.title }}</h2></mat-card-title>
           </mat-card-header>
-          <mat-card-content class="card-content">
-            <p [class.content-text]="true" [innerHTML]="news.content"></p>
+          <mat-card-content [innerHTML]="sanitizeHTML(news.content)" class="card-content">
+
           </mat-card-content>
           <mat-card-actions class="card-action">
             <div class="action-button">

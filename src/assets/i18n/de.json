@@ -118,5 +118,9 @@
       "MENU_EVENT_GRAPHICS": "Eventgrafiken",
       "MENU_PROFILE": "Profil",
       "MENU_LOGOUT": "Ausloggen"
+    },
+    "RESET_PASSWORD":{
+      "RESET_PASSWORD_TITLE": "Passwort zurücksetzen!!",
+      "RESET_PASSWORD_MESSAGE": "Möchten Sie Ihr Passwort zurücksetzen?"
     }
 }

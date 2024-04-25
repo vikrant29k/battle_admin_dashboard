@@ -120,7 +120,13 @@
         "MENU_EVENT_GRAPHICS": "Event Graphics",
         "MENU_PROFILE": "Profile",
         "MENU_LOGOUT": "Logout"
+      },
+      "RESET_PASSWORD":{
+        "RESET_PASSWORD_TITLE": "Reset Password!!",
+        "RESET_PASSWORD_MESSAGE": "Do you want to reset your password?"
       }
+
+
 
 
 }
