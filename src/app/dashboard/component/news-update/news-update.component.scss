@@ -61,8 +61,14 @@
         font-size: 1.2rem;
         font-weight: 100;
       }
+      // .angular-editor-wrapper {
+      //   height: 22rem; /* Set a fixed height for the editor wrapper */
+      //   overflow-y: scroll; /* Enable vertical scrollbar when content overflows */
+      // }
+      
+    
     }
-
+ 
     .postNewsButton{
       width: 10rem;
       margin-bottom: 20px;
@@ -73,4 +79,5 @@ left: 0;
 right: 0;
   }
   }
+
 }

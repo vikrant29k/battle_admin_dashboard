@@ -38,14 +38,16 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
   });
   updateNews: boolean = false;
   newsId!: string;
-
+  headerTitle:string=''
+  headerDescription:string=''
+  buttonName='Post'
   constructor(
     private http: HttpClient,
     private updateService: NewsUpdateService,
     private route: Router,
     private toastr: ToastrService,private translate:TranslateService
   ) {}
-    buttonName='Post'
+
   // ngOnInit(): void {
   //   let data: any = this.updateService.news;
   //   this.newsId = data._id;
@@ -61,11 +63,12 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
   //     this.buttonName='Post'
   //   }
   // }
-  headerTitle:any
+
   ngOnInit(): void {
     let data: any = this.updateService.news;
     this.newsId = data?._id; // Use optional chaining to avoid errors if data is null
     this.translateTitle(); // Call translateTitle method
+    this.translateDescription();
     this.buttonName = this.getButtonLabel();
     if (this.newsId) {
       console.log(data, 'hii');
@@ -75,11 +78,14 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
         title: data.title,
       });
     }
+    this.updateMinHeight();
+    window.addEventListener('resize', () => this.updateMinHeight());
   }
   
   getButtonLabel(): string {
     return this.newsId ? 'UPDATE_NEWS_PAGE.UPDATE_BUTTON' : 'POST_NEWS_PAGE.POST_BUTTON';
   }
+
   translateTitle() {
     const titleKey = this.newsId ? 'UPDATE_NEWS_PAGE.HEADER_TITLE' : 'POST_NEWS_PAGE.HEADER_TITLE';
     this.translate.get(titleKey).subscribe((title: string) => {
@@ -87,6 +93,12 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     });
   }
   
+  translateDescription() {
+    const descriptionKey = this.newsId ? 'UPDATE_NEWS_PAGE.HEADER_DESCRIPTION' : 'POST_NEWS_PAGE.HEADER_DESCRIPTION';
+    this.translate.get(descriptionKey).subscribe((description: string) => {
+      this.headerDescription = description; // Assign translated description to headerDescription property
+    });
+  }
   
   config: AngularEditorConfig = {
     editable: true,
@@ -102,7 +114,8 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
       console.log('file is', file);
       return Observable.create(
         (observer: Observer<HttpEvent<UploadResponse>>) => {
-          const maxDimension = 250; // Maximum width or height for the resized image
+          // const maxDimension = 250; 
+          const maxDimension = 200; // Maximum width or height for the resized image
 
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d');
@@ -166,6 +179,20 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     toolbarPosition: 'top',
     toolbarHiddenButtons: [['insertVideo','toggleEditorMode']],
   };
+
+  //Responsive for mobile
+  updateMinHeight(): void {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 768) { // Adjust this breakpoint as needed for your design
+      this.config.minHeight = '5.9rem'; // Set minHeight for mobile view
+      this.config.maxHeight = '5.9rem';
+
+    } else {
+      this.config.minHeight = '20rem'; // Set default minHeight for larger screens
+      this.config.maxHeight = '20rem';
+    }
+  }
+
   submitContent() {
     if (this.newsContent.valid) {
       console.log(this.newsContent.value);

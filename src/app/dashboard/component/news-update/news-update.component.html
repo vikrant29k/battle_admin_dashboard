@@ -1,14 +1,14 @@
 <div class="container">
   <div class="header-tag">
-   <!-- <h2>{{ 'POST_NEWS_PAGE.HEADER_TITLE' | translate }}</h2> -->
    <h2>{{ headerTitle | translate }}</h2>
-   <p>{{ 'POST_NEWS_PAGE.HEADER_DESCRIPTION' | translate }}</p>
+   <p>{{ headerDescription | translate }}</p>
   </div>
- <form [formGroup]="newsContent">
+ <form [formGroup]="newsContent" >
    <mat-form-field appearance="fill" class="title">
      <mat-label>{{ 'POST_NEWS_PAGE.TITLE_LABEL' | translate }}</mat-label>
        <input type="text" matInput formControlName="title">
    </mat-form-field>
+   <div class="angular-editor-wrapper">
    <angular-editor formControlName="content" id="angular-editor" class="angular-editor" [config]="config" #editor>
     <ng-template #customButtons let-executeCommandFn="executeCommandFn">
       <ae-toolbar-set>
@@ -17,6 +17,7 @@
       </ae-toolbar-set>
     </ng-template>
   </angular-editor>
-   <button mat-raised-button color="primary" class="postNewsButton" (click)="submitContent()">{{ 'POST_NEWS_PAGE.POST_BUTTON' | translate }}</button>
+</div>
+   <button mat-raised-button color="primary" class="postNewsButton" (click)="submitContent()">{{ getButtonLabel() | translate }}</button>
  </form>
  </div>
