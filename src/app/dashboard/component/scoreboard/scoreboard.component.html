@@ -59,7 +59,7 @@
         <thead>
           <tr>
             <td *ngFor="let header of headers">{{ header }}</td>
-            <td *ngIf="fileData?.length > 0">Action</td>
+            <td *ngIf="fileData?.length > 0" class="action-column">Action</td>
           </tr>
         </thead>
         <tbody>

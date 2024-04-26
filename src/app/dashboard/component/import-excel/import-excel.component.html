@@ -25,7 +25,7 @@
         <thead>
           <tr>
             <td *ngFor="let header of tableHeaders">{{header}}</td>
-            <td *ngIf="tableData.length>0">Action</td>
+            <td *ngIf="tableData.length>0" class="action-column">Action</td>
           </tr>
         </thead>
         <tbody>
@@ -45,13 +45,13 @@
             <td>{{item["Language ISO-639-1"]}}</td>
             <td>{{item["Battle Partner Company No"]}}</td>
             <td>{{item["Battle Partner Company Name"]}}</td>
-            <td>
+            <td class="action-column">
               <!-- <button mat-icon-button matTooltip="Delete" (click)="deleteLine(i)">
                 <mat-icon>delete</mat-icon>
               </button> -->
-              <button mat-icon-button matTooltip="Edit" (click)="editLine(i)">
-                <mat-icon>edit</mat-icon>
-              </button>
+              <!-- <button mat-icon-button matTooltip="Edit" > -->
+                <mat-icon (click)="editLine(i)">edit</mat-icon>
+              <!-- </button> -->
             </td>
           </tr>
         </tbody>
