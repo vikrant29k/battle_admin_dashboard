@@ -28,6 +28,8 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./news-update.component.scss'],
 })
 export class NewsUpdateComponent implements OnInit, OnDestroy {
+  characterCount: number = 0;
+  textarea: string = '';
   @ViewChild('editor') editor: ElementRef | any;
   // content:any;
   // title:any
@@ -179,7 +181,10 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     toolbarPosition: 'top',
     toolbarHiddenButtons: [['insertVideo','toggleEditorMode']],
   };
-
+  countCharacters() {
+    const editorContent = this.newsContent.get('content')?.value;
+    this.characterCount = editorContent ? editorContent.length : 0;
+  }
   //Responsive for mobile
   updateMinHeight(): void {
     const screenWidth = window.innerWidth;
