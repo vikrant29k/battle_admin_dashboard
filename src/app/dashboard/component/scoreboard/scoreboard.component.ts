@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environment/enviroment';
@@ -12,7 +12,7 @@ import { DialogAnimationsComponent } from '../dialog-animations/dialog-animation
   templateUrl: './scoreboard.component.html',
   styleUrls: ['./scoreboard.component.scss'],
 })
-export class ScoreboardComponent {
+export class ScoreboardComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
@@ -34,11 +34,17 @@ export class ScoreboardComponent {
   dataArray: any;
   headers: any;
   excelFileLineIndexForEditDialog!: number;
+  jsonFileData: any;
+  storedData: any;
 
   editLineDialogData = {
     title: 'Edit Line',
     message: 'Are you sure you want to edit this line?',
   };
+
+  ngOnInit(): void {
+    this.storedData = localStorage.getItem('hourly_file_data');
+  }
 
   openDialog(
     enterAnimationDuration: string,
@@ -46,7 +52,7 @@ export class ScoreboardComponent {
   ): void {
     const dialogRef = this.dialog.open(HourlyExcelEditFormDialogComponent, {
       width: '500px',
-      height:'600px',
+      height: '600px',
       enterAnimationDuration,
       data: this.fileData[this.excelFileLineIndexForEditDialog],
       exitAnimationDuration,
@@ -338,10 +344,16 @@ export class ScoreboardComponent {
                 // console.log('File upload response:', res);
                 if (res.statusCode == 200) {
                   // alert("Import Successful");
+                  localStorage.setItem(
+                    'hourly_file_data',
+                    JSON.stringify(this.fileData)
+                  );
+                  this.storedData = localStorage.getItem('hourly_file_data');
                   this.selectedFile = null;
                   this.file = null;
                   this.toastr.success(res.message);
-                  this.fileData = []
+                  this.fileData = [];
+                  this.headers = [];
                 } else {
                   this.toastr.success(res.message);
                   this.selectedFile = null;
@@ -372,6 +384,77 @@ export class ScoreboardComponent {
     }
   }
 
+  downloadJsonFile() {
+    var hourly_file_data: [];
+    var company_current = 0;
+    var companyTargetLC = 0;
+    this.storedData = localStorage.getItem('hourly_file_data');
+
+    // console.log("storedata ", this.storedData)
+
+    if (this.storedData !== null) {
+      hourly_file_data = JSON.parse(this.storedData);
+      // console.log("hourly ", hourly_file_data)
+    } else {
+      this.toastr.error('Upload excel file first');
+      return;
+    }
+
+    this.http.get(environment.baseUrl + 'user/target-sales').subscribe({
+      next: (res: any) => {
+        // console.log('res==', res);
+        if (res.success) {
+          console.log('api data', res.data);
+          // console.log('file data data', res.data);
+          const promises = res.data.map((obj: any) => {
+            // console.log('abj is', obj);
+            return new Promise((resolve, reject) => {
+              if (Array.isArray(hourly_file_data)) {
+                hourly_file_data.map((obj1: any) => {
+                  company_current = company_current + obj1['Sales in LC'];
+                  // console.log("obj",obj.salesRepNo,"obj1",obj1 )
+                  if (obj.salesRepNo == obj1['Sales rep no.']) {
+                    // console.log("obj1['Sales in LC']", obj1['Sales in LC']);
+                    obj.salesInLC = obj1['Sales in LC'];
+                    // console.log('obj', obj);
+                  }
+                });
+                companyTargetLC = obj.companyTargetLC;
+                resolve(obj);
+              } else {
+                reject(new Error('storedData is not an array'));
+              }
+            });
+          });
+
+          Promise.all(promises)
+            .then((jsonFileData: any[]) => {
+              // console.log('final json file data', jsonFileData);
+              const jsonObject = {
+                 data:jsonFileData,
+                company_current: company_current,
+                company_total: companyTargetLC,
+              };
+              const jsonString = JSON.stringify(jsonObject, null, 2); 
+              const blob = new Blob([jsonString], { type: 'application/json' });
+              const url = URL.createObjectURL(blob);
+              const anchor = document.createElement('a');
+              anchor.href = url;
+              anchor.download = 'data.json';
+              anchor.click();
+              URL.revokeObjectURL(url);
+            })
+            .catch((error) => {
+              console.error('Error processing data:', error);
+            });
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching data:', error);
+      },
+    });
+  }
+
   convertobjectToArray(filesData: any) {
     const arrayOfArrays = filesData.map((obj: any) => Object.values(obj));
     this.dataArray = arrayOfArrays;
@@ -382,6 +465,6 @@ export class ScoreboardComponent {
     // console.log('line ', index);
     this.excelFileLineIndexForEditDialog = index;
     // this.openDialog('0ms', '0ms');
-    this.openNewDialog('0ms', '0ms')
+    this.openNewDialog('0ms', '0ms');
   }
 }
