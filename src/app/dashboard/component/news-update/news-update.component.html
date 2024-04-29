@@ -9,7 +9,7 @@
        <input type="text" matInput formControlName="title">
    </mat-form-field>
    <div class="angular-editor-wrapper">
-   <angular-editor formControlName="content" id="angular-editor" class="angular-editor" [config]="config" #editor>
+   <angular-editor formControlName="content" id="angular-editor" class="angular-editor" [config]="config" #editor (keyup)="countCharacters()">
     <ng-template #customButtons let-executeCommandFn="executeCommandFn">
       <ae-toolbar-set>
         <ae-button iconClass="fa fa-video-camera" title="Insert Video" (buttonClick)="addVideo()">
@@ -17,6 +17,7 @@
       </ae-toolbar-set>
     </ng-template>
   </angular-editor>
+  <span>Characters typed: {{ characterCount }}</span>
 </div>
    <button mat-raised-button color="primary" class="postNewsButton" (click)="submitContent()">{{ getButtonLabel() | translate }}</button>
  </form>
