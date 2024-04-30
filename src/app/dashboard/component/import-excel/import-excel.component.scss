@@ -76,6 +76,10 @@
     
     overflow: auto;
     height: 35vh;
+    @media only screen and (max-width: 428px) and (min-width: 320px) {
+      overflow: hidden;
+      height: auto; /* or unset */
+  }
     .tableContainer {
       height: fit-content;
       min-width: 40rem;
