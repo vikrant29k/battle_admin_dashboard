@@ -65,6 +65,8 @@
         }
 
         .confirm-button {
+          display: flex;
+          align-items: center;
           button {
             padding: 10px 20px;
             // background-color: #2ecc71;
@@ -74,6 +76,10 @@
             cursor: pointer;
 
           }
+        }
+        .downloadBtn{
+          cursor: pointer;
+          margin-left: 10px;
         }
       }
     }
