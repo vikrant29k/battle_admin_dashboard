@@ -1,6 +1,6 @@
 .container {
   text-align: center;
-
+ 
   .colorRed {
     color: red;
   }
@@ -73,8 +73,9 @@
     }
   }
   .table{
+    
     overflow: auto;
-    // height: 35vh;
+    height: 35vh;
     .tableContainer {
       height: fit-content;
       min-width: 40rem;
@@ -112,7 +113,7 @@
           }
 
         }
-        tbody {
+tbody {
          tr{
           td {
             border-bottom: 2px solid white;
@@ -160,6 +161,10 @@
     }
   }
 }
+
+
+
+
 @media only screen and (max-width:480px){
   .container{
     .header-tag{
@@ -197,3 +202,7 @@
         // }
       }
     }
+   
+    
+  
+  

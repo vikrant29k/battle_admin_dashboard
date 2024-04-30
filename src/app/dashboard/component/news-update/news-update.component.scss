@@ -1,63 +1,81 @@
-.container{
+.container {
   width: 100%;
   // margin-block-start: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  .header-tag{
+
+  .header-tag {
     width: 100%;
     background-color: #cc0000;
     text-align: center;
     margin-block-end: 2rem;
-    h2{
+
+    h2 {
       color: #ffffff;
       margin: 0;
       font-size: 2rem;
       padding: 10px;
-     }
-     p{
+    }
+
+    p {
       margin: 0;
       color: #ffffff;
-        font-size: 1.5rem;
-     }
+      font-size: 1.5rem;
+    }
   }
-  form{
+
+  form {
     width: 95%;
     text-align: center;
-    .title{
+
+    .title {
       width: 100%;
     }
-    angular-editor{
+
+    angular-editor {
       text-align: left;
       // max-width: 600px; /* Set a desired max-width for the editor */
-       word-wrap: break-word;
+      word-wrap: break-word;
     }
-    button{
 
+    button {
       font-size: 1.5rem;
       font-weight: 600;
-
       margin-block-start: 1rem;
     }
   }
-  .postNewsButton{
-      width: 12rem;
+
+  .postNewsButton {
+    width: 12rem;
+    margin-top: -20px;
+
+    @media only screen and (max-width: 480px) {
+      width: 10rem;
+      margin-bottom: 20px;
+      position: fixed;
+      bottom: 0;
+      margin-inline: 35% auto; /* Only centers horizontally not vertically! */
+      left: 0;
+      right: 0;
+    }
   }
-}
-@media only screen and (max-width: 480px) {
-  .container{
-   .header-tag{
-    h2{
-      font-size: 1.8rem;
-      font-weight: 200;
+
+  @media only screen and (max-width: 480px) {
+    .header-tag {
+      h2 {
+        font-size: 1.8rem;
+        font-weight: 200;
+      }
+
+      p {
+        font-size: 1rem;
+      }
     }
-    p{
-      font-size: 1rem;
-    }
-   }
-    form{
-      button{
+
+    form {
+      button {
         font-size: 1.2rem;
         font-weight: 100;
       }
@@ -65,19 +83,9 @@
       //   height: 22rem; /* Set a fixed height for the editor wrapper */
       //   overflow-y: scroll; /* Enable vertical scrollbar when content overflows */
       // }
-      
-    
     }
- 
-    .postNewsButton{
-      width: 10rem;
-      margin-bottom: 20px;
-      position: fixed;
-      bottom: 0;
-      margin-inline: 35% auto; /* Only centers horizontally not vertically! */
-left: 0;
-right: 0;
   }
-  }
-
+}
+.box{
+  margin-bottom: 34px
 }

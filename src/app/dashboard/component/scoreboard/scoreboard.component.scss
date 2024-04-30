@@ -79,99 +79,80 @@
     }
   }
 
-  .table{
-    overflow: auto;
-    height: 35vh;
-    display: flex;
-    justify-content: center;
+  .table {
     .tableContainer {
-      height: fit-content;
-      min-width: 40rem;
-      width: max-content;
-      overflow: auto;
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      overflow-wrap: anywhere;
-      scrollbar-width: thin;
-
-     /* Add this CSS to make the "Action" column sticky */
-.table {
-  overflow: auto;
-  height: 35vh;
-  display: flex;
-  justify-content: center;
-
-  .tableContainer {
-    height: fit-content;
-    min-width: 40rem;
-    width: max-content;
-    overflow: auto;
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    overflow-wrap: anywhere;
-    scrollbar-width: thin;
-    position: relative; /* Add this line */
-
-    table {
-      color: white;
-      text-align: center;
+     
+      min-width: 100%;
       width: 100%;
-      border-spacing: 0;
-
-      thead {
-        background-color: #959595;
-        font-weight: 700;
-        td {
-          color: #ffffff;
-          height: 40px;
-          padding: 5px;
-          border-right: 2px solid rgb(255, 255, 255);
-          &:first-child {
-            border-left: 2px solid white;
-          }
-          &:last-child {
-            border-right: 2px solid white;
-          }
-        }
-      }
-
-      tbody {
-        tr {
+      margin-top: 20px;
+      overflow-x: auto; /* Horizontal scrolling for small screens */
+      scrollbar-width: thin;
+      overflow-wrap: anywhere;
+      display: flex;
+      justify-content: center; /* Center the table horizontally */
+  margin-bottom: 20px;
+      table {
+        color: white;
+        text-align: center;
+        width: 100%; /* Set width to 100% to fill the container */
+        border-spacing: 0;
+        thead {
+          background-color: #959595;
+          font-weight: 700;
           td {
-            border-bottom: 2px solid white;
-            border-right: 2px solid white;
-            color: #cc0000;
+            color: #ffffff;
+            height: 40px;
             padding: 5px;
+            border: 2px solid white; /* Border for all sides */
             &:first-child {
-              border-left: 2px solid white;
+              border-left: none; /* Remove left border for first td */
             }
             &:last-child {
-              border-right: 2px solid white;
+              border-right: none; /* Remove right border for last td */
             }
           }
-          &:last-child {
+        }
+        tbody {
+          tr {
             td {
+              border: 2px solid white; /* Border for all sides */
+              color: #cc0000;
+              padding: 5px;
               &:first-child {
-                border-bottom-left-radius: 20px;
+                border-left: none; /* Remove left border for first td */
               }
               &:last-child {
-                border-bottom-right-radius: 20px;
+                border-right: none; /* Remove right border for last td */
+              }
+            }
+            &:last-child {
+              td {
+                &:first-child {
+                  border-bottom-left-radius: 20px;
+                }
+                &:last-child {
+                  border-bottom-right-radius: 20px;
+                }
               }
             }
           }
         }
       }
     }
-
-    /* Add this block to make the "Action" column sticky */
-
   }
-}
-
+  
+  @media only screen and (max-width: 480px) {
+    .table .tableContainer {
+      overflow-x: auto;
+      scrollbar-width: thin;
     }
-
+  }
+  @media only screen and (max-width: 480px) {
+    .table .tableContainer {
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+  }
     #img {
       height: 50px !important ;
       width: auto;
@@ -182,7 +163,7 @@
       top: 0;
       z-index: 1;
     }
-  }
+  
 
 
   @media only screen and (max-width: 480px)   {
@@ -206,5 +187,20 @@
 
         }
     }
+    }
+  }
+  .action-column {
+    position: sticky;
+    right: 0;
+    z-index: 1; /* Adjust the z-index to make sure it's above the table */
+    background-color: #959595; /* Match the background color of the table header */
+    border: 1px solid white;
+    // button{
+      // padding: 0;
+      mat-icon{
+        width: 1.2rem;
+        height: 1.2rem;
+        font-size: 1.2rem;
+      // }
     }
   }

@@ -15,10 +15,13 @@
         <ae-button iconClass="fa fa-video-camera" title="Insert Video" (buttonClick)="addVideo()">
         </ae-button>
       </ae-toolbar-set>
+      <span>Characters No: {{ characterCount }}</span>
     </ng-template>
   </angular-editor>
-  <span>Characters typed: {{ characterCount }}</span>
 </div>
-   <button mat-raised-button color="primary" class="postNewsButton" (click)="submitContent()">{{ getButtonLabel() | translate }}</button>
+<div class="box">
+
+  <button mat-raised-button color="primary" class="postNewsButton" (click)="submitContent()">{{ getButtonLabel() | translate }}</button>
+</div>
  </form>
  </div>

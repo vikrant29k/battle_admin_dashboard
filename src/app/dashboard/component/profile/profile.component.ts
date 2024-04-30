@@ -180,7 +180,7 @@ export class ProfileComponent {
             this.profileForm.disable();
             this.editBtn = true;
             this.getProfileDetails();
-            this.toastr.success('Profile update successfully');
+            this.toastr.success('Profile updated successfully');
             // this.toastr.success("Password updated successfully")
           }
         },

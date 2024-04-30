@@ -45,9 +45,9 @@ export class ScoreboardComponent {
     exitAnimationDuration: string
   ): void {
     const dialogRef = this.dialog.open(HourlyExcelEditFormDialogComponent, {
-      width: '500px',
-      height:'600px',
+      width: '900px',
       enterAnimationDuration,
+      
       data: this.fileData[this.excelFileLineIndexForEditDialog],
       exitAnimationDuration,
     });

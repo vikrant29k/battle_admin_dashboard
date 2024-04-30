@@ -30,7 +30,7 @@
   font-size: 3rem;
 }
 @media only screen and (max-width: 1400px) {
-  .container{
+  .container {
     width: 50%;
   }
 }
@@ -40,14 +40,14 @@
     // height: calc(90vh); /* Ensure full viewport height */
   }
 
-.dashboard-header{
-  .logo{
-    width: 150px;
+  .dashboard-header {
+    .logo {
+      width: 150px;
+    }
   }
-}
-.icon-button mat-icon {
-  width: 2rem;
-  height: 2rem;
-  font-size: 2rem;
-}
+  .icon-button mat-icon {
+    width: 2rem;
+    height: 2rem;
+    font-size: 2rem;
+  }
 }

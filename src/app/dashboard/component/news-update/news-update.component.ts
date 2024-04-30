@@ -80,6 +80,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
         title: data.title,
       });
     }
+    this.countCharacters();
     this.updateMinHeight();
     window.addEventListener('resize', () => this.updateMinHeight());
   }
@@ -183,8 +184,15 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
   };
   countCharacters() {
     const editorContent = this.newsContent.get('content')?.value;
-    this.characterCount = editorContent ? editorContent.length : 0;
-  }
+    if (editorContent) {
+        // Remove non-character content using regular expression
+        const cleanContent = editorContent.replace(/[^a-zA-Z]/g, '');
+        // Count characters
+        this.characterCount = cleanContent.length;
+    } else {
+        this.characterCount = 0;
+    }
+}
   //Responsive for mobile
   updateMinHeight(): void {
     const screenWidth = window.innerWidth;

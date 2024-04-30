@@ -24,9 +24,14 @@ export class SliderComponent {
   }
 
   logOut() {
+    // Clear token and any other related data from localStorage
     localStorage.removeItem("token");
-    localStorage.removeItem('activeMenu')
+    localStorage.removeItem('activeMenu');
+  
+    // Redirect to login page
     this.route.navigate(['/auth/login']);
-    this.toastr.success('Logout successfully')
+  
+    // Show success message
+    this.toastr.success('Logout successfully');
   }
 }

@@ -69,15 +69,11 @@
             <td>{{ item["Company ID"] }}</td>
             <td>{{ item["Sales rep no."] }}</td>
             <td>{{ item["Sales in LC"] }}</td>
-            <td class="action-column" style="position: sticky; right: 0">
-              <button
-                mat-icon-button
-                matTooltip="Edit"
-                (click)="editLine(i)"
-                style="background-color: #f0f0f0"
-              >
-                <mat-icon>edit</mat-icon>
-              </button>
+            <td class="action-column" >
+              <!-- <button mat-icon-button matTooltip="Edit" > -->
+                <mat-icon (click)="editLine(i)">edit</mat-icon>
+              <!-- </button> -->
+              
             </td>
           </tr>
         </tbody>

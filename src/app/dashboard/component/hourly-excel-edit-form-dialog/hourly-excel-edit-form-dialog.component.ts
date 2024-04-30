@@ -30,11 +30,13 @@ export class HourlyExcelEditFormDialogComponent implements OnInit {
   onConfirm(): void {
     if (this.hourlyExcelFileLineForm.valid) {
       this.dialogRef.close(this.hourlyExcelFileLineForm.value);
+      this.toastr.success('Update successfully')
     } else {
       console.error('enter all fields');
       this.toastr.error('Enter all required fields');
     }
   }
+  
 
   onDismiss(): void {
     console.log('on dismiss');

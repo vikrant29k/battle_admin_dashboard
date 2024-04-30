@@ -46,6 +46,8 @@ export class EditFormDialogComponent implements OnInit {
   onConfirm(): void {
     if(this.excelFileLineForm.valid){
       this.dialogRef.close(this.excelFileLineForm.value);
+      this.toastr.success("Update successfully ")
+
     }else{
       console.error("enter all fields")
       this.toastr.error("Enter all required fields")
