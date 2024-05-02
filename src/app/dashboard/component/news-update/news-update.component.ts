@@ -6,7 +6,7 @@ import {
   OnInit,
   OnDestroy,
 } from '@angular/core';
-import { AngularEditorConfig, UploadResponse } from '@kolkov/angular-editor';
+import { AngularEditorComponent, AngularEditorConfig, UploadResponse } from '@kolkov/angular-editor';
 import {
   HttpClient,
   HttpErrorResponse,
@@ -31,6 +31,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
   characterCount: number = 0;
   textarea: string = '';
   @ViewChild('editor') editor: ElementRef | any;
+  @ViewChild('colorPickerContainer') colorPickerContainer: ElementRef|any;
   // content:any;
   // title:any
   images: any[] = [];
@@ -272,6 +273,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
+
   getYouTubeVideoId(url: string): string | null {
     const videoIdRegex =
       /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/;
@@ -281,5 +283,40 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.updateService.news = [];
+  }
+
+
+
+
+  
+  openColorPicker() {
+    const colorPicker = document.createElement('input');
+    colorPicker.type = 'color';
+    colorPicker.style.position = 'fixed';
+    colorPicker.style.top = '33%';
+    colorPicker.style.left = '85%';
+    colorPicker.style.transform = 'translate(-50%, -50%)';
+    colorPicker.style.zIndex = '9999';
+    colorPicker.addEventListener('input', () => {
+      this.applyBackgroundColor(colorPicker.value);
+    });
+    document.body.appendChild(colorPicker); // append color picker to body
+    colorPicker.click();
+  }
+  
+  applyBackgroundColor(color: string) {
+    const editor = this.editor.executeCommand();
+    const selection = editor.executeCommand();
+    
+    if (selection && !selection.isCollapsed) {
+      editor.model.change((writer:any) => {
+        const firstPosition = writer.createPositionAt(selection.getFirstPosition());
+        const lastPosition = writer.createPositionAt(selection.getLastPosition());
+  
+        writer.setAttribute('background', color, editor.model.createRangeIn(firstPosition, lastPosition));
+      });
+    } else {
+      alert('Please select some text to apply color');
+    }
   }
 }

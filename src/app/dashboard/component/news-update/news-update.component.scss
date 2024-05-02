@@ -38,13 +38,16 @@
       text-align: left;
       // max-width: 600px; /* Set a desired max-width for the editor */
       word-wrap: break-word;
+      
     }
+    
 
     button {
       font-size: 1.5rem;
       font-weight: 600;
       margin-block-start: 1rem;
     }
+ 
   }
 
   .postNewsButton {
@@ -88,4 +91,13 @@
 }
 .box{
   margin-bottom: 34px
+}
+
+
+#color-picker-container {
+  z-index: 9999; /* ensure it's above other elements */
+}
+
+input _ngcontent-ng-c834769704[type="color" i] {
+  display: inline-flex;
 }

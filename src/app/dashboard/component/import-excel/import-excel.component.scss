@@ -1,17 +1,17 @@
 .container {
   text-align: center;
- 
+
   .colorRed {
     color: red;
   }
-  .header-tag{
+  .header-tag {
     background-color: #cc0000;
     color: #ffffff;
     padding-block: 10px;
-    h1{
+    h1 {
       margin: 0px 0;
     }
-    p{
+    p {
       font-size: 1.5rem;
       margin: 0;
     }
@@ -72,14 +72,13 @@
       }
     }
   }
-  .table{
-    
+  .table {
     overflow: auto;
-    height: 35vh;
-    @media only screen and (max-width: 428px) and (min-width: 320px) {
-      overflow: hidden;
-      height: auto; /* or unset */
-  }
+    // height: 35vh;
+    // @media only screen and (max-width: 428px) and (min-width: 320px) {
+    //   overflow: auto;
+    //   height: auto; /* or unset */
+    // }
     .tableContainer {
       height: fit-content;
       min-width: 40rem;
@@ -105,50 +104,47 @@
             height: 40px;
             padding: 5px;
             border-right: 2px solid rgb(255, 255, 255);
-            &:first-child{
+            &:first-child {
               border-left: 2px solid white;
             }
-            &:last-child{
+            &:last-child {
               border-right: 2px solid white;
               display: flex;
               position: absolute;
               align-items: center;
             }
           }
-
         }
-tbody {
-         tr{
-          td {
-            border-bottom: 2px solid white;
-            border-right: 2px solid white;
-            color:#cc0000;
-            padding: 5px;
-            &:first-child{
-              border-left: 2px solid white;
-            }
-            &:last-child{
+        tbody {
+          tr {
+            td {
+              border-bottom: 2px solid white;
               border-right: 2px solid white;
-              position: absolute;
-              padding: 5.5px 19px
-            }
-          }
-          &:last-child{
-            td{
-              &:first-child{
-              border-bottom-left-radius: 20px;
+              color: #cc0000;
+              padding: 5px;
+              &:first-child {
+                border-left: 2px solid white;
               }
-              &:last-child{
-                border-bottom-right-radius: 20px;
-                display: flex;
+              &:last-child {
+                border-right: 2px solid white;
                 position: absolute;
-                align-items: center;
+                padding: 5.5px 19px;
               }
             }
-
+            &:last-child {
+              td {
+                &:first-child {
+                  border-bottom-left-radius: 20px;
+                }
+                &:last-child {
+                  border-bottom-right-radius: 20px;
+                  display: flex;
+                  position: absolute;
+                  align-items: center;
+                }
+              }
+            }
           }
-         }
-
         }
       }
     }
@@ -166,47 +162,48 @@ tbody {
   }
 }
 
-
-
-
-@media only screen and (max-width:480px){
-  .container{
-    .header-tag{
-      h1{
+@media only screen and (max-width: 480px) {
+  .container {
+    .header-tag {
+      h1 {
         font-size: 1.8rem;
         font-weight: 200;
       }
-      p{
+      p {
         font-size: 1rem;
       }
     }
-    .upload-section{
-      .file-selection{
+    .upload-section {
+      .file-selection {
         border: 4px solid #cc0000;
-       h3{
-        font-size: 16px;
-        font-weight: 100;
-       }
+        h3 {
+          font-size: 16px;
+          font-weight: 100;
+        }
       }
     }
   }
 }
- .action-column {
-      position: sticky;
-      right: 0;
-      z-index: 1; /* Adjust the z-index to make sure it's above the table */
-      background-color: #959595; /* Match the background color of the table header */
-      border: 1px solid white;
-      // button{
-        // padding: 0;
-        mat-icon{
-          width: 1.2rem;
-          height: 1.2rem;
-          font-size: 1.2rem;
-        // }
-      }
-    }
-   
-    
-  
-  
+.action-column {
+  position: sticky;
+  right: 0;
+  z-index: 1; /* Adjust the z-index to make sure it's above the table */
+  background-color: #959595; /* Match the background color of the table header */
+  border: 1px solid white;
+  // button{
+  // padding: 0;
+  mat-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    font-size: 1.2rem;
+    // }
+  }
+}
+
+.action-col{
+  position: sticky;
+  right: 0;
+  z-index: 1; /* Adjust the z-index to make sure it's above the table */
+  background-color: #959595; /* Match the background color of the table header */
+  border: 1px solid white;
+}

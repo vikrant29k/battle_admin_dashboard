@@ -144,8 +144,8 @@ export class ProfileComponent {
                 if (res.statusCode == 200) {
                   console.log('password res', res);
                   this.profileUpdate();
-                  // this.toastr.success("Password Updated Successfully")
                   localStorage.clear()
+                  // this.toastr.success("Password Updated Successfully")
                   this.router.navigate(['']);
                 }
               },

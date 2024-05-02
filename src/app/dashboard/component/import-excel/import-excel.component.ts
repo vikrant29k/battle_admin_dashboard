@@ -12,6 +12,9 @@ import { DialogAnimationsComponent } from '../dialog-animations/dialog-animation
   styleUrls: ['./import-excel.component.scss'],
 })
 export class ImportExcelComponent {
+  isActive: boolean = false;
+fileUploaded: boolean = false;
+
   selectedFile: File | null = null;
   file: File | null = null;
   fileError: boolean = true;
@@ -89,6 +92,7 @@ export class ImportExcelComponent {
     // console.log('file', event);
     this.file = event.target.files[0];
     this.selectedFile = this.file;
+    this.isActive = true;
 
     if (
       this.file?.type !== 'application/vnd.ms-excel' &&
@@ -706,6 +710,9 @@ export class ImportExcelComponent {
   }
   disableConfirmButotn: boolean = true;
   onFileUpload(): void {
+    // this.isActive=true;
+    // this.fileUploaded = true;
+debugger
     if (!this.fileError) {
       // console.log(this.finalResult);
       this.excelService.importExcel(this.finalResult).subscribe(
