@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-form-dialog',
@@ -14,8 +15,14 @@ export class EditFormDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<EditFormDialogComponent>,
     private fb:FormBuilder,
     private toastr: ToastrService,
-    @Inject(MAT_DIALOG_DATA) public data:any
+    @Inject(MAT_DIALOG_DATA) public data:any,
+    public translate:TranslateService
   ) {
+    let lang= localStorage.getItem('lang');
+    if(lang){
+      translate.use(lang)
+    }
+
     this.excelFileLineForm = fb.group({
       'Company No':['',Validators.required],
       'Company Name':['',Validators.required],

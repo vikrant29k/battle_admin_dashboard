@@ -1,5 +1,6 @@
 {
   "AUTH":{
+      "LANGUAGE_LABEL": "Language",
     "LOG_IN":"Log In",
     "LOG_IN_FORM":{
       "ADMIN_LOGIN": "Admin Login",
@@ -28,13 +29,17 @@
       "SELECT_FILE": "Select a file to upload from your computer or device",
       "CHOOSE_FILE": "Choose a File",
       "SELECTED_FILE": "Selected File: ",
-      "CONFIRM_BUTTON": "Confirm"
+      "CONFIRM_BUTTON": "Confirm",
+      "EDIT_ROW": "Edit Row",
+      "CANCEL_BUTTON": "Cancel",
+      "OK_BUTTON": "OK"
     },
     "POST_NEWS_PAGE": {
       "HEADER_TITLE": "Post News",
       "HEADER_DESCRIPTION": "Post Your Source For Wuerth Updates, Images And Video Links",
       "TITLE_LABEL": "Title",
-      "POST_BUTTON": "Post"
+      "POST_BUTTON": "Post",
+      "EDITOR_PLACEHOLDER": "Enter text here..."
     },
       "UPDATE_NEWS_PAGE": {
         "HEADER_TITLE": "Update News",
@@ -42,7 +47,7 @@
         "TITLE_LABEL": "New Title",
         "UPDATE_BUTTON": "Update"
       },
-    
+
     "NEWS_LIST_PAGE": {
       "HEADER_TITLE": "News",
       "HEADER_DESCRIPTION": "Explore The Latest Wuerth Updates",

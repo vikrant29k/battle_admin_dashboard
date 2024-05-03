@@ -16,7 +16,6 @@ import { ImportExcelComponent } from './component/import-excel/import-excel.comp
 import { MatchComponent } from './component/match/match.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
 import { EditFormDialogComponent } from './component/edit-form-dialog/edit-form-dialog.component';
 import { HourlyExcelEditFormDialogComponent } from './component/hourly-excel-edit-form-dialog/hourly-excel-edit-form-dialog.component';
 @NgModule({

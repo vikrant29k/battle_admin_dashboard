@@ -85,7 +85,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     this.updateMinHeight();
     window.addEventListener('resize', () => this.updateMinHeight());
   }
-  
+
   getButtonLabel(): string {
     return this.newsId ? 'UPDATE_NEWS_PAGE.UPDATE_BUTTON' : 'POST_NEWS_PAGE.POST_BUTTON';
   }
@@ -96,14 +96,14 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
       this.headerTitle = title; // Assign translated title to headerTitle property
     });
   }
-  
+
   translateDescription() {
     const descriptionKey = this.newsId ? 'UPDATE_NEWS_PAGE.HEADER_DESCRIPTION' : 'POST_NEWS_PAGE.HEADER_DESCRIPTION';
     this.translate.get(descriptionKey).subscribe((description: string) => {
       this.headerDescription = description; // Assign translated description to headerDescription property
     });
   }
-  
+
   config: AngularEditorConfig = {
     editable: true,
     enableToolbar: false,
@@ -118,7 +118,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
       console.log('file is', file);
       return Observable.create(
         (observer: Observer<HttpEvent<UploadResponse>>) => {
-          // const maxDimension = 250; 
+          // const maxDimension = 250;
           const maxDimension = 200; // Maximum width or height for the resized image
 
           const canvas = document.createElement('canvas');
@@ -177,7 +177,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
         }
       );
     },
-    placeholder: 'Enter text here...',
+    placeholder: this.translate.instant('POST_NEWS_PAGE.EDITOR_PLACEHOLDER'),
     translate: 'no',
     sanitize: false,
     toolbarPosition: 'top',
