@@ -14,6 +14,15 @@ import { TranslateService } from '@ngx-translate/core';
 export class SetPasswordComponent implements OnInit {
   token!: string;
   password: string = '';
+  selectedLanguage = 'en';
+languageCodes = ['en', 'de'];
+  languages:any = {
+    en: 'English',
+    de: 'German',
+    // es: 'Spanish',
+    // ds: 'Dutch',
+    // Add more language codes and their corresponding names here
+  };
   confirmPassword: string = '';
   passwordMismatchError: string = ''; // New variable to hold password mismatch error message
   constructor(
@@ -22,10 +31,10 @@ export class SetPasswordComponent implements OnInit {
     private route: Router,
     private aRoute: ActivatedRoute,
     private toastr: ToastrService,
-    private translateService:TranslateService
+    public translate:TranslateService
   ) {
     let lang=localStorage.getItem('lang')||'en'
-    translateService.use(lang);
+    translate.use(lang);
   }
   public showPassword: boolean = false;
   public togglePasswordVisibility(): void {

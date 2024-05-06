@@ -18,7 +18,7 @@
         <div class="lang-drop-down">
           <!-- <label for="lang">Select Language:</label> -->
          <mat-form-field appearance="outline">
-          <mat-label>Language</mat-label>
+          <mat-label>{{ 'AUTH.LANGUAGE_LABEL' | translate }}</mat-label>
           <mat-select placeholder="Langu" name="lang" #langSelect [(ngModel)]="selectedLanguage" (selectionChange)="translate.use(langSelect.value)">
             <mat-option *ngFor="let code of languageCodes"[value]="code"> {{ languages[code] }}</mat-option>
           </mat-select>

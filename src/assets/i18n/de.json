@@ -1,5 +1,6 @@
 {
   "AUTH":{
+    "LANGUAGE_LABEL": "Sprache",
     "LOG_IN": "Anmeldung",
     "LOG_IN_FORM":{
       "ADMIN_LOGIN": "Admin Anmeldung",
@@ -28,13 +29,17 @@
       "SELECT_FILE": "Wählen Sie eine Datei zum Hochladen von Ihrem Computer oder Gerät aus",
       "CHOOSE_FILE": "Wählen Sie eine Datei aus",
       "SELECTED_FILE": "Ausgewählte Datei: ",
-      "CONFIRM_BUTTON": "Bestätigen"
+      "CONFIRM_BUTTON": "Bestätigen",
+      "EDIT_ROW":"Zeile bearbeiten",
+      "CANCEL_BUTTON": "Abbrechen",
+      "OK_BUTTON": "OK"
     },
     "POST_NEWS_PAGE":{
       "HEADER_TITLE": "Nachrichten veröffentlichen",
       "HEADER_DESCRIPTION": "Veröffentlichen Sie Ihre Quelle für Wuerth-Updates, Bilder und Videolinks",
       "TITLE_LABEL": "Titel",
-      "POST_BUTTON": " Veröffentlichen"
+      "POST_BUTTON": " Veröffentlichen",
+      "EDITOR_PLACEHOLDER": "Hier Text eingeben..."
     },
     "UPDATE_NEWS_PAGE": {
       "HEADER_TITLE": "Nachrichten aktualisieren",
