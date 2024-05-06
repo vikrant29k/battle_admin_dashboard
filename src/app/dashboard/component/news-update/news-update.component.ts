@@ -15,7 +15,7 @@ import {
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, MaxLengthValidator, FormBuilder } from '@angular/forms';
 import { environment } from 'src/environment/enviroment';
 import { NewsUpdateService } from 'src/app/services/newsUpdate.service';
 import { Router } from '@angular/router';
@@ -29,6 +29,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class NewsUpdateComponent implements OnInit, OnDestroy {
   characterCount: number = 0;
+  // maxCharacterCount = 800;
   textarea: string = '';
   @ViewChild('editor') editor: ElementRef | any;
   @ViewChild('colorPickerContainer') colorPickerContainer: ElementRef|any;
@@ -48,8 +49,13 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private updateService: NewsUpdateService,
     private route: Router,
-    private toastr: ToastrService,private translate:TranslateService
-  ) {}
+    private toastr: ToastrService,private translate:TranslateService,
+    private fb: FormBuilder
+  ) {
+    // this.newsContent = this.fb.group({
+    //   content: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxCharacterCount)])],
+    //   title: ['', Validators.required],});
+  }
 
   // ngOnInit(): void {
   //   let data: any = this.updateService.news;
@@ -81,10 +87,47 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
         title: data.title,
       });
     }
-    this.countCharacters();
+   
     this.updateMinHeight();
     window.addEventListener('resize', () => this.updateMinHeight());
   }
+
+  countCharacters(event: any) {
+    const editorContent = this.newsContent.get('content')?.value;
+    if (editorContent) {
+      // Remove non-character content using regular expression
+      const cleanContent = editorContent.replace(/[^a-zA-Z]/g, '');
+      // Count characters
+      this.characterCount = cleanContent.length;
+  
+      // Allow backspace to work
+      if (event.keyCode === 8) { // 8 is the key code for backspace
+        return;
+      }
+  
+      // Disable typing when character count exceeds 800
+      if (this.characterCount >= 800) {
+        event.preventDefault(); // Prevent further key presses
+      }
+    } else {
+      this.characterCount = 0; // If content is null, set character count to 0
+    }
+  
+    // Check if the target is the video input
+    if (event.target.id === 'video-input') {
+      // Allow only up to 3 characters in the video input
+      if (event.target.value.length >= 3) {
+        event.preventDefault();
+      }
+    }
+  }
+  
+  
+  disableEditor() {
+    const editor = this.editor.editor.nativeElement;
+    editor.blur(); // Blur the editor to disable typing
+  }
+  
 
   getButtonLabel(): string {
     return this.newsId ? 'UPDATE_NEWS_PAGE.UPDATE_BUTTON' : 'POST_NEWS_PAGE.POST_BUTTON';
@@ -183,17 +226,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     toolbarPosition: 'top',
     toolbarHiddenButtons: [['insertVideo','toggleEditorMode']],
   };
-  countCharacters() {
-    const editorContent = this.newsContent.get('content')?.value;
-    if (editorContent) {
-        // Remove non-character content using regular expression
-        const cleanContent = editorContent.replace(/[^a-zA-Z]/g, '');
-        // Count characters
-        this.characterCount = cleanContent.length;
-    } else {
-        this.characterCount = 0;
-    }
-}
+  
   //Responsive for mobile
   updateMinHeight(): void {
     const screenWidth = window.innerWidth;

@@ -9,14 +9,12 @@
        <input type="text" matInput formControlName="title">
    </mat-form-field>
    <div class="angular-editor-wrapper">
-    <angular-editor formControlName="content" id="angular-editor" class="angular-editor,custom-input"  [config]="config" #editor (keyup)="countCharacters()">
-    
+    <angular-editor formControlName="content" id="angular-editor" class="angular-editor custom-input" [config]="config" #editor (keydown)="countCharacters($event)">
       <ng-template #customButtons let-executeCommandFn="executeCommandFn">
         <ae-toolbar-set>
           <ae-button iconClass="fa fa-video-camera" title="Insert Video" (buttonClick)="addVideo()"></ae-button>
-          <!-- <ae-button iconClass="fa fa-font" title=" Insert Background Color" (buttonClick)="openColorPicker()"></ae-button> -->
         </ae-toolbar-set>
-        <span>Characters No: {{ characterCount }}</span>
+        <span class="character-count">Characters No: {{ characterCount }} / 800</span>
       </ng-template>
     </angular-editor>
 </div>

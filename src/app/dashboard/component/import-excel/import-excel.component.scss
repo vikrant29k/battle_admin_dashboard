@@ -42,14 +42,14 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      overflow: hidden; /* Prevent text from going out of the box */
+
       h3 {
         font-size: 26px;
         margin-bottom: 12px;
       }
 
       .file-chooser {
-        // margin-bottom: 16px;
-
         .choose-button {
           padding: 10px 20px;
           background-color: #cc0000;
@@ -63,7 +63,6 @@
       .confirm-button {
         button {
           padding: 10px 20px;
-          // background-color: #2ecc71;
           color: #cc0000;
           border: none;
           border-radius: 4px;
@@ -72,6 +71,13 @@
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    .file-selection {
+      width: 90%; /* Adjust width for mobile */
+    }
+  }
+
   .table {
     overflow: auto;
     // height: 35vh;
