@@ -29,6 +29,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class NewsUpdateComponent implements OnInit, OnDestroy {
   characterCount: number = 0;
+  
   // maxCharacterCount = 800;
   textarea: string = '';
   @ViewChild('editor') editor: ElementRef | any;
@@ -40,6 +41,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     content: new FormControl('', Validators.required),
     title: new FormControl('', Validators.required),
   });
+
   updateNews: boolean = false;
   newsId!: string;
   headerTitle:string=''
@@ -117,6 +119,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     if (event.target.id === 'video-input') {
       // Allow only up to 3 characters in the video input
       if (event.target.value.length >= 3) {
+      
         event.preventDefault();
       }
     }
@@ -291,15 +294,23 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
   //   }
   // }
 
+  private videoCount: number = 0;
+
   addVideo() {
+    if (this.videoCount >= 3) {
+      alert('You can only add up to 3 videos.');
+      return;
+    }
+
     const videoLink = prompt('Please enter the YouTube video URL:');
     if (videoLink) {
       const videoId = this.getYouTubeVideoId(videoLink);
       if (videoId) {
         const videoEmbedCode = `<div>
-                          <iframe src="https://www.youtube.com/embed/${videoId}" style="position: relative; width: 100%; max-width: 500px; min-height: 250px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>`;
+                                  <iframe src="https://www.youtube.com/embed/${videoId}" style="position: relative; width: 100%; max-width: 500px; min-height: 250px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>`;
         this.editor.executeCommand('insertHtml', videoEmbedCode);
+        this.videoCount++; // Increment the count after adding a video
       } else {
         alert('Invalid YouTube video URL.');
       }

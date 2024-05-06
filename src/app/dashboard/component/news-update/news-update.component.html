@@ -1,26 +1,45 @@
 <div class="container">
   <div class="header-tag">
-   <h2>{{ headerTitle | translate }}</h2>
-   <p>{{ headerDescription | translate }}</p>
+    <h2>{{ headerTitle | translate }}</h2>
+    <p>{{ headerDescription | translate }}</p>
   </div>
- <form [formGroup]="newsContent" >
-   <mat-form-field appearance="fill" class="title">
-     <mat-label>{{ 'POST_NEWS_PAGE.TITLE_LABEL' | translate }}</mat-label>
-       <input type="text" matInput formControlName="title">
-   </mat-form-field>
-   <div class="angular-editor-wrapper">
-    <angular-editor formControlName="content" id="angular-editor" class="angular-editor custom-input" [config]="config" #editor (keydown)="countCharacters($event)">
-      <ng-template #customButtons let-executeCommandFn="executeCommandFn">
-        <ae-toolbar-set>
-          <ae-button iconClass="fa fa-video-camera" title="Insert Video" (buttonClick)="addVideo()"></ae-button>
-        </ae-toolbar-set>
-        <span class="character-count">Characters No: {{ characterCount }} / 800</span>
-      </ng-template>
-    </angular-editor>
+  <form [formGroup]="newsContent">
+    <mat-form-field appearance="fill" class="title">
+      <mat-label>{{ "POST_NEWS_PAGE.TITLE_LABEL" | translate }}</mat-label>
+      <input type="text" matInput formControlName="title" />
+    </mat-form-field>
+    <div class="angular-editor-wrapper">
+      <angular-editor
+        formControlName="content"
+        id="angular-editor"
+        class="angular-editor custom-input"
+        [config]="config"
+        #editor
+        (keydown)="countCharacters($event)"
+      >
+        <ng-template #customButtons let-executeCommandFn="executeCommandFn">
+          <ae-toolbar-set>
+            <ae-button
+              iconClass="fa fa-video-camera"
+              title="Insert Video"
+              (buttonClick)="addVideo()"
+            ></ae-button>
+          </ae-toolbar-set>
+          <span class="character-count"
+            >Characters No: {{ characterCount }} / 800</span
+          >
+        </ng-template>
+      </angular-editor>
+    </div>
+    <div class="box">
+      <button
+        mat-raised-button
+        color="primary"
+        class="postNewsButton"
+        (click)="submitContent()"
+      >
+        {{ getButtonLabel() | translate }}
+      </button>
+    </div>
+  </form>
 </div>
-<div class="box">
-
-  <button mat-raised-button color="primary" class="postNewsButton" (click)="submitContent()">{{ getButtonLabel() | translate }}</button>
-</div>
- </form>
- </div>
