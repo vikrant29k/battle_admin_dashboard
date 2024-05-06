@@ -44,11 +44,12 @@
         <button
           mat-raised-button
           (click)="onFileUpload()"
+          *ngIf="!confirm"
           [disabled]="disableConfirmButotn"
         >
           {{ 'UPLOAD_EXCEL.CONFIRM_BUTTON' | translate }}
         </button>
-        <mat-icon class="downloadBtn" (click)="downloadJsonFile()" *ngIf="storedData" >download</mat-icon>
+        <!-- <mat-icon class="downloadBtn" (click)="downloadJsonFile()" *ngIf="storedData" >download</mat-icon> -->
         <mat-spinner style="width: 50px" *ngIf="confirm"></mat-spinner>
       </div>
     </div>

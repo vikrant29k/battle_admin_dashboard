@@ -37,13 +37,16 @@ export class ScoreboardComponent implements OnInit {
   jsonFileData: any;
   storedData: any;
 
+  // companyUid!:number
+
   editLineDialogData = {
     title: 'Edit Line',
     message: 'Are you sure you want to edit this line?',
   };
 
   ngOnInit(): void {
-    this.storedData = localStorage.getItem('hourly_file_data');
+    // this.storedData = localStorage.getItem('hourly_file_data');
+    // this.getCompanyUid()
   }
 
   openDialog(
@@ -348,17 +351,19 @@ export class ScoreboardComponent implements OnInit {
                     'hourly_file_data',
                     JSON.stringify(this.fileData)
                   );
-                  this.storedData = localStorage.getItem('hourly_file_data');
+                  // this.storedData = localStorage.getItem('hourly_file_data');
+                  this.downloadJsonFile();
                   this.selectedFile = null;
                   this.file = null;
                   this.toastr.success(res.message);
                   this.fileData = [];
                   this.headers = [];
-                } else {
-                  this.toastr.success(res.message);
-                  this.selectedFile = null;
-                  this.file = null;
                 }
+                //  else {
+                //   this.toastr.success(res.message);
+                //   this.selectedFile = null;
+                //   this.file = null;
+                // }
                 this.disableConfirmButotn = true;
               },
               (error: HttpErrorResponse) => {
@@ -454,6 +459,28 @@ export class ScoreboardComponent implements OnInit {
       },
     });
   }
+
+//   getCompanyUid() {
+//     this.http.get(`${environment.baseUrl}user/details`).subscribe({
+//       next: (res: any) => {
+//         this.companyUid = res.data?.companyId?.uid;
+//         const storedDataString = localStorage.getItem('hourly_file_data');
+//         if (storedDataString !== null) {
+//           const storedDataArr = JSON.parse(storedDataString);
+//           console.log("Company ID", storedDataArr[0]["Company ID"], this.companyUid);
+//           if (storedDataArr[0]["Company ID"] !== this.companyUid) {
+//             localStorage.removeItem("hourly_file_data");
+//           }
+//         } else {
+//           console.error("No data found in local storage for 'hourly_file_data'");
+//         }
+//       },
+//       error: (error: any) => {
+//         console.error("Error fetching user details:", error);
+//       }
+//     });
+// }
+
 
   convertobjectToArray(filesData: any) {
     const arrayOfArrays = filesData.map((obj: any) => Object.values(obj));
