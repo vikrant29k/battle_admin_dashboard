@@ -27,8 +27,8 @@
           <tr>
             <!-- <td *ngIf="tableData.length>0" *ngFor="let header of tableHeaders">{{header}}</td> -->
             <ng-container *ngIf="tableData.length > 0">
+              <td *ngFor="let header of tableHeaders " class="action-col">{{header}}</td>
             </ng-container>
-            <td *ngFor="let header of tableHeaders " class="action-col">{{header}}</td>
             <td *ngIf="tableData.length>0" class="action-column">Action</td>
           </tr>
         </thead>

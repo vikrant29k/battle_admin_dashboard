@@ -285,10 +285,6 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     this.updateService.news = [];
   }
 
-
-
-
-  
   openColorPicker() {
     const colorPicker = document.createElement('input');
     colorPicker.type = 'color';
