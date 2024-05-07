@@ -230,18 +230,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     toolbarHiddenButtons: [['insertVideo','toggleEditorMode']],
   };
 
-  //counting characters
-  countCharacters() {
-    const editorContent = this.newsContent.get('content')?.value;
-    if (editorContent) {
-        // Remove non-character content using regular expression
-        const cleanContent = editorContent.replace(/[^a-zA-Z]/g, '');
-        // Count characters
-        this.characterCount = cleanContent.length;
-    } else {
-        this.characterCount = 0;
-    }
-}
+
   //Responsive for mobile
   updateMinHeight(): void {
     const screenWidth = window.innerWidth;
