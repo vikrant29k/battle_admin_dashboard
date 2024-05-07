@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environment/enviroment';
 import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-match',
@@ -36,6 +37,7 @@ export class MatchComponent implements OnInit {
     private http: HttpClient,
     private toastr: ToastrService,
     public dialog: MatDialog,
+    public translate:TranslateService
   ) {}
   ngOnInit(): void {
     this.getAllMatches();
@@ -79,7 +81,7 @@ export class MatchComponent implements OnInit {
         data.append('avatar', this.selectedImgLogo);
         data.append('bgAvatar', this.selectedImgBg);
       } else {
-        this.toastr.error('Please select both the image');
+        this.toastr.error(this.translate.instant('TOASTER_RESPONSE.IMAGE_SELECTION_ERROR'));
         return;
       }
 
@@ -97,25 +99,25 @@ export class MatchComponent implements OnInit {
           }
         },
         error: (error: HttpErrorResponse) => {
-          console.log('error', error);
-          console.error('API Error:', error);
+          // console.log('error', error);
+          // console.error('API Error:', error);
           if (!error.error.message) {
-            this.toastr.error('error');
+            this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
           } else {
             this.toastr.error(error.error.message);
           }
         },
       });
     } else {
-      this.toastr.error('Enter Match Name');
+      this.toastr.error(this.translate.instant('TOASTER_RESPONSE.MATCH_NAME_MISSING_ERROR'));
     }
   }
 
 
- 
-  
-  
-  
+
+
+
+
   getAllMatches() {
     this.http.get(`${environment.baseUrl}event`).subscribe({
       next: (res: any) => {
@@ -124,8 +126,8 @@ export class MatchComponent implements OnInit {
         }
       },
       error: (error: HttpErrorResponse) => {
-        console.log('error', error);
-        this.toastr.error('error');
+        // console.log('error', error);
+        this.toastr.error(error.error.message);
       },
     });
   }
@@ -146,7 +148,7 @@ export class MatchComponent implements OnInit {
         },
         error: (error: HttpErrorResponse) => {
           console.log('error', error);
-          this.toastr.error('error');
+          this.toastr.error(error.error.message);
         },
       });
   }
@@ -169,7 +171,7 @@ export class MatchComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         console.log('error', error);
-        this.toastr.error('error');
+        this.toastr.error(error.error.message);
       },
     });
   }
@@ -218,7 +220,7 @@ export class MatchComponent implements OnInit {
         },
         error: (error: HttpErrorResponse) => {
           console.log('error', error);
-          this.toastr.error('error');
+          this.toastr.error(error.error.message);
         },
       });
   }

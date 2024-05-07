@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CompanyService } from 'src/app/services/company/company.service';
+import { TranslateService } from '@ngx-translate/core';
 interface Company {
   uid: number;
   name: string;
@@ -63,7 +64,8 @@ export class SignUpComponent implements OnInit {
     private auth: AuthService,
     private toastr: ToastrService,
     private companyService: CompanyService,
-    private fb:FormBuilder
+    private fb:FormBuilder,
+    public translate:TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -86,7 +88,7 @@ export class SignUpComponent implements OnInit {
       this.signupForm.value.companyNumber == undefined ||
       this.signupForm.value.companyName == ''
     ) {
-      this.toastr.error('Enter All Fields');
+      this.toastr.error(this.translate.instant('TOASTER_RESPONSE.ENTER_ALL_FIELDS'));
     } else {
       // Create the data object with form values
       const data = {
@@ -102,18 +104,18 @@ export class SignUpComponent implements OnInit {
 
       this.auth.signUp(data).subscribe({
         next: (response: any) => {
-          console.log('API Response:', response);
+          // console.log('API Response:', response);
           if (response.success) {
             this.toastr.success(response.message);
             this.signupForm.reset()
           }
         },
         error: (error: HttpErrorResponse) => {
-          console.error('API Error:', error);
+          // console.error('API Error:', error);
           if (error.error.message) {
             this.toastr.error(error.error.message);
           } else {
-            this.toastr.error('server error');
+            this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
           }
         },
       });

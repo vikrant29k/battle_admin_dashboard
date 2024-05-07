@@ -6,7 +6,7 @@ import { environment } from 'src/environment/enviroment';
 import * as XLSX from 'xlsx';
 import { HourlyExcelEditFormDialogComponent } from '../hourly-excel-edit-form-dialog/hourly-excel-edit-form-dialog.component';
 import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
-
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-scoreboard',
   templateUrl: './scoreboard.component.html',
@@ -16,8 +16,14 @@ export class ScoreboardComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
-    public dialog: MatDialog
-  ) {}
+    public dialog: MatDialog,
+    public translate:TranslateService
+  ) {
+    this.editLineDialogData = {
+      title: this.translate.instant('UPLOAD_SECTION.EDIT_LINE_TITLE'),
+      message: this.translate.instant('UPLOAD_SECTION.EDIT_LINE_MESSAGE')
+    };
+  }
   // file!: File;
   // selectedFile!: File;
   file: File | null = null;
@@ -37,12 +43,7 @@ export class ScoreboardComponent implements OnInit {
   jsonFileData: any;
   storedData: any;
 
-  // companyUid!:number
-
-  editLineDialogData = {
-    title: 'Edit Line',
-    message: 'Are you sure you want to edit this line?',
-  };
+  editLineDialogData :any;
 
   ngOnInit(): void {
     // this.storedData = localStorage.getItem('hourly_file_data');
@@ -56,7 +57,7 @@ export class ScoreboardComponent implements OnInit {
     const dialogRef = this.dialog.open(HourlyExcelEditFormDialogComponent, {
       width: '900px',
       enterAnimationDuration,
-      
+
       data: this.fileData[this.excelFileLineIndexForEditDialog],
       exitAnimationDuration,
     });
@@ -122,7 +123,7 @@ export class ScoreboardComponent implements OnInit {
         // console.log('arrays is same');
       } else {
         // console.log('array not same');
-        this.toastr.error('Please Check Headers');
+        this.toastr.error(this.translate.instant('TOASTER_RESPONSE.CHECK_HEADERS_ERROR'));
         this.fileError = true;
         this.fileErrorMessage = 'Please Check Headers';
         this.fileSelectedSpinner = false;
@@ -186,7 +187,7 @@ export class ScoreboardComponent implements OnInit {
               obj[header] = row[index];
 
               if (obj[header] === undefined) {
-                this.toastr.error(`Fill all fields in ${header}`);
+                this.toastr.error(this.translate.instant(`TOASTER_RESPONSE.FILL_ALL_FIELDS_ERROR ${header}`));
                 this.fileErrorMessage = `Fill all fields in ${header}`;
                 this.fileError = true;
                 this.fileSelectedSpinner = false;
@@ -235,7 +236,7 @@ export class ScoreboardComponent implements OnInit {
             `Error: Not all values in the "${columnName}" column are the same.`
           );
 
-          this.toastr.error(`${columnName} need to same `);
+          this.toastr.error(this.translate.instant(`${columnName} need to same COLUMN_VALUE_MATCH_ERROR`));
           this.fileError = true;
           throw new Error(`${columnName} need to same `);
         }
@@ -250,9 +251,7 @@ export class ScoreboardComponent implements OnInit {
           console.error(
             `Error: Not all values in the "${columnName}" column are numbers.`
           );
-          this.toastr.error(
-            `Please check all values in number column ${columnName}`
-          );
+          this.toastr.error(this.translate.instant(`CHECK_NUMBER_COLUMN`,{columnName:columnName}));
           this.fileError = true;
           throw new Error(
             `Please check all values in number column ${columnName}`
@@ -270,15 +269,14 @@ export class ScoreboardComponent implements OnInit {
         );
 
         if (!allValuesInNumberOrString) {
-          console.error(
-            `Error: Not all values in the "${columnName}" column are numbers or string.`
-          );
-          this.toastr.error(
-            `Please check all values in number in column ${columnName} or enter superuser`
-          );
+          // console.error(
+          //   `Error: Not all values in the "${columnName}" column are numbers or string.`
+          // );
+          const errorMessage = this.translate.instant('TOASTER_RESPONSE.COLUMN_NUMBER_VALUE_ERROR', { columnName: columnName });
+          this.toastr.error(errorMessage);
           this.fileError = true;
           throw new Error(
-            `Please check all values in number in column ${columnName} or enter superuser`
+            errorMessage
           );
           return;
         }
@@ -292,9 +290,7 @@ export class ScoreboardComponent implements OnInit {
             }
           }
           if (seenSet.has(val)) {
-            this.toastr.error(
-              `${val} is already exist in Sales rep No. check and remove duplicate entry`
-            );
+            this.toastr.error(this.translate.instant(`${val} TOASTER_RESPONSE.SALES_REP_DUPLICATE_ENTRY`));
             this.fileError = true;
             throw new Error(
               `${val} is already exist in Sales rep No. check and remove duplicate entry`
@@ -368,21 +364,22 @@ export class ScoreboardComponent implements OnInit {
               },
               (error: HttpErrorResponse) => {
                 this.confirm = false;
-                console.error('Error uploading file:', error);
+                // console.error('Error uploading file:', error);
                 // this.selectedFile = null;
                 // this.file = null;
                 if (error.error.message) {
                   this.toastr.error(error.error.message);
                 } else {
-                  this.toastr.error('server error');
+                  this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
                 }
               }
             );
         } else {
-          this.toastr.error('file upload in progress');
+          this.toastr.error(this.translate.instant('TOASTER_RESPONSE.FILE_UPLOAD_IN_PROGRESS'));
         }
       } else {
-        this.toastr.error('Please select file');
+        this.toastr.error(this.translate.instant('TOASTER_RESPONSE.PLEASE_SELECT_FILE_ERROR'));
+
       }
     } else {
       this.toastr.error(this.fileErrorMessage);
@@ -401,7 +398,7 @@ export class ScoreboardComponent implements OnInit {
       hourly_file_data = JSON.parse(this.storedData);
       // console.log("hourly ", hourly_file_data)
     } else {
-      this.toastr.error('Upload excel file first');
+      this.toastr.error(this.translate.instant('TOASTER_REPLACE.UPLOAD_EXCEL_FIRST_ERROR'));
       return;
     }
 
@@ -440,7 +437,7 @@ export class ScoreboardComponent implements OnInit {
                 company_current: company_current,
                 company_total: companyTargetLC,
               };
-              const jsonString = JSON.stringify(jsonObject, null, 2); 
+              const jsonString = JSON.stringify(jsonObject, null, 2);
               const blob = new Blob([jsonString], { type: 'application/json' });
               const url = URL.createObjectURL(blob);
               const anchor = document.createElement('a');

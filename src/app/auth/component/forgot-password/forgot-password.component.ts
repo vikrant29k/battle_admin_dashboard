@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
@@ -16,15 +16,17 @@ export class ForgotPasswordComponent {
   constructor(
     private auth: AuthService,
     private toastr: ToastrService,
-    private route: Router
+    private route: Router,
+    public translate: TranslateService
   ) {}
 
   forgotBtnClick() {
     // alert(this.email)
     this.spinner = true
     if (!this.isValidEmail(this.email)) {
-      console.log('Email is not valid');
-      this.toastr.error('Enter valid email');
+
+      this.toastr.error(this.translate.instant('TOASTER_RESPONSE.ENTER_VALID_EMAIL'));
+
       this.spinner = false
       return;
     }
@@ -46,7 +48,7 @@ export class ForgotPasswordComponent {
         if (error.error.message) {
           this.toastr.error(error.error.message);
         } else {
-          this.toastr.error('server error');
+          this.toastr.error(this.translate.instant('SERVER_ERROR'));
         }
       },
     });

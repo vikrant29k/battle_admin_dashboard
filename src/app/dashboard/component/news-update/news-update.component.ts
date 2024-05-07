@@ -29,7 +29,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class NewsUpdateComponent implements OnInit, OnDestroy {
   characterCount: number = 0;
-  
+
   // maxCharacterCount = 800;
   textarea: string = '';
   @ViewChild('editor') editor: ElementRef | any;
@@ -89,7 +89,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
         title: data.title,
       });
     }
-   
+
     this.updateMinHeight();
     window.addEventListener('resize', () => this.updateMinHeight());
   }
@@ -101,12 +101,12 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
       const cleanContent = editorContent.replace(/[^a-zA-Z]/g, '');
       // Count characters
       this.characterCount = cleanContent.length;
-  
+
       // Allow backspace to work
       if (event.keyCode === 8) { // 8 is the key code for backspace
         return;
       }
-  
+
       // Disable typing when character count exceeds 800
       if (this.characterCount >= 800) {
         event.preventDefault(); // Prevent further key presses
@@ -114,23 +114,23 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     } else {
       this.characterCount = 0; // If content is null, set character count to 0
     }
-  
+
     // Check if the target is the video input
     if (event.target.id === 'video-input') {
       // Allow only up to 3 characters in the video input
       if (event.target.value.length >= 3) {
-      
+
         event.preventDefault();
       }
     }
   }
-  
-  
+
+
   disableEditor() {
     const editor = this.editor.editor.nativeElement;
     editor.blur(); // Blur the editor to disable typing
   }
-  
+
 
   getButtonLabel(): string {
     return this.newsId ? 'UPDATE_NEWS_PAGE.UPDATE_BUTTON' : 'POST_NEWS_PAGE.POST_BUTTON';
@@ -209,7 +209,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
               formData.append('file', blob, file.name);
               this.updateService.uploadNews(formData).subscribe(
                 (response: any) => {
-                  console.log('Upload successful:', response.body.imageUrl);
+                  // console.log('Upload successful:', response.body.imageUrl);
                   this.images.push(response.body.imageUrl);
                   observer.next(response);
                   observer.complete();
@@ -229,7 +229,19 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     toolbarPosition: 'top',
     toolbarHiddenButtons: [['insertVideo','toggleEditorMode']],
   };
-  
+
+  //counting characters
+  countCharacters() {
+    const editorContent = this.newsContent.get('content')?.value;
+    if (editorContent) {
+        // Remove non-character content using regular expression
+        const cleanContent = editorContent.replace(/[^a-zA-Z]/g, '');
+        // Count characters
+        this.characterCount = cleanContent.length;
+    } else {
+        this.characterCount = 0;
+    }
+}
   //Responsive for mobile
   updateMinHeight(): void {
     const screenWidth = window.innerWidth;
@@ -271,7 +283,8 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
           (res: any) => {
             console.log(res);
             if (res.statusCode == 200) {
-              this.toastr.success('News added successfully');
+              this.toastr.success(this.translate.instant('TOASTER_RESPONSE.NEWS_ADDED_SUCCESS'));
+
               this.route.navigate(['/', 'dashboard', 'news-list']);
             }
           },
@@ -282,7 +295,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
         );
       }
     } else {
-      this.toastr.error('Enter All Fields');
+      this.toastr.success(this.translate.instant('TOASTER_RESPONSE.ENTER_ALL_FIELDS'));
     }
   }
 
@@ -302,7 +315,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const videoLink = prompt('Please enter the YouTube video URL:');
+    const videoLink = prompt(this.translate.instant('TOASTER_RESPONSE.PROMPT_VIDEO_URL'));
     if (videoLink) {
       const videoId = this.getYouTubeVideoId(videoLink);
       if (videoId) {
@@ -312,7 +325,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
         this.editor.executeCommand('insertHtml', videoEmbedCode);
         this.videoCount++; // Increment the count after adding a video
       } else {
-        alert('Invalid YouTube video URL.');
+        this.toastr.error(this.translate.instant('TOASTER_RESPONSE.INVALID_YOUTUBE_URL'));
       }
     }
   }
@@ -329,6 +342,10 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     this.updateService.news = [];
   }
 
+
+
+
+
   openColorPicker() {
     const colorPicker = document.createElement('input');
     colorPicker.type = 'color';
@@ -343,16 +360,16 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     document.body.appendChild(colorPicker); // append color picker to body
     colorPicker.click();
   }
-  
+
   applyBackgroundColor(color: string) {
     const editor = this.editor.executeCommand();
     const selection = editor.executeCommand();
-    
+
     if (selection && !selection.isCollapsed) {
       editor.model.change((writer:any) => {
         const firstPosition = writer.createPositionAt(selection.getFirstPosition());
         const lastPosition = writer.createPositionAt(selection.getLastPosition());
-  
+
         writer.setAttribute('background', color, editor.model.createRangeIn(firstPosition, lastPosition));
       });
     } else {

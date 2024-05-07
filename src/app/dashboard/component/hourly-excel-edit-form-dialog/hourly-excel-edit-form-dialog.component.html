@@ -1,7 +1,7 @@
 <div class="dialog-container">
     <form [formGroup]="hourlyExcelFileLineForm" (ngSubmit)=" onConfirm()" class="custom-form">
         <div class="header-tag">
-            <h2 mat-dialog-title class="text-center">Edit Row</h2>
+             <h2 mat-dialog-title class="text-center">{{'UPLOAD_SECTION.EDIT_ROW' | translate}}</h2>
         </div>
 
         <div class="card">
@@ -20,10 +20,12 @@
 
 
             <div mat-dialog-actions class="action-buttons">
-                <button mat-raised-button type="button" (click)="onDismiss()">
-                    Cancel
-                </button>
-                <button mat-raised-button color="primary" type="submit">OK</button>
+              <button mat-raised-button type="button" (click)="onDismiss()">
+                {{ 'UPLOAD_SECTION.CANCEL_BUTTON' | translate }}
+              </button>
+              <button mat-raised-button color="primary" type="submit">
+                {{ 'UPLOAD_SECTION.OK_BUTTON' | translate }}
+              </button>
             </div>
         </div>
     </form>

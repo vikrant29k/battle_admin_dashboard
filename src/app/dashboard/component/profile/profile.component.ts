@@ -30,7 +30,7 @@ export class ProfileComponent {
 
   editBtn: boolean = true;
   changePassword: boolean = false;
- 
+
 
   ngOnInit(): void {
     this.translateService.get(['RESET_PASSWORD.RESET_PASSWORD_TITLE', 'RESET_PASSWORD.RESET_PASSWORD_MESSAGE']).subscribe(translations => {
@@ -113,12 +113,12 @@ export class ProfileComponent {
     this.profileForm.get('uid')?.disable();
     this.profileForm.get('name')?.disable();
     this.editBtn = false;
-    this.changePasswordBtnDisabled = true; 
+    this.changePasswordBtnDisabled = true;
     this.changePassword = false;
   }
 
 
-  
+
 
   saveBtnClick() {
     // this.editBtn = true;
@@ -127,9 +127,7 @@ export class ProfileComponent {
         if (this.profileForm.get('newPassword')?.value) {
           let pswd = this.profileForm.get('newPassword')?.value;
           if (!this.validatePassword(pswd)) {
-            this.toastr.error(
-              'Password should have minimum 8 character, atleast one uppercase letter, one lowercase letter, one digit and one special character.'
-            );
+            this.toastr.error(this.translate.instant('TOASTER_RESPONSE.PASSWORD_VALIDATION_ERROR'));
             return;
           }
           console.log('new password', this.profileForm.get('newPassword'));
@@ -156,14 +154,14 @@ export class ProfileComponent {
               },
             });
         } else {
-          this.toastr.info('Enter New Password');
+          this.toastr.info( this.translate.instant('TOASTER_RESPONSE.NEW_PASSWORD_ENTRY_INFO'));
           return;
         }
       } else {
         this.profileUpdate();
       }
     } else {
-      this.toastr.error('fill all fields');
+      this.toastr.error(this.translate.instant('TOASTER_RESPONSE.FILL_ALL_FIELDS_ERROR'));
     }
   }
 
@@ -180,8 +178,7 @@ export class ProfileComponent {
             this.profileForm.disable();
             this.editBtn = true;
             this.getProfileDetails();
-            this.toastr.success('Profile updated successfully');
-            // this.toastr.success("Password updated successfully")
+            this.toastr.success(this.translate.instant('TOASTER_RESPONSE.PROFILE_UPDATED_SUCCESS'));
           }
         },
         error: (err: HttpErrorResponse) => {
@@ -190,7 +187,7 @@ export class ProfileComponent {
         },
       });
     } else {
-      this.toastr.error('fill all fields');
+      this.toastr.error(this.translate.instant('TOASTER_RESPONSE.FILL_ALL_FIELDS_ERROR'));
     }
   }
 

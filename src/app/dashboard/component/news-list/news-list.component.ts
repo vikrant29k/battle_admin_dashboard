@@ -9,6 +9,7 @@ import { environment } from 'src/environment/enviroment';
 import { NewsUpdateService } from 'src/app/services/newsUpdate.service';
 import { ToastrService } from 'ngx-toastr';
 import { DomSanitizer } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-news-list',
   templateUrl: './news-list.component.html',
@@ -20,6 +21,7 @@ export class NewsListComponent implements OnInit {
     private updateService: NewsUpdateService,
     private route: Router,
     private toastr: ToastrService,
+    public translate:TranslateService,
     private sanitizer:DomSanitizer,
   ) {}
   ngOnInit(): void {
@@ -49,7 +51,7 @@ export class NewsListComponent implements OnInit {
         // console.log(res)
         if (res.success) {
           // location.reload()
-          this.toastr.success('News deleted successfully');
+          this.toastr.success(this.translate.instant('TOASTER_RESPONSE.NEWS_DELETED_SUCCESS'));
           this.getListofNews();
         }
       },
@@ -63,7 +65,7 @@ export class NewsListComponent implements OnInit {
     console.log(news);
     this.updateService.news = news;
     if (news) {
-   
+
       this.route.navigate(['/', 'news-update']);
     }
   }

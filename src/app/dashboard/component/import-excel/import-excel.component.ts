@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EditFormDialogComponent } from '../edit-form-dialog/edit-form-dialog.component';
 import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
-
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-import-excel',
   templateUrl: './import-excel.component.html',
@@ -29,16 +29,20 @@ fileUploaded: boolean = false;
   tableHeaders: any = [];
   excelFileLineIndexForEditDialog!: number;
 
-  editLineDialogData = {
-    title: 'Edit Line',
-    message: 'Are you sure you want to edit this line?',
-  };
+  editLineDialogData:any
+
 
   constructor(
     private toastr: ToastrService,
     private excelService: ExcelService,
-    public dialog: MatDialog
-  ) {}
+    public dialog: MatDialog,
+    public translate:TranslateService
+  ) {
+  this.editLineDialogData  = {
+      title: this.translate.instant('UPLOAD_SECTION.EDIT_LINE_TITLE'),
+      message: this.translate.instant('UPLOAD_SECTION.EDIT_LINE_MESSAGE')
+    };
+  }
 
   openDialog(
     enterAnimationDuration: string,
@@ -99,9 +103,9 @@ fileUploaded: boolean = false;
       !this.file?.name.endsWith('.xlsx')
     ) {
       // File format is not supported
-      this.toastr.error('Please select an Excel file (.xlsx).');
-      this.fileError = true;
-      this.fileErrorMessage = 'Please select an Excel file (.xlsx).';
+      this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SELECT_EXCEL_FILE_ERROR'));
+            this.fileError = true;
+      this.fileErrorMessage = this.translate.instant('.TOASTER_RESPONSESELECT_EXCEL_FILE_ERROR');
       return;
     }
     this.disableConfirmButotn = false;
@@ -154,7 +158,8 @@ fileUploaded: boolean = false;
         // console.log('arrays is same');
       } else {
         // console.log('array not same');
-        this.toastr.error('Please Check Headers');
+        this.toastr.error(this.translate.instant('TOASTER_RESPONSE.CHECK_HEADERS_ERROR'));
+
         this.fileError = true;
         this.fileSelectedSpinner = false;
         return;
@@ -238,8 +243,9 @@ fileUploaded: boolean = false;
             // console.log("obj", obj)
 
             if (obj[header] === undefined && header !== 'Game-Leader (GL)') {
-              this.toastr.error(`Fill all fields in ${header}`);
-              this.fileErrorMessage = `Fill all fields in ${header}`;
+              this.toastr.error(this.translate.instant(`FILL_ALL_FIELDS_ERROR  ${header}`));
+
+              this.fileErrorMessage = this.translate.instant(`FILL_ALL_FIELDS_ERROR  ${header}`);
               this.fileError = true;
               this.fileSelectedSpinner = false;
               throw new Error(`Error: Missing value in "${header}" field`);
@@ -312,10 +318,8 @@ fileUploaded: boolean = false;
           ) {
             // console.log('other value', obj);
             if (obj['Game-Leader (GL)'] !== 'GL') {
-              this.toastr.error(
-                `Game-Leader (GL) column only GL and SU allowed. check sales rep no ${obj['Sales rep No']}`
-              );
-              this.fileErrorMessage = `Game-Leader (GL) column only GL and SU allowed. check check sales rep no ${obj['Sales rep No']}`;
+              this.toastr.error(this.translate.instant(`GAME_LEADER_COLUMN_ERROR ${obj['Sales rep No']}`))
+              this.fileErrorMessage = this.translate.instant(`GAME_LEADER_COLUMN_ERROR ${obj['Sales rep No']}`);
               this.fileError = true;
               this.fileSelectedSpinner = false;
               throw new Error(
@@ -336,9 +340,8 @@ fileUploaded: boolean = false;
               'superuser'
           ) {
             if (!(obj['Game-Leader (GL)'] == 'SU')) {
-              this.toastr.error(
-                'For Superuser You need to enter SU in Game-Leader (GL) column'
-              );
+              this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SUPERUSER_COLUMN_ERROR'));
+
               throw new Error(
                 'For Superuser You need to enter SU in Game-Leader (GL) column'
               );
@@ -351,9 +354,8 @@ fileUploaded: boolean = false;
               obj['Company Unit (Region or Division...)'].toLowerCase() !==
               'superuser'
             ) {
-              this.toastr.error(
-                'superuser name should be Superuser in Company Unit (Region or Division...)'
-              );
+              this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_ERROR'));
+
               this.fileError = true;
               this.fileErrorMessage = `superuser name should be Superuser in Company Unit (Region or Division...)`;
               this.fileSelectedSpinner = false;
@@ -362,9 +364,8 @@ fileUploaded: boolean = false;
               );
             }
             if (obj['Team name (ASM level)'].toLowerCase() !== 'superuser') {
-              this.toastr.error(
-                'superuser name should be Superuser in Team name (ASM level)'
-              );
+              this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_ASM_LEVEL_ERROR'));
+
               this.fileError = true;
               this.fileErrorMessage = `superuser name should be Superuser in Team name (ASM level)`;
               this.fileSelectedSpinner = false;
@@ -373,9 +374,8 @@ fileUploaded: boolean = false;
               );
             }
             if (obj['Sales rep No'].toLowerCase() !== 'superuser') {
-              this.toastr.error(
-                'superuser name should be Superuser in Sales rep No'
-              );
+              this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_SALES_REP_NO_ERROR'));
+
               this.fileError = true;
               this.fileErrorMessage = `superuser name should be Superuser in Sales rep No`;
               this.fileSelectedSpinner = false;
@@ -387,9 +387,8 @@ fileUploaded: boolean = false;
               obj['Battle Partner Team name (ASM level)'].toLowerCase() !==
               'superuser'
             ) {
-              this.toastr.error(
-                'superuser name should be Superuser in Battle Partner Team name (ASM level)'
-              );
+              this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_BATTLE_PARTNER_ERROR'));
+
               this.fileError = true;
               this.fileErrorMessage = `superuser name should be Superuser in Battle Partner Team name (ASM level)`;
               this.fileSelectedSpinner = false;
@@ -415,7 +414,7 @@ fileUploaded: boolean = false;
 
         if (stringCount === 0) {
           // console.log('game leader not found, team name', teamName);
-          this.toastr.error('game leader not found', teamName);
+          this.toastr.error(this.translate.instant('TOASTER_RESPONSE.GAME_LEADER_NOT_FOUND', teamName));
           this.fileError = true;
           this.fileErrorMessage = `game leader not found, team name ${teamName}`;
           this.fileSelectedSpinner = false;
@@ -432,7 +431,8 @@ fileUploaded: boolean = false;
 
         if (stringCountforMoreGL > 1) {
           // console.log('game leader not found, team name', teamName);
-          this.toastr.error(`more than one game leader found in ${teamName}`);
+          this.toastr.error(this.translate.instant('TOASTER_RESPONSE.MULTIPLE_GAME_LEADERS_FOUND', {teamName:teamName}));
+
           this.fileError = true;
           this.fileErrorMessage = `more than one game leader found in ${teamName}`;
           this.fileSelectedSpinner = false;
@@ -481,8 +481,9 @@ fileUploaded: boolean = false;
       // console.log(
       //   'Not all values in the first array exist in the second array.'
       // );
-      let mess = `Team name (ASM level) ${missingValues[0]} not present in Battle Partner Team name (ASM level)`;
+      let mess = this.translate.instant('TOASTER_RESPONSE.TEAM_NAME_NOT_PRESENT', {teamName:missingValues[0]});
       this.toastr.error(mess);
+
       this.fileError = true;
       this.fileErrorMessage = mess;
       this.fileSelectedSpinner = false;
@@ -495,7 +496,7 @@ fileUploaded: boolean = false;
       // console.log(
       //   'Not all values in the second array exist in the first array.'
       // );
-      let mess = `Battle Partner Team name (ASM level) ${missingValues1} not present in Team name (ASM level)`;
+      let mess = this.translate.instant('TOASTER_RESPONSE.BATTLE_PARTNER_TEAM_NAME_NOT_PRESENT', {teamName:missingValues1});
       this.toastr.error(mess);
       this.fileError = true;
       this.fileErrorMessage = mess;
@@ -530,7 +531,9 @@ fileUploaded: boolean = false;
                 index + 1
               } in the "${columnName}" column.`
             );
-            this.toastr.error(`Invalid Email: ${email}`);
+            this.toastr.error(this.translate.instant(`TOASTER_RESPONSE.INVALID_EMAIL ${email}`));
+
+            // this.toastr.error(`Invalid Email: );
             throw new Error('Invalid email found'); // Exit the loop by throwing an error
           }
         }
@@ -551,9 +554,7 @@ fileUploaded: boolean = false;
           console.error(
             `Error: Not all values in the "${columnName}" column are numbers.`
           );
-          this.toastr.error(
-            `Please check all values in number column ${columnName}`
-          );
+          this.toastr.error(this.translate.instant(`TOASTER_RESPONSE.CHECK_NUMBER_COLUMN "${columnName}"`));
           this.fileError = true;
           throw new Error('column values not in number');
           return;
@@ -574,9 +575,8 @@ fileUploaded: boolean = false;
             }
           }
           if (seenSet.has(val)) {
-            this.toastr.error(
-              `${val} is already exist in Sales rep No. check and remove duplicate entry`
-            );
+            this.toastr.error(this.translate.instant(`${val} TOASTER_REPONSE.SALES_REP_DUPLICATE_ENTRY`));
+
             this.fileError = true;
             throw new Error(
               `${val} is already exist in Sales rep No. check and remove duplicate entry`
@@ -590,7 +590,7 @@ fileUploaded: boolean = false;
             `Error: Not all values in the "${columnName}" column are numbers or string.`
           );
           this.toastr.error(
-            `Please check all values in number or string in column ${columnName}`
+            this.translate.instant(`TOASTER_RESPONSE.COLUMN_VALUE_ERROR ${columnName}`)
           );
           this.fileError = true;
           throw new Error('column values not in number or string');
@@ -644,7 +644,7 @@ fileUploaded: boolean = false;
             `Error: Not all values in the "${columnName}" column are string.`
           );
           this.toastr.error(
-            `Please check all values in string, column ${columnName}`
+            this.translate.instant(`TOASTER_RESPONSE.ERROR_MESSAGE ${columnName}`)
           );
           this.fileError = true;
           throw new Error(
@@ -674,11 +674,11 @@ fileUploaded: boolean = false;
       );
 
       if (!allValuesMatch) {
-        console.error(
-          `Error: Not all values in the "${columnName}" column are the same.`
-        );
+        // console.error(
+        //   `Error: Not all values in the "${columnName}" column are the same.`
+        // );
 
-        this.toastr.error(`${columnName} need to same `);
+        this.toastr.error( this.translate.instant(`${columnName} COLUMN_VALUE_MATCH_ERROR`));
         this.fileError = true;
         throw new Error(`${columnName} need to same `);
       }
@@ -720,7 +720,7 @@ debugger
           // console.log('File upload response:', res);
           if (res.statusCode == 200) {
             // alert("Import Successful");
-            this.toastr.success(res.message);
+            this.toastr.success(this.translate.instant('EXCEL_FILE_ADDED_SUCCESS'));
             this.selectedFile = null;
             this.file = null;
             this.tableData = [];
@@ -739,14 +739,14 @@ debugger
           if (error.error.message) {
             this.toastr.error(error.error.message);
           } else {
-            this.toastr.error('server error');
+            this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
           }
         }
       );
     } else {
       this.confirm = false;
       if (!this.selectedFile) {
-        this.toastr.error('Please Select File');
+        this.toastr.error(this.translate.instant('TOASTER_RESPONSE.PLEASE_SELECT_FILE_ERROR'));
       } else {
         this.toastr.error(this.fileErrorMessage);
       }

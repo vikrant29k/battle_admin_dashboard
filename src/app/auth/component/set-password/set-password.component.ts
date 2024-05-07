@@ -19,9 +19,6 @@ languageCodes = ['en', 'de'];
   languages:any = {
     en: 'English',
     de: 'German',
-    // es: 'Spanish',
-    // ds: 'Dutch',
-    // Add more language codes and their corresponding names here
   };
   confirmPassword: string = '';
   passwordMismatchError: string = ''; // New variable to hold password mismatch error message
@@ -45,7 +42,7 @@ languageCodes = ['en', 'de'];
   }
   setPassword(): void {
     if (this.password == '' || this.confirmPassword == '') {
-      this.toastr.error('Enter all fields');
+      this.toastr.error(this.translate.instant('TOASTER_RESPONSE.ENTER_ALL_FIELDS'));
       return;
     }
     let validatePass = this.validatePassword(this.password);
@@ -74,14 +71,12 @@ languageCodes = ['en', 'de'];
             if (error.error.message) {
               this.toastr.error(error.error.message);
             } else {
-              this.toastr.error('server error');
+              this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
             }
           },
         });
       } else {
-        this.toastr.error(
-          'Password should have minimum 8 character, atleast one uppercase letter, one lowercase letter, one digit and one special character.'
-        );
+        this.toastr.error(this.translate.instant('TOASTER_RESPONSE.PASSWORD_VALIDATION_ERROR'));
       }
     } else {
       this.passwordMismatchError = 'Passwords does not match. Please try again.';

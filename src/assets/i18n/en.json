@@ -30,6 +30,8 @@
       "CHOOSE_FILE": "Choose a File",
       "SELECTED_FILE": "Selected File: ",
       "CONFIRM_BUTTON": "Confirm",
+      "EDIT_LINE_TITLE": "Edit Line",
+  "EDIT_LINE_MESSAGE": "Are you sure you want to edit this line?",
       "EDIT_ROW": "Edit Row",
       "CANCEL_BUTTON": "Cancel",
       "OK_BUTTON": "OK"
@@ -129,9 +131,49 @@
       "RESET_PASSWORD":{
         "RESET_PASSWORD_TITLE": "Reset Password!!",
         "RESET_PASSWORD_MESSAGE": "Do you want to reset your password?"
+      },
+      "TOASTER_RESPONSE":{
+        "UPDATE_SUCCESS": "Update successfully",
+        "ENTER_ALL_FIELDS": "Enter all required fields",
+        "LOGOUT_SUCCESS": "Logout successfully",
+        "NEWS_DELETED_SUCCESS": "News deleted successfully",
+        "NEWS_ADDED_SUCCESS": "News added successfully",
+        "INVALID_YOUTUBE_URL": "Invalid YouTube URL",
+        "EXCEL_FILE_ADDED_SUCCESS": "Excel file added successfully",
+        "PROMPT_VIDEO_URL": "Please enter the YouTube video URL:",
+        "PROFILE_UPDATED_SUCCESS": "Profile updated successfully",
+        "ENTER_VALID_EMAIL": "Enter valid email",
+        "SERVER_ERROR": "Server error",
+        "PASSWORD_VALIDATION_ERROR": "Password should have minimum 8 characters, at least one uppercase letter, one lowercase letter, one digit, and one special character.",
+        "LOGIN_ERROR": "Error occurred during login.",
+        "SELECT_EXCEL_FILE_ERROR": "Please select an Excel file (.xlsx).",
+        "CHECK_HEADERS_ERROR": "Please Check Headers",
+        "FILL_ALL_FIELDS_ERROR": "Fill all fields in",
+        "GAME_LEADER_COLUMN_ERROR": "Game-Leader (GL) column only GL and SU allowed. check sales rep no ",
+        "SUPERUSER_COLUMN_ERROR": "For Superuser You need to enter SU in Game-Leader (GL) column",
+        "SUPERUSER_NAME_ERROR": "Superuser name should be Superuser in Company Unit (Region or Division...)",
+        "PLEASE_SELECT_FILE_ERROR": "Please select file",
+        "SUPERUSER_NAME_SUPERUSER_ASM_LEVEL_ERROR": "superuser name should be Superuser in Team name (ASM level)",
+        "SUPERUSER_NAME_SUPERUSER_SALES_REP_NO_ERROR": "Superuser name should be Superuser in Sales rep No",
+        "SUPERUSER_NAME_SUPERUSER_BATTLE_PARTNER_ERROR": "Der Name des Superusers sollte im Schlachtpartner-Teamnamen (ASM-Ebene) Superuser sein",
+        "GAME_LEADER_NOT_FOUND": "Game leader not found",
+        "MULTIPLE_GAME_LEADERS_FOUND": "More than one game leader found in {{teamName}}",
+        "TEAM_NAME_NOT_PRESENT": "Team name (ASM level) {{teamName}} not present in Battle Partner Team name (ASM level)",
+        "BATTLE_PARTNER_TEAM_NAME_NOT_PRESENT": "Battle Partner Team name (ASM level) {{teamName}} not present in Team name (ASM level)",
+        "INVALID_EMAIL": "Invalid Email:",
+        "CHECK_NUMBER_COLUMN": "Please check all values in number column {{columnName}}",
+        "SALES_REP_DUPLICATE_ENTRY": "is already exist in Sales rep No. check and remove duplicate entry",
+        "ERROR_MESSAGE": "Please check all values in the string, column",
+        "COLUMN_VALUE_ERROR": "Please check all values in number or string in column",
+        "COLUMN_VALUE_MATCH_ERROR": "needs to be the same",
+        "IMAGE_SELECTION_ERROR": "Please select both the images",
+        "MATCH_NAME_MISSING_ERROR": "Enter Match Name",
+        "NEW_PASSWORD_ENTRY_INFO": "Enter New Password",
+        "COLUMN_NUMBER_VALUE_ERROR": "Please check all values in number in column {{columnName}} or enter superuser",
+        "FILE_UPLOAD_IN_PROGRESS": "File upload in progress"
+
+
       }
-
-
 
 
 }

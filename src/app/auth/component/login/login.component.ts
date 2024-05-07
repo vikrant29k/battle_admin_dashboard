@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { environment } from 'src/environment/enviroment';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -23,7 +22,8 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router: Router,
     private toastr: ToastrService,
-    private auth: AuthService
+    private auth: AuthService,
+    public translate:TranslateService
   ) {}
 
   togglePasswordVisibility(): void {
@@ -78,20 +78,20 @@ export class LoginComponent {
               this.toastr.error(error.error.message);
             } else {
               // }
-              console.error('API Error:', error);
+              // console.error('API Error:', error);
               // Handle error, e.g., show an error message
               //   if(!error.error.message){
-              this.toastr.error('error while login');
+                this.toastr.error(this.translate.instant('TOASTER_RESPONSE.LOGIN_ERROR'));
+
             }
           },
         });
       } else {
-        this.toastr.error(
-          'Password should have minimum 8 character, atleast one uppercase letter, one lowercase letter, one digit and one special character.'
-        );
+        this.toastr.error(this.translate.instant('TOASTER_RESPONSE.PASSWORD_VALIDATION_ERROR'));
+
       }
     } else {
-      this.toastr.error('Enter all fields');
+      this.toastr.error(this.translate.instant('TOASTER_RESPONSE.ENTER_ALL_FIELDS'));
     }
   }
   onInputBox(event: any) {
