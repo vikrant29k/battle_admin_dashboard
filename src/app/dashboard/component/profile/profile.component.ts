@@ -104,6 +104,20 @@ export class ProfileComponent {
         this.profileForm.patchValue(formData);
         this.profileForm.disable();
       },
+      error:(error:HttpErrorResponse)=>{
+        if (error.error.message=="Resource not found. Please check the ID and try again.") {
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_RESOURCE_NOT_FOUND'));
+        }
+        else if(error.error.message=="No user found."){
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_NO_USER_FOUND'));
+        }
+        else if(error.error.message=="Unauthorized"){
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED'));
+        }
+        else{
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SERVER'));
+        }
+      }
     });
   }
 
@@ -147,9 +161,27 @@ export class ProfileComponent {
                   this.router.navigate(['']);
                 }
               },
-              error: (err: HttpErrorResponse) => {
-                console.log(' api error', err);
-                this.toastr.error(err.error.message);
+              error: (error: HttpErrorResponse) => {
+                // console.log(' api error', err);
+                // this.toastr.error(err.error.message);
+                if (error.error.message=="An error occurred while updating. Please try again later.") {
+                  this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UPDATE_ERROR'));
+                }
+                else if(error.error.message=="Unauthorized"){
+                  this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED'));
+                }
+                else if(error.error.message=="User is not admin or Invalid user Id."){
+                  this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_USER_NOT_ADMIN_OR_INVALID_USER_ID'));
+                }
+                else if(error.error.message=="userName is required."){
+                  this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_USERNAME_REQUIRED'));
+                }
+                else if(error.error.message=="Resource not found. Please check the ID and try again."){
+                  this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_RESOURCE_NOT_FOUND'));
+                }
+                else{
+                  this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SERVER'));
+                }
                 return;
               },
             });
@@ -181,9 +213,27 @@ export class ProfileComponent {
             this.toastr.success(this.translate.instant('TOASTER_RESPONSE.PROFILE_UPDATED_SUCCESS'));
           }
         },
-        error: (err: HttpErrorResponse) => {
-          console.log(' api error', err);
-          this.toastr.error(err.error.message);
+        error: (error: HttpErrorResponse) => {
+          // console.log(' api error', err);
+          // this.toastr.error(err.error.message);
+          if (error.error.message=="An error occurred while updating. Please try again later.") {
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UPDATE_ERROR'));
+          }
+          else if(error.error.message=="Unauthorized"){
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED'));
+          }
+          else if(error.error.message=="User is not admin or Invalid user Id."){
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_USER_NOT_ADMIN_OR_INVALID_USER_ID'));
+          }
+          else if(error.error.message=="userName is required."){
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_USERNAME_REQUIRED'));
+          }
+          else if(error.error.message=="Resource not found. Please check the ID and try again."){
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_RESOURCE_NOT_FOUND'));
+          }
+          else{
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SERVER'));
+          }
         },
       });
     } else {

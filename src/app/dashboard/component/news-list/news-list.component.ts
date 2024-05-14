@@ -30,9 +30,28 @@ export class NewsListComponent implements OnInit {
   listOfNews: any;
 
   getListofNews() {
-    this.http.get(environment.baseUrl + 'news').subscribe((res: any) => {
+    this.http.get(environment.baseUrl + 'news').subscribe(
+      (res: any) => {
       this.listOfNews = res.data;
-    });
+    },
+    (error:HttpErrorResponse)=>{
+      if(error.error.message=="Invalid news id"){
+        this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_NEWS_ID'));
+      }
+      else if(error.error.message=="Unauthorized"){
+        this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED'));
+      }
+      else if(error.error.message=="Forbidden"){
+        this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_FORBIDDEN'));
+      }
+      else if(error.error.message=="Something went wrong on the server."){
+        this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SOMETHING_WENT_WRONG'));
+      }
+      else{
+        this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
+      }
+    }
+  );
   }
   getFormattedDate(timestamp: string): string {
     const date = new Date(timestamp);
@@ -56,8 +75,23 @@ export class NewsListComponent implements OnInit {
         }
       },
       (error: HttpErrorResponse) => {
-        console.log('error', error);
-        this.toastr.error(error.error.message);
+        if(error.error.message=="Invalid news id"){
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_NEWS_ID'));
+        }
+        else if(error.error.message=="Unauthorized"){
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED'));
+        }
+        else if(error.error.message=="Forbidden"){
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_FORBIDDEN'));
+        }
+        else if(error.error.message=="Something went wrong on the server."){
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SOMETHING_WENT_WRONG'));
+        }
+        else{
+          this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
+        }
+        // console.log('error', error);
+        // this.toastr.error(error.error.message);
       }
     );
   }
@@ -65,7 +99,6 @@ export class NewsListComponent implements OnInit {
     console.log(news);
     this.updateService.news = news;
     if (news) {
-
       this.route.navigate(['/', 'news-update']);
     }
   }

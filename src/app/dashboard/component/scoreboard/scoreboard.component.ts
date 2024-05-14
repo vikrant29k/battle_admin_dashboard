@@ -368,7 +368,43 @@ export class ScoreboardComponent implements OnInit {
                 // this.selectedFile = null;
                 // this.file = null;
                 if (error.error.message) {
-                  this.toastr.error(error.error.message);
+                  // this.toastr.error(error.error.message);
+                  if(error.error.message=="An error occurred while updating. Please try again later."){
+                    this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UPDATE_ERROR'));
+                  }
+                  else if(error.error.message=="Unauthorized"){
+                    this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED'));
+                  }
+                  else if(error.error.message=="Data should not be empty"){
+                    this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_DATA_SHOULD_NOT_BE_EMPTY'));
+                  }
+                  else if(error.error.message=="Please provide data in the proper format. Missing column Company ID"){
+                    this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_MISSING_COMPANY_ID_COLUMN'));
+                  }
+                  else if(error.error.message=="Please provide data in the proper format. Missing column Sales rep no."){
+                    this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_MISSING_SALES_REP_NO_COLUMN'));
+                  }
+                  else if(error.error.message=="Please provide data in the proper format. Missing column Sales in LC"){
+                    this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_MISSING_SALES_IN_LC_COLUMN'));
+                  }
+                  else if(error.error.message=="Company not found"){
+                    this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_COMPANY_NOT_FOUND'));
+                  }
+                  else if(error.error.message=="Your are not authorised to add another company details."){
+                    this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_NOT_AUTHORIZED_TO_ADD_COMPANY'));
+                  }
+                  else if(error.error.message=="--- sales rep no does not exist in database"){
+                    this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SALES_REP_NO_NOT_EXIST'));
+                  }
+                  else if(error.error.message=="Forbidden"){
+                    this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_FORBIDDEN'));
+                  }
+                  else if(error.error.message=="Unauthorized"){
+                    this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED'));
+                  }
+                  else {
+                    this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
+                  }
                 } else {
                   this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
                 }

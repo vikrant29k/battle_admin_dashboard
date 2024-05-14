@@ -175,14 +175,15 @@
       "TOASTER_ERROR":{
         "ERROR_BAD_REQUEST_INVALID_PARAMETERS": "Bad request. Invalid input parameters",
         "ERROR_INTERNAL_SERVER_ERROR": "Internal Server Error. Something went wrong on the server",
-        "ERROR_EVENT_NAME_REQUIRED": "Eventname ist erforderlich.",
+        "ERROR_EVENT_NAME_REQUIRED": "Event name is required.",
         "ERROR_EVENT_NAME_MUST_BE_STRING": "Event name must be a string.",
+        "ERROR_EVENT_NAME_ALREADY_EXIST": "Event name is already exist.",
         "ERROR_UNAUTHORIZED": "Unauthorized",
         "ERROR_SERVER": "Something went wrong on the server.",
         "ERROR_NO_EVENT_DATA_FOUND": "Keine Ereignisdaten gefunden.",
         "ERROR_RESOURCE_NOT_FOUND": "Resource not found. Please check the ID and try again.",
         "ERROR_EMAIL_VERIFICATION_REQUIRED": "Please verify your email before proceeding.",
-        "ERROR_INVALID_CREDENTIALS": "Invalid credentials.",
+        "ERROR_INVALID_CREDENTIALS": "Invalid credentials .",
         "ERROR_NO_MATCHING_DATA_FOUND": "No matching data found. Please check your credentials and try again.",
         "ERROR_INVALID_EMAIL_ADDRESS": "Invalid email address.",
         "ERROR_ROLE_MUST_BE_STRING": "Role must be a string.",
@@ -229,8 +230,8 @@
           "ERROR_FORBIDDEN": "Forbidden",
           "ERROR_INVALID_NEWS_ID_OR_USER_ID": "Invalid news ID or user ID.",
           "ERROR_SOMETHING_WENT_WRONG": "Something went wrong on the server.",
-          "ERROR_INVALID_TEAM_ID": "Invalid team ID."
-
+          "ERROR_INVALID_TEAM_ID": "Invalid team ID.",
+          "ERROR_DUPLICATE_SALES_REP_NUMBER":"Within one company the sales rep number cannot come up twice  ---"
 
       }
      

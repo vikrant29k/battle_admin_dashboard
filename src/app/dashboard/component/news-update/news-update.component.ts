@@ -216,6 +216,19 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
                 },
                 (error) => {
                   console.error('Upload failed:', error);
+                  if(error.error.message=="Unauthorized"){
+                    this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED'));
+                  }
+                  else if(error.error.message=="Forbidden"){
+                    this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_FORBIDDEN'));
+                  }
+                  else if(error.error.message=="Something went wrong on the server."){
+                    this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SERVER_ERROR'));
+                  }
+                  else{
+                    console.log('error in api ', error);
+                    this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
+                  }
                 }
               );
             }, file.type);
@@ -262,8 +275,35 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
               }
             },
             (error: HttpErrorResponse) => {
-              console.log('error in api ', error);
-              this.toastr.error(error.error.message);
+              if(error.error.message=="The title must contain a minimum of 10 characters."){
+                this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_TITLE_MINIMUM_LENGTH'));
+              }
+              else if(error.error.message=="The title must not exceed 200 characters."){
+                this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_TITLE_MAXIMUM_LENGTH'));
+              }
+              else if(error.error.message=="Content should not be empty."){
+                this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_EMPTY_CONTENT'));
+              }
+              else if(error.error.message=="Content should be between 10 and 1000 characters."){
+                this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_CONTENT_LENGTH_RANGE'));
+              }
+              else if(error.error.message=="Invalid news id"){
+                this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_NEWS_ID'));
+              }
+              else if(error.error.message=="Unauthorized"){
+                this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED'));
+              }
+              else if(error.error.message=="Forbidden"){
+                this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_FORBIDDEN'));
+              }
+              else if(error.error.message=="Something went wrong on the server."){
+                this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SOMETHING_WENT_WRONG'));
+              }
+              else{
+                console.log('error in api ', error);
+                this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
+              }
+             
             }
           );
       } else {
@@ -279,7 +319,35 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
           },
           (error: HttpErrorResponse) => {
             console.log('error in api', error);
-            this.toastr.error(error.error.message);
+            if(error.error.message=="Title should not be empty."){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_EMPTY_TITLE'));
+            }
+            else if(error.error.message=="Unauthorized"){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED'));
+            }
+            else if(error.error.message=="Something went wrong on the server."){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SERVER_ERROR'));
+            }
+            else if(error.error.message=="The title must contain a minimum of 10 characters."){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_TITLE_MINIMUM_LENGTH'));
+            }
+            else if(error.error.message=="The title must not exceed 200 characters."){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_TITLE_MAXIMUM_LENGTH'));
+            }
+            else if(error.error.message=="Content should not be empty."){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_EMPTY_CONTENT'));
+            }
+            else if(error.error.message=="Forbidden"){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_FORBIDDEN'));
+            }
+            else if(error.error.message=="Content should be between 10 and 1000 characters."){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_CONTENT_LENGTH_RANGE'));
+            }
+            else{
+              console.log('error in api ', error);
+              this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
+            }
+            
           }
         );
       }

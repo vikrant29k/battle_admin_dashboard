@@ -45,10 +45,23 @@ export class ForgotPasswordComponent {
       error: (error: HttpErrorResponse) => {
         console.error('API Error:', error);
         this.spinner = false
-        if (error.error.message) {
-          this.toastr.error(error.error.message);
-        } else {
-          this.toastr.error(this.translate.instant('SERVER_ERROR'));
+        if (error.error.message=="This email is not associated with wuerth") {
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_EMAIL_NOT_ASSOCIATED_WITH_WUERTH'));
+        } 
+        else if (error.error.message=="Email must be a string.") {
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_EMAIL_MUST_BE_STRING'));
+        } 
+        else if (error.error.message=="Invalid email address.") {
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_EMAIL_ADDRESS'));
+        } 
+        else if (error.error.message=="Only Admin can forget password not player.") {
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_ONLY_ADMIN_FORGET_PASSWORD'));
+        } 
+        else if (error.error.message=="error occurred while sending email...") {
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SENDING_EMAIL'));
+        } 
+        else {
+          this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
         }
       },
     });
