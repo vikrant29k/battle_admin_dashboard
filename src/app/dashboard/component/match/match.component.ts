@@ -107,7 +107,22 @@ export class MatchComponent implements OnInit {
           if (!error.error.message) {
             this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
           } else {
-            this.toastr.error(error.error.message);
+            // this.toastr.error(error.error.message);
+            if (error.error.message=="Event name is required.") {
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_EVENT_NAME_REQUIRED'));
+            }
+            else if (error.error.message=="Event name must be a string.") {
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_EVENT_NAME_MUST_BE_STRING'));
+            }
+            else if (error.error.message=="Event name is aleardy exist.") {
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_EVENT_NAME_ALREADY_EXIST'));
+            }
+            else if (error.error.message=="Unauthorized") {
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED'));
+            }
+            else{
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SERVER'));
+            }
           }
         },
       });
@@ -130,7 +145,16 @@ export class MatchComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         // console.log('error', error);
-        this.toastr.error(error.error.message);
+        // this.toastr.error(error.error.message);
+        if (error.error.message=="No event data found.") {
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_EVENT_NAME_REQUIRED'));
+        }
+        else if(error.error.message=="Unauthorized"){
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED'));
+        }
+        else{
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SERVER'));
+        }
       },
     });
   }
@@ -150,8 +174,17 @@ export class MatchComponent implements OnInit {
           }
         },
         error: (error: HttpErrorResponse) => {
-          console.log('error', error);
-          this.toastr.error(error.error.message);
+          // console.log('error', error);
+          // this.toastr.error(error.error.message);
+          if (error.error.message=="Resource not found. Please check the ID and try again.") {
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_RESOURCE_NOT_FOUND'));
+          }
+          else if(error.error.message=="Unauthorized"){
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED'));
+          }
+          else{
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SERVER'));
+          }
         },
       });
   }
@@ -173,8 +206,17 @@ export class MatchComponent implements OnInit {
         }
       },
       error: (error: HttpErrorResponse) => {
-        console.log('error', error);
-        this.toastr.error(error.error.message);
+        // console.log('error', error);
+        // this.toastr.error(error.error.message);
+        if (error.error.message=="Resource not found. Please check the ID and try again.") {
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_RESOURCE_NOT_FOUND'));
+        }
+        else if(error.error.message=="Unauthorized"){
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED'));
+        }
+        else{
+          this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SERVER'));
+        }
       },
     });
   }

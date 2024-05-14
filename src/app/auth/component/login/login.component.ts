@@ -74,9 +74,34 @@ export class LoginComponent {
           },
           error: (error: HttpErrorResponse) => {
             console.log('error', error);
-            if (error.error.message) {
-              this.toastr.error(error.error.message);
-            } else {
+            if (error.error.message=="Please verify your email before proceeding.") {
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_EMAIL_VERIFICATION_REQUIRED'));
+            }
+            else if (error.error.message=="Invalid credentials ."){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_CREDENTIALS'));
+            }
+            else if (error.error.message=="No matching data found. Please check your credentials and try again."){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_NO_MATCHING_DATA_FOUND'));
+            }
+            else if (error.error.message=="Something went wrong on the server."){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SERVER_ERROR'));
+            }
+            else if (error.error.message=="Invalid email address."){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_EMAIL_ADDRESS'));
+            }
+            else if (error.error.message=="role must be a string."){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_ROLE_MUST_BE_STRING'));
+            }
+            else if (error.error.message=="role is required."){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_ROLE_REQUIRED'));
+            }
+            else if (error.error.message=="Password must be at least 8 characters long."){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_PASSWORD_LENGTH'));
+            }
+            else if (error.error.message=="Please enter valid password."){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_PASSWORD'));
+            }
+             else {
               // }
               // console.error('API Error:', error);
               // Handle error, e.g., show an error message

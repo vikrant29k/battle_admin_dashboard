@@ -112,9 +112,40 @@ export class SignUpComponent implements OnInit {
         },
         error: (error: HttpErrorResponse) => {
           // console.error('API Error:', error);
-          if (error.error.message) {
-            this.toastr.error(error.error.message);
-          } else {
+          if (error.error.message=='Email already exists. Please use a different email address.') {
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_EMAIL_ALREADY_EXISTS'));
+          }
+          else if(error.error.message=='No matching company data found. Please check your input and try again.'){
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_NO_COMPANY_DATA_FOUND'));
+          }
+          else if(error.error.message=='Email must be a string.'){
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_EMAIL_MUST_BE_STRING'));
+          }
+          else if(error.error.message=='Invalid email address.'){
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_EMAIL_ADDRESS'));
+          }
+          else if(error.error.message=='Company name must be a string.'){
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_COMPANY_NAME_MUST_BE_STRING'));
+          }
+          else if(error.error.message=='Company name is required.'){
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_COMPANY_NAME_REQUIRED'));
+          }
+          else if(error.error.message=='User name must be a string.'){
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_USER_NAME_MUST_BE_STRING'));
+          }
+          else if(error.error.message=='User name is required.'){
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_USER_NAME_REQUIRED'));
+          }
+          else if(error.error.message=='Company number is required.'){
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_COMPANY_NUMBER_REQUIRED'));
+          }
+          else if(error.error.message=='Company number must be a number.'){
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_COMPANY_NUMBER_MUST_BE_NUMBER'));
+          }
+          else if(error.error.message=='error occurred while sending email...'){
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SENDING_EMAIL'));
+          }
+           else {
             this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
           }
         },

@@ -712,7 +712,7 @@ fileUploaded: boolean = false;
   onFileUpload(): void {
     // this.isActive=true;
     // this.fileUploaded = true;
-debugger
+
     if (!this.fileError) {
       // console.log(this.finalResult);
       this.excelService.importExcel(this.finalResult).subscribe(
@@ -736,9 +736,37 @@ debugger
           this.confirm = false;
           this.file = null;
           console.error('Error uploading file:', error);
-          if (error.error.message) {
-            this.toastr.error(error.error.message);
-          } else {
+          if (error.error.message=="Something went wrong on the server.") {
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SERVER_ERROR'));
+          }
+          else if (error.error.message=="Unauthorized") {
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED'));
+          }
+          else if (error.error.message=="User is not admin or Invalid user Id.") {
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_USER_NOT_ADMIN_OR_INVALID_USER_ID'));
+          }
+          else if (error.error.message=="No data in excel file") {
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_NO_DATA_IN_EXCEL_FILE'));
+          }
+          else if (error.error.message=="Resource not found. Please check the ID and try again.") {
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_RESOURCE_NOT_FOUND'));
+          }
+          else if (error.error.message=="Your are not authorised to add another company details.") {
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_NOT_AUTHORIZED_TO_ADD_COMPANY'));
+          }
+          else if (error.error.message=="Given battle partner company number and name not exist --- & ---") {
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_BATTLE_PARTNER_COMPANY'));
+          }
+          else if (error.error.message=="Given company number and name not exist ---  ---") {
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_BATTLE_PARTNER_COMPANY'));
+          }
+          else if (error.error.message=="Within one company the sales rep number cannot come up twice  ---") {
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_DUPLICATE_SALES_REP_NUMBER'));
+          }
+          else if (error.error.message=="error occurred while sending email...") {
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SENDING_EMAIL'));
+          }
+           else {
             this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
           }
         }
