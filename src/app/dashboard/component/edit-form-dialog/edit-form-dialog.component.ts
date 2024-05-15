@@ -18,10 +18,8 @@ export class EditFormDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data:any,
     public translate:TranslateService
   ) {
-    let lang= localStorage.getItem('lang');
-    if(lang){
-      translate.use(lang)
-    }
+    let lang:any=localStorage.getItem('lang')
+    translate.use(lang);
 
     this.excelFileLineForm = fb.group({
       'Company No':['',Validators.required],
