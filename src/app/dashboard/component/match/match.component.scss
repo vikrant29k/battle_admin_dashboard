@@ -175,7 +175,7 @@
 
 
 
-@media only screen and (max-width:480px){
+@media only screen and (max-width:480px ){
   .container{
     // max-width: 100%;
     // overflow: hidden;
@@ -242,4 +242,20 @@
   
   }
 
+  @media only screen and (max-width: 568px) {
+    .container{
+      // max-width: 100%;
+      // overflow: hidden;
+      .header-tag{
+        h1{
+          font-size: 1.6rem;
+          font-weight: 200;
+        }
+        p{
+          font-size: 1rem;
+  
+        }
+      }
+    }
+  }
 }

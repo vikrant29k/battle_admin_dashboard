@@ -33,6 +33,7 @@ export class NewsListComponent implements OnInit {
     this.http.get(environment.baseUrl + 'news').subscribe(
       (res: any) => {
       this.listOfNews = res.data;
+      this.listOfNews.reverse();
     },
     (error:HttpErrorResponse)=>{
       if(error.error.message=="Invalid news id"){
