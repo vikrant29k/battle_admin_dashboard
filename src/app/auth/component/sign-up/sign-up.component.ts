@@ -106,7 +106,7 @@ export class SignUpComponent implements OnInit {
         next: (response: any) => {
           // console.log('API Response:', response);
           if (response.success) {
-            this.toastr.success(response.message);
+            this.toastr.success(this.translate.instant('TOASTER_RESPONSE.PASSWORD_RESET_LINK_SENT_SUCCESS'));
             this.signupForm.reset()
           }
         },

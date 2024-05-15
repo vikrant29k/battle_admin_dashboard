@@ -38,7 +38,12 @@ export class MatchComponent implements OnInit {
     private toastr: ToastrService,
     public dialog: MatDialog,
     public translate:TranslateService
-  ) {}
+  ) {
+    this.activeEventDialogData.title = this.translate.instant('DELETE_ACTIVE_EVENT_DIALOG_BOX_POP_UP.TITLE')
+    this.activeEventDialogData.message = this.translate.instant('DELETE_ACTIVE_EVENT_DIALOG_BOX_POP_UP.MESSAGE')
+    this.deleteEventDialogData.title = this.translate.instant('DELETE_EVENT_DIALOG_BOX_POP_UP.TITLE')
+    this.deleteEventDialogData.message = this.translate.instant('DELETE_EVENT_DIALOG_BOX_POP_UP.MESSAGE')
+  }
   ngOnInit(): void {
     this.getAllMatches();
   }
@@ -94,7 +99,7 @@ export class MatchComponent implements OnInit {
             this.selectedImgLogo = null;
             this.selectedImgBg = null;
             this.matchNameInput.nativeElement.value = '';
-            this.toastr.success(response.message);
+            this.toastr.success(this.translate.instant('TOASTER_RESPONSE.EVENT_ADDED_SUCCESS'));
             this.getAllMatches();
           }
         },
@@ -166,7 +171,7 @@ export class MatchComponent implements OnInit {
         next: (res: any) => {
           if (res.success) {
             // console.log('api res', res);
-            this.toastr.success(res.message);
+            this.toastr.success(this.translate.instant('TOASTER_RESPONSE.EVENT_UPDATED_SUCCESS'));
             this.getAllMatches();
           }
         },
@@ -192,7 +197,7 @@ export class MatchComponent implements OnInit {
       next: (res: any) => {
         if (res.success) {
           // console.log('api res', res);
-          this.toastr.success(res.message);
+          this.toastr.success(this.translate.instant("TOASTER_RESPONSE.EVENT_DELETED_SUCCESS"));
          // Clear the form details when the record is deleted
          this.matchNameInput.nativeElement.value = '';
          this.selectedImgLogo = null;
@@ -250,7 +255,7 @@ export class MatchComponent implements OnInit {
         next: (res: any) => {
           if (res.success) {
             // console.log('api res', res);
-            this.toastr.success(res.message);
+            this.toastr.success(this.translate.instant('TOASTER_RESPONSE.EVENT_UPDATED_SUCCESS'));
             this.getAllMatches();
 
             this.matchNameInput.nativeElement.value = '';

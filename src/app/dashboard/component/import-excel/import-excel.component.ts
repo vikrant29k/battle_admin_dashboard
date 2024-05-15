@@ -318,12 +318,12 @@ fileUploaded: boolean = false;
           ) {
             // console.log('other value', obj);
             if (obj['Game-Leader (GL)'] !== 'GL') {
-              this.toastr.error(this.translate.instant(`GAME_LEADER_COLUMN_ERROR ${obj['Sales rep No']}`))
-              this.fileErrorMessage = this.translate.instant(`GAME_LEADER_COLUMN_ERROR ${obj['Sales rep No']}`);
+              this.toastr.error(this.translate.instant(`TOASTER_RESPONSE.GAME_LEADER_COLUMN_ERROR`, {val:obj['Sales rep No']}))
+              this.fileErrorMessage = this.translate.instant(`TOASTER_RESPONSE.GAME_LEADER_COLUMN_ERROR`, {val:obj['Sales rep No']});
               this.fileError = true;
               this.fileSelectedSpinner = false;
               throw new Error(
-                `Game-Leader (GL) column only GL and SU allowed. check check sales rep no ${obj['Sales rep No']}`
+                this.translate.instant(`TOASTER_RESPONSE.GAME_LEADER_COLUMN_ERROR`, {val:obj['Sales rep No']})
               );
             }
           }
@@ -343,7 +343,7 @@ fileUploaded: boolean = false;
               this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SUPERUSER_COLUMN_ERROR'));
 
               throw new Error(
-                'For Superuser You need to enter SU in Game-Leader (GL) column'
+                this.translate.instant('TOASTER_RESPONSE.SUPERUSER_COLUMN_ERROR')
               );
             }
           }
@@ -357,30 +357,34 @@ fileUploaded: boolean = false;
               this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_ERROR'));
 
               this.fileError = true;
-              this.fileErrorMessage = `superuser name should be Superuser in Company Unit (Region or Division...)`;
+              this.fileErrorMessage = this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_ERROR');
               this.fileSelectedSpinner = false;
               throw new Error(
-                'superuser name should be Superuser in Company Unit (Region or Division...)'
+                this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_ERROR')
               );
             }
             if (obj['Team name (ASM level)'].toLowerCase() !== 'superuser') {
               this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_ASM_LEVEL_ERROR'));
 
               this.fileError = true;
-              this.fileErrorMessage = `superuser name should be Superuser in Team name (ASM level)`;
+              this.fileErrorMessage = this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_ASM_LEVEL_ERROR');
               this.fileSelectedSpinner = false;
               throw new Error(
-                'superuser name should be Superuser in Team name (ASM level)'
+                this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_ASM_LEVEL_ERROR')
               );
             }
             if (obj['Sales rep No'].toLowerCase() !== 'superuser') {
               this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_SALES_REP_NO_ERROR'));
 
               this.fileError = true;
-              this.fileErrorMessage = `superuser name should be Superuser in Sales rep No`;
+              // this.fileErrorMessage = `superuser name should be Superuser in Sales rep No`;
+              this.fileErrorMessage = this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_SALES_REP_NO_ERROR');
               this.fileSelectedSpinner = false;
+              // throw new Error(
+              //   'superuser name should be Superuser in Sales rep No'
+              // );
               throw new Error(
-                'superuser name should be Superuser in Sales rep No'
+                this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_SALES_REP_NO_ERROR')
               );
             }
             if (
@@ -390,10 +394,10 @@ fileUploaded: boolean = false;
               this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_BATTLE_PARTNER_ERROR'));
 
               this.fileError = true;
-              this.fileErrorMessage = `superuser name should be Superuser in Battle Partner Team name (ASM level)`;
+              this.fileErrorMessage = this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_BATTLE_PARTNER_ERROR');
               this.fileSelectedSpinner = false;
               throw new Error(
-                'superuser name should be Superuser in Battle Partner Team name (ASM level)'
+                this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_BATTLE_PARTNER_ERROR')
               );
             }
           }
@@ -414,11 +418,13 @@ fileUploaded: boolean = false;
 
         if (stringCount === 0) {
           // console.log('game leader not found, team name', teamName);
-          this.toastr.error(this.translate.instant('TOASTER_RESPONSE.GAME_LEADER_NOT_FOUND', teamName));
+          this.toastr.error(this.translate.instant('TOASTER_RESPONSE.GAME_LEADER_NOT_FOUND', {teamName:teamName}));
           this.fileError = true;
-          this.fileErrorMessage = `game leader not found, team name ${teamName}`;
+          // this.fileErrorMessage = `game leader not found, team name ${teamName}`;
+          this.fileErrorMessage = this.translate.instant('TOASTER_RESPONSE.GAME_LEADER_NOT_FOUND', {teamName:teamName});
           this.fileSelectedSpinner = false;
-          throw new Error(`game leader not found, team name,${teamName}`);
+          // throw new Error(`game leader not found, team name,${teamName}`);
+          throw new Error(this.translate.instant('TOASTER_RESPONSE.GAME_LEADER_NOT_FOUND', {teamName:teamName}));
         } else {
           // console.log('No error. team leader found');
         }
@@ -434,9 +440,9 @@ fileUploaded: boolean = false;
           this.toastr.error(this.translate.instant('TOASTER_RESPONSE.MULTIPLE_GAME_LEADERS_FOUND', {teamName:teamName}));
 
           this.fileError = true;
-          this.fileErrorMessage = `more than one game leader found in ${teamName}`;
+          this.fileErrorMessage = this.translate.instant('TOASTER_RESPONSE.MULTIPLE_GAME_LEADERS_FOUND', {teamName:teamName});
           this.fileSelectedSpinner = false;
-          throw new Error(`more than one game leader found in,${teamName}`);
+          throw new Error(this.translate.instant('TOASTER_RESPONSE.MULTIPLE_GAME_LEADERS_FOUND', {teamName:teamName}));
         } else {
           // console.log('No error. team leader found');
         }
@@ -531,10 +537,10 @@ fileUploaded: boolean = false;
                 index + 1
               } in the "${columnName}" column.`
             );
-            this.toastr.error(this.translate.instant(`TOASTER_RESPONSE.INVALID_EMAIL ${email}`));
+            this.toastr.error(this.translate.instant(`TOASTER_RESPONSE.INVALID_EMAIL`,{email:email}));
 
             // this.toastr.error(`Invalid Email: );
-            throw new Error('Invalid email found'); // Exit the loop by throwing an error
+            throw new Error(this.translate.instant(`TOASTER_RESPONSE.INVALID_EMAIL`,{email:email})); // Exit the loop by throwing an error
           }
         }
         return;
@@ -554,9 +560,9 @@ fileUploaded: boolean = false;
           console.error(
             `Error: Not all values in the "${columnName}" column are numbers.`
           );
-          this.toastr.error(this.translate.instant(`TOASTER_RESPONSE.CHECK_NUMBER_COLUMN "${columnName}"`));
+          this.toastr.error(this.translate.instant(`TOASTER_RESPONSE.CHECK_NUMBER_COLUMN`, {columnName:columnName}));
           this.fileError = true;
-          throw new Error('column values not in number');
+          throw new Error(this.translate.instant(`TOASTER_RESPONSE.CHECK_NUMBER_COLUMN`, {columnName:columnName}));
           return;
         }
       }
@@ -575,11 +581,11 @@ fileUploaded: boolean = false;
             }
           }
           if (seenSet.has(val)) {
-            this.toastr.error(this.translate.instant(`${val} TOASTER_REPONSE.SALES_REP_DUPLICATE_ENTRY`));
+            this.toastr.error(this.translate.instant(`TOASTER_RESPONSE.SALES_REP_DUPLICATE_ENTRY`,{val:val}));
 
             this.fileError = true;
             throw new Error(
-              `${val} is already exist in Sales rep No. check and remove duplicate entry`
+              this.translate.instant(`TOASTER_RESPONSE.SALES_REP_DUPLICATE_ENTRY`,{val:val})
             );
           }
           seenSet.add(val);
@@ -590,10 +596,10 @@ fileUploaded: boolean = false;
             `Error: Not all values in the "${columnName}" column are numbers or string.`
           );
           this.toastr.error(
-            this.translate.instant(`TOASTER_RESPONSE.COLUMN_VALUE_ERROR ${columnName}`)
+            this.translate.instant(`TOASTER_RESPONSE.COLUMN_VALUE_ERROR`, {columnName:columnName})
           );
           this.fileError = true;
-          throw new Error('column values not in number or string');
+          throw new Error(this.translate.instant(`TOASTER_RESPONSE.COLUMN_VALUE_ERROR`, {columnName:columnName}));
           return;
         }
       }
@@ -644,11 +650,11 @@ fileUploaded: boolean = false;
             `Error: Not all values in the "${columnName}" column are string.`
           );
           this.toastr.error(
-            this.translate.instant(`TOASTER_RESPONSE.ERROR_MESSAGE ${columnName}`)
+            this.translate.instant(`TOASTER_RESPONSE.ERROR_MESSAGE`, {columnName:columnName})
           );
           this.fileError = true;
           throw new Error(
-            `Please check all values in string, column ${columnName}`
+            this.translate.instant(`TOASTER_RESPONSE.ERROR_MESSAGE`, {columnName:columnName})
           );
         }
       }
@@ -678,9 +684,9 @@ fileUploaded: boolean = false;
         //   `Error: Not all values in the "${columnName}" column are the same.`
         // );
 
-        this.toastr.error( this.translate.instant(`${columnName} COLUMN_VALUE_MATCH_ERROR`));
+        this.toastr.error( this.translate.instant(`TOASTER_RESPONSE.COLUMN_VALUE_MATCH_ERROR`,{columnName:columnName}));
         this.fileError = true;
-        throw new Error(`${columnName} need to same `);
+        throw new Error(this.translate.instant(`TOASTER_RESPONSE.COLUMN_VALUE_MATCH_ERROR`,{columnName:columnName}));
       }
     } catch (error: any) {
       console.error('error while validating', error.message);
@@ -694,14 +700,14 @@ fileUploaded: boolean = false;
   arraysAreEqual(arr1: any[], arr2: any[]): boolean {
     // Check if arrays have the same length
     if (arr1.length !== arr2.length) {
-      this.fileErrorMessage = 'Please Check Headers';
+      this.fileErrorMessage = this.translate.instant('TOASTER_RESPONSE.CHECK_HEADERS_ERROR');
       return false;
     }
 
     // Check if each element at corresponding indices is equal
     for (let i = 0; i < arr1.length; i++) {
       if (arr1[i] !== arr2[i]) {
-        this.fileErrorMessage = 'Please Check Headers';
+        this.fileErrorMessage = this.translate.instant('TOASTER_RESPONSE.CHECK_HEADERS_ERROR');
         return false;
       }
     }
@@ -754,13 +760,13 @@ fileUploaded: boolean = false;
           else if (error.error.message=="Your are not authorised to add another company details.") {
             this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_NOT_AUTHORIZED_TO_ADD_COMPANY'));
           }
-          else if (error.error.message=="Given battle partner company number and name not exist --- & ---") {
+          else if (error.error.message.includes("Given battle partner company number and name not exis")) {
             this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_BATTLE_PARTNER_COMPANY'));
           }
-          else if (error.error.message=="Given company number and name not exist ---  ---") {
+          else if (error.error.message.includes("Given company number and name not exist")) {
             this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_BATTLE_PARTNER_COMPANY'));
           }
-          else if (error.error.message=="Within one company the sales rep number cannot come up twice  ---") {
+          else if (error.error.message.includes("Within one company the sales rep number cannot come up twice")) {
             this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_DUPLICATE_SALES_REP_NUMBER'));
           }
           else if (error.error.message=="error occurred while sending email...") {

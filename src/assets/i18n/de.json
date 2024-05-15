@@ -36,6 +36,54 @@
       "CANCEL_BUTTON": "Abbrechen",
       "OK_BUTTON": "OK"
     },
+    "USERS_EDIT_LINE_PAGE":{
+      "LABELS":{
+        "COMPANY_NUMBER":"Firmennummer",
+        "COMPANY_NAME":"Name der Firma",
+        "COMPANY_UNIT_REGION":"Unternehmenseinheit (Region oder Division...)",
+        "TEAM_NAME_ASM_LEVEL":"Teamname (ASM-Level)",
+        "COMPANY_TARGET_LC_TOTAL":"Unternehmensziel LC Total",
+        "TARGET_SALES_REP_LC":"Ziel-/Vertriebsmitarbeiter LC",
+        "CURRENCY":"Währung",
+        "SALES_REP_NUMBER":"Vertriebsmitarbeiter-Nr",
+        "E_Mail":"E-Mail",
+        "GAME_LEADER":"Spielleiter (GL)",
+        "BATTLE_PARTNER_TEAM_NAME":"Name des Kampfpartnerteams (ASM-Stufe)",
+        "TIME_ZONE":"Zeitzone (korreliert mit MEZ)",
+        "LANGUAGE":"Sprache ISO-639-1",
+        "BATTLE_PARTNER_COMPANY_NUMBER":"Gefechtspartner-Kompanie-Nr",
+        "BATTLE_PARTNER_COMPANY_NAME":"Name des Kampfpartnerunternehmens"
+      },
+      "PLACEHOLDERS":{
+        "COMPANY_NUMBER":"Geben Sie die Firmennummer ein",
+        "COMPANY_NAME":"Geben Sie den Firmennamen ein",
+        "COMPANY_UNIT_REGION":"Geben Sie die Unternehmenseinheit ein (Region oder Division...)",
+        "TEAM_NAME_ASM_LEVEL":"Geben Sie den Teamnamen ein (ASM-Ebene)",
+        "COMPANY_TARGET_LC_TOTAL":"Geben Sie die Ziel-LC-Gesamtsumme des Unternehmens ein",
+        "TARGET_SALES_REP_LC":"Geben Sie Ziel/Vertriebsmitarbeiter LC ein",
+        "CURRENCY":"Geben Sie die Währung ein",
+        "SALES_REP_NUMBER":"Geben Sie die Vertriebsmitarbeiter-Nr. ein",
+        "E_Mail":"Email eingeben",
+        "GAME_LEADER":"Spielleiter (GL) eingeben",
+        "BATTLE_PARTNER_TEAM_NAME":"Geben Sie den Namen des Kampfpartnerteams ein (ASM-Stufe).",
+        "TIME_ZONE":"Geben Sie die Zeitzone ein (korreliert mit MEZ)",
+        "LANGUAGE":"Geben Sie die Sprache ISO-639-1 ein",
+        "BATTLE_PARTNER_COMPANY_NUMBER":"Geben Sie die Firmennummer des Kampfpartners ein",
+        "BATTLE_PARTNER_COMPANY_NAME":"Geben Sie den Firmennamen des Kampfpartners ein"
+      }
+    },
+    "HOURLY_EDIT_LINE_PAGE":{
+      "LABELS":{
+        "COMPANY_ID":"Firmen-ID",
+        "SALES_REP_NUMBER":"Vertriebsmitarbeiter-Nr",
+        "SALES_IN_LC":"Verkauf in LC"
+      },
+      "PLACEHOLDERS":{
+        "COMPANY_ID":"Geben Sie die Firmen-ID ein",
+        "SALES_REP_NUMBER":"Geben Sie die Vertriebsmitarbeiter-Nr. ein",
+        "SALES_IN_LC":"Geben Sie Verkäufe in LC ein"
+      }
+    },
     "POST_NEWS_PAGE":{
       "HEADER_TITLE": "Nachrichten veröffentlichen",
       "HEADER_DESCRIPTION": "Veröffentlichen Sie Ihre Quelle für Wuerth-Updates, Bilder und Videolinks",
@@ -117,6 +165,14 @@
       "NO_BUTTON": "Nein",
       "YES_BUTTON": "Ja"
     },
+    "DELETE_ACTIVE_EVENT_DIALOG_BOX_POP_UP": {
+      "TITLE": "Aktives Ereignis löschen",
+      "MESSAGE": "Sind Sie sicher, dass Sie das aktive Ereignis löschen möchten?"
+    },
+    "DELETE_EVENT_DIALOG_BOX_POP_UP": {
+      "TITLE": "Ereignis löschen",
+      "MESSAGE": "Sind Sie sicher, dass Sie dieses Ereignis löschen möchten?"
+    },
     "DASHBOARD_SIDEBAR":{
       "MENU_HOME": "Startseite",
       "MENU_POST_NEWS": "Neuigkeiten posten",
@@ -132,38 +188,47 @@
     },
     "TOASTER_RESPONSE":{
       "UPDATE_SUCCESS": "Erfolgreich aktualisiert",
+      "SALES_DATA_UPDATE_SUCCESS": "Verkaufsdaten erfolgreich aktualisiert",
       "ENTER_ALL_FIELDS": "Bitte alle erforderlichen Felder ausfüllen",
       "LOGOUT_SUCCESS": "Erfolgreich abgemeldet",
+      "LOGIN_SUCCESS":"Anmeldung erfolgreich",
       "NEWS_DELETED_SUCCESS": "Nachricht erfolgreich gelöscht",
       "NEWS_ADDED_SUCCESS": "Nachricht erfolgreich hinzugefügt",
+      "NEWS_UPDATED_SUCCESS": "Nachrichten erfolgreich aktualisiert",
       "INVALID_YOUTUBE_URL": "Ungültige YouTube-URL",
       "EXCEL_FILE_ADDED_SUCCESS": "Excel-Datei erfolgreich hinzugefügt",
+      "EVENT_ADDED_SUCCESS": "Ereignis erfolgreich hinzugefügt",
+      "EVENT_UPDATED_SUCCESS": "Ereignis erfolgreich aktualisiert",
+      "EVENT_DELETED_SUCCESS": "Ereignis erfolgreich gelöscht",
       "PROMPT_VIDEO_URL": "Bitte geben Sie die URL des YouTube-Videos ein:",
       "PROFILE_UPDATED_SUCCESS": "Profil erfolgreich aktualisiert",
+      "PASSWORD_RESET_LINK_SENT_SUCCESS": "Der Link zum Zurücksetzen des Passworts wurde an Ihre E-Mail-Adresse gesendet",
+      "PASSWORD_NOT_MATCH":"Passwort stimmt nicht überein. Bitte versuche es erneut",
       "ENTER_VALID_EMAIL": "Geben Sie eine gültige E-Mail-Adresse ein",
       "SERVER_ERROR": "Serverfehler",
       "PASSWORD_VALIDATION_ERROR": "Passwort muss mindestens 8 Zeichen, mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Ziffer und ein Sonderzeichen enthalten.",
+      "PASSWORD_UPDATE_SUCCESS":"Passwort erfolgreich aktualisiert",
       "LOGIN_ERROR": "Fehler beim Anmelden aufgetreten.",
       "SELECT_EXCEL_FILE_ERROR": "Bitte wählen Sie eine Excel-Datei (.xlsx) aus.",
-      "CHECK_HEADERS_ERROR": "Bitte überprüfen Sie die Kopfzeilen",
+      "CHECK_HEADERS_ERROR": "Bitte überprüfen Sie die Überschriften",
       "FILL_ALL_FIELDS_ERROR": "Füllen Sie alle Felder in",
-      "GAME_LEADER_COLUMN_ERROR": "Game-Leader (GL) Spalte nur GL und SU erlaubt. Überprüfen Sie die Verkaufsrepräsentantenzahl",
+      "GAME_LEADER_COLUMN_ERROR": "Game-Leader (GL) Spalte nur GL und SU erlaubt. Überprüfen Sie die Verkaufsrepräsentantenzahl {{val}}",
       "SUPERUSER_COLUMN_ERROR": "Für Superuser müssen Sie SU in der Game-Leader (GL) Spalte eingeben",
       "SUPERUSER_NAME_ERROR": "Der Superuser-Name sollte Superuser im Unternehmensbereich (Region oder Abteilung...) sein",
       "PLEASE_SELECT_FILE_ERROR": "Bitte wählen Sie eine Datei aus",
       "SUPERUSER_NAME_SUPERUSER_ASM_LEVEL_ERROR": "Der Name des superuser sollte im Teamnamen (ASM-Ebene) Superuser sein",
       "SUPERUSER_NAME_SUPERUSER_SALES_REP_NO_ERROR": "Der Name des Superusers sollte im Verkaufsrepräsentantennamen Superuser sein",
-      "SUPERUSER_NAME_SUPERUSER_BATTLE_PARTNER_ERROR": "Superuser name should be Superuser in Battle Partner Team name (ASM level)",
-      "GAME_LEADER_NOT_FOUND": "Spielanführer nicht gefunden",
+      "SUPERUSER_NAME_SUPERUSER_BATTLE_PARTNER_ERROR": "Der Name des Superusers sollte im Schlachtpartner-Teamnamen (ASM-Ebene) Superuser sein",
+      "GAME_LEADER_NOT_FOUND": "Spielanführer nicht gefunden {{teamName}}",
       "MULTIPLE_GAME_LEADERS_FOUND": "Mehr als ein Spielanführer gefunden in {{teamName}}",
       "TEAM_NAME_NOT_PRESENT": "Teamname (ASM-Ebene) {{teamName}} nicht vorhanden in Teamname des Schlachtpartners (ASM-Ebene)",
       "BATTLE_PARTNER_TEAM_NAME_NOT_PRESENT": "Teamname des Schlachtpartners (ASM-Ebene) {{teamName}} nicht vorhanden in Teamname (ASM-Ebene)",
-      "INVALID_EMAIL": "Ungültige E-Mail:",
-      "CHECK_NUMBER_COLUMN": "Bitte überprüfen Sie alle Werte in der Nummernspalte",
-      "SALES_REP_DUPLICATE_ENTRY": "existiert bereits in der Vertriebsmitarbeiter-Nr. Überprüfen Sie die Einträge und entfernen Sie doppelte Einträge",
-      "ERROR_MESSAGE": "Bitte überprüfen Sie alle Werte in der Zeichenkette, Spalte",
-      "COLUMN_VALUE_ERROR": "Bitte überprüfen Sie alle Werte in Zahl oder Zeichenfolge in Spalte",
-      "COLUMN_VALUE_MATCH_ERROR": "muss gleich sein",
+      "INVALID_EMAIL": "Ungültige E-Mail: {{email}}",
+      "CHECK_NUMBER_COLUMN": "Bitte überprüfen Sie alle Werte in der Nummernspalte {{columnName}}",
+      "SALES_REP_DUPLICATE_ENTRY": "{{val}} existiert bereits in der Vertriebsmitarbeiter-Nr. Überprüfen Sie die Einträge und entfernen Sie doppelte Einträge",
+      "ERROR_MESSAGE": "Bitte überprüfen Sie alle Werte in der Zeichenkette, Spalte {{columnName}}",
+      "COLUMN_VALUE_ERROR": "Bitte überprüfen Sie alle Werte in Zahl oder Zeichenfolge in Spalte {{columnName}}",
+      "COLUMN_VALUE_MATCH_ERROR": "{{columnName}} muss gleich sein",
       "IMAGE_SELECTION_ERROR": "Bitte wählen Sie beide Bilder aus",
       "MATCH_NAME_MISSING_ERROR": "Geben Sie den Spielnamen ein",
       "NEW_PASSWORD_ENTRY_INFO": "Neues Passwort eingeben",
@@ -228,8 +293,8 @@
 "ERROR_FORBIDDEN": "Verboten",
 "ERROR_INVALID_NEWS_ID_OR_USER_ID": "Ungültige Nachrichten-ID oder Benutzer-ID.",
 "ERROR_SOMETHING_WENT_WRONG": "Auf dem Server ist ein Fehler aufgetreten.",
-"ERROR_INVALID_TEAM_ID": "Ungültige Team-ID."
-
+"ERROR_INVALID_TEAM_ID": "Ungültige Team-ID.",
+"ERROR_DUPLICATE_SALES_REP_NUMBER":"Innerhalb eines Unternehmens darf die Vertriebsmitarbeiternummer nicht doppelt vorkommen"
 
     }
 }

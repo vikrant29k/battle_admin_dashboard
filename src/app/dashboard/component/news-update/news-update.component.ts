@@ -269,8 +269,8 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
           .subscribe(
             (res: any) => {
               if (res.statusCode == 200) {
-                this.toastr.success(res.message);
-
+                // this.toastr.success(res.message);
+                this.toastr.success(this.translate.instant('TOASTER_RESPONSE.NEWS_UPDATED_SUCCESS'));
                 this.route.navigate(['/', 'dashboard', 'news-list']);
               }
             },

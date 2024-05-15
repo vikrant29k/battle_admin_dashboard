@@ -34,12 +34,9 @@ export class ForgotPasswordComponent {
       next: (response) => {
         console.log('API Response:', response);
         if (response.statusCode == 200) {
-          this.toastr.success(response.message);
+          this.toastr.success(this.translate.instant('TOASTER_RESPONSE.PASSWORD_RESET_LINK_SENT_SUCCESS'));
           this.spinner = false
           this.route.navigate(['']);
-        } else {
-          this.toastr.success(response.message);
-          this.spinner = false
         }
       },
       error: (error: HttpErrorResponse) => {

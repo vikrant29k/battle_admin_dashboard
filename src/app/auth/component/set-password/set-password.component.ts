@@ -60,11 +60,9 @@ languageCodes = ['en', 'de'];
             console.log('API Response:', response);
             if (response.statusCode == 200) {
               // alert("Password set successful");
-              this.toastr.success(response.message);
+              this.toastr.success(this.translate.instant('TOASTER_RESPONSE.PASSWORD_UPDATE_SUCCESS'));
               this.route.navigate(['/', 'auth', 'login']);
-            } else {
-              this.toastr.success(response.message);
-            }
+            } 
           },
           error: (error: HttpErrorResponse) => {
             console.error('API Error:', error);
@@ -92,9 +90,9 @@ languageCodes = ['en', 'de'];
         this.toastr.error(this.translate.instant('TOASTER_RESPONSE.PASSWORD_VALIDATION_ERROR'));
       }
     } else {
-      this.passwordMismatchError = 'Passwords does not match. Please try again.';
+      this.passwordMismatchError = 'Password does not match. Please try again.';
       // alert(this.passwordMismatchError);
-      this.toastr.error(this.passwordMismatchError);
+      this.toastr.error(this.translate.instant('TOASTER_RESPONSE.PASSWORD_NOT_MATCH'));
       return;
 
       // alert("Password Should Be At Least Of Minimun 8 Character, Must Contain Number And Alphabets")
