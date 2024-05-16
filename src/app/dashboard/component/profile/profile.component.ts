@@ -159,7 +159,7 @@ export class ProfileComponent {
                 if (res.statusCode == 200) {
                   console.log('password res', res);
                   this.profileUpdate();
-                  localStorage.clear()
+                  
                   // this.toastr.success("Password Updated Successfully")
                   this.router.navigate(['']);
                 }
@@ -216,6 +216,7 @@ export class ProfileComponent {
             this.editBtn = true;
             this.getProfileDetails();
             this.toastr.success(this.translate.instant('TOASTER_RESPONSE.PROFILE_UPDATED_SUCCESS'));
+            localStorage.clear()
           }
         },
         error: (error: HttpErrorResponse) => {

@@ -5,11 +5,12 @@ import { jwtDecode } from 'jwt-decode';
 import { Observable, finalize } from 'rxjs';
 import { environment } from 'src/environment/enviroment';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http:HttpClient, private toster:ToastrService) {}
+  constructor(private http:HttpClient, private toster:ToastrService, public translate: TranslateService) {}
 
   getUserIdFromToken(): string | null {              //Get the id from the token saved in localStorage
     const token = localStorage.getItem('token');
@@ -27,7 +28,7 @@ export class AuthService {
 
 
     signUp(data: any): Observable<any> {
-      const loadingToast = this.toster.info('','Verifying...', {
+      const loadingToast = this.toster.info('',this.translate.instant('TOASTER_RESPONSE.VERIFYING'), {
         disableTimeOut: true,
         closeButton: true,
         positionClass: 'toast-top-right'

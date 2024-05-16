@@ -234,7 +234,8 @@
       "NEW_PASSWORD_ENTRY_INFO": "Neues Passwort eingeben",
       "COLUMN_NUMBER_VALUE_ERROR": "Bitte überprüfen Sie alle Werte in Zahl in Spalte {{columnName}} oder geben Sie einen Superuser ein",
       "FILE_UPLOAD_IN_PROGRESS": "Dateiupload läuft",
-      "UPLOAD_EXCEL_FIRST_ERROR": "Bitte zuerst Excel-Datei hochladen"
+      "UPLOAD_EXCEL_FIRST_ERROR": "Bitte zuerst Excel-Datei hochladen",
+      "VERIFYING":"Überprüfung..."
     },
     "TOASTER_ERROR":{
       "ERROR_BAD_REQUEST_INVALID_PARAMETERS": "Ungültige Anforderung. Ungültige Eingabeparameter",
