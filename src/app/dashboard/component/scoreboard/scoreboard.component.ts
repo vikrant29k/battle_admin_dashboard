@@ -19,6 +19,8 @@ export class ScoreboardComponent implements OnInit {
     public dialog: MatDialog,
     public translate:TranslateService
   ) {
+    let lang:any=localStorage.getItem('lang')
+    translate.use(lang);
     this.editLineDialogData = {
       title: this.translate.instant('UPLOAD_SECTION.EDIT_LINE_TITLE'),
       message: this.translate.instant('UPLOAD_SECTION.EDIT_LINE_MESSAGE')

@@ -296,10 +296,10 @@
           "ERROR_INVALID_NEWS_ID_OR_USER_ID": "Invalid news ID or user ID.",
           "ERROR_SOMETHING_WENT_WRONG": "Something went wrong on the server.",
           "ERROR_INVALID_TEAM_ID": "Invalid team ID.",
-          "ERROR_DUPLICATE_SALES_REP_NUMBER":"Within one company the sales rep number cannot come up twice"
+          "ERROR_DUPLICATE_SALES_REP_NUMBER":"Within one company the sales rep number cannot come up twice {{data}}"
 
       }
-     
+
 
 
 }

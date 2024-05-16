@@ -14,12 +14,14 @@ import { TranslateService } from '@ngx-translate/core';
 export class MatchComponent implements OnInit {
   @ViewChild('matchName') matchNameInput!: ElementRef;
   @ViewChild('uploadSection') uploadSection!: ElementRef;
+  isActive: boolean = false;
   selectedImgLogo: any = null;
   selectedImgBg: any = null;
   fileError: boolean = false;
   baseUrl = environment.baseUrl;
   updateBtn = false;
   matchIdForUpdate = '';
+  tableData: any[] = [];
 
   matches: any = [];
 
@@ -79,6 +81,7 @@ export class MatchComponent implements OnInit {
 
   onFileUpload(match: any) {
     // console.log('file type is', this.selectedImg.type);
+    this.isActive = true;
     if (match) {
       // console.log('match', match);
       let data = new FormData();

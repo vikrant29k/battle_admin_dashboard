@@ -60,7 +60,10 @@ export class ProfileComponent {
     private router: Router,
     private translateService:TranslateService,
     private translate:TranslateService
-  ) {}
+  ) {
+    let lang:any=localStorage.getItem('lang')
+    translate.use(lang);
+  }
 
   showOtherDiv: boolean = false;
   inputValue: string = '';
@@ -192,6 +195,8 @@ export class ProfileComponent {
       } else {
         this.profileUpdate();
       }
+      this.changePasswordBtnDisabled = false;
+
     } else {
       this.toastr.error(this.translate.instant('TOASTER_RESPONSE.FILL_ALL_FIELDS_ERROR'));
     }

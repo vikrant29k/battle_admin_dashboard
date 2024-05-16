@@ -294,7 +294,8 @@
 "ERROR_INVALID_NEWS_ID_OR_USER_ID": "Ungültige Nachrichten-ID oder Benutzer-ID.",
 "ERROR_SOMETHING_WENT_WRONG": "Auf dem Server ist ein Fehler aufgetreten.",
 "ERROR_INVALID_TEAM_ID": "Ungültige Team-ID.",
-"ERROR_DUPLICATE_SALES_REP_NUMBER":"Innerhalb eines Unternehmens darf die Vertriebsmitarbeiternummer nicht doppelt vorkommen"
+"ERROR_DUPLICATE_SALES_REP_NUMBER":"Innerhalb eines Unternehmens darf die Vertriebsmitarbeiternummer nicht zweimal vorkommen:{{data}}"
+
 
     }
 }

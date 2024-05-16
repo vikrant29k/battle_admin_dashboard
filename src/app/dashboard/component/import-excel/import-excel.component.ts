@@ -38,6 +38,8 @@ fileUploaded: boolean = false;
     public dialog: MatDialog,
     public translate:TranslateService
   ) {
+    let lang:any=localStorage.getItem('lang')
+    translate.use(lang);
   this.editLineDialogData  = {
       title: this.translate.instant('UPLOAD_SECTION.EDIT_LINE_TITLE'),
       message: this.translate.instant('UPLOAD_SECTION.EDIT_LINE_MESSAGE')
@@ -726,7 +728,7 @@ fileUploaded: boolean = false;
           // console.log('File upload response:', res);
           if (res.statusCode == 200) {
             // alert("Import Successful");
-            this.toastr.success(this.translate.instant('EXCEL_FILE_ADDED_SUCCESS'));
+            this.toastr.success(this.translate.instant('TOASTER_RESPONSE.EXCEL_FILE_ADDED_SUCCESS'));
             this.selectedFile = null;
             this.file = null;
             this.tableData = [];
@@ -766,8 +768,8 @@ fileUploaded: boolean = false;
           else if (error.error.message.includes("Given company number and name not exist")) {
             this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_BATTLE_PARTNER_COMPANY'));
           }
-          else if (error.error.message.includes("Within one company the sales rep number cannot come up twice")) {
-            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_DUPLICATE_SALES_REP_NUMBER'));
+          else if (error.error.message=="Within one company the sales rep number cannot come up twice {{data}}") {
+            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_DUPLICATE_SALES_REP_NUMBER',{data:error.error.errors}));
           }
           else if (error.error.message=="error occurred while sending email...") {
             this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SENDING_EMAIL'));

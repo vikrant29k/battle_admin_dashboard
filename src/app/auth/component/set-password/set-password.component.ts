@@ -30,7 +30,7 @@ languageCodes = ['en', 'de'];
     private toastr: ToastrService,
     public translate:TranslateService
   ) {
-    let lang=localStorage.getItem('lang')||'en'
+    let lang:any=localStorage.getItem('lang')
     translate.use(lang);
   }
   public showPassword: boolean = false;
@@ -68,19 +68,19 @@ languageCodes = ['en', 'de'];
             console.error('API Error:', error);
             if (error.error.message=="Token is required.") {
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SENDING_EMAIL_TOKEN_REQUIRED'));
-            } 
+            }
             else if (error.error.message=="Password must be at least 8 characters long.") {
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_PASSWORD_LENGTH_ERROR'));
-            } 
+            }
             else if (error.error.message=="Please enter valid password.") {
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_PASSWORD'));
-            } 
+            }
             else if (error.error.message=="Your session has expired. Please log in again.") {
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SESSION_EXPIRED'));
-            } 
+            }
             else if (error.error.message=="An error occurred while updating. Please try again later.") {
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UPDATE_ERROR'));
-            } 
+            }
             else {
               this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
             }

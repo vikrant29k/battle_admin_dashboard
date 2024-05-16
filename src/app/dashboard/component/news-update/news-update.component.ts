@@ -2,20 +2,16 @@ import {
   Component,
   ViewChild,
   ElementRef,
-  AfterViewInit,
   OnInit,
   OnDestroy,
 } from '@angular/core';
-import { AngularEditorComponent, AngularEditorConfig, UploadResponse } from '@kolkov/angular-editor';
+import { AngularEditorConfig, UploadResponse } from '@kolkov/angular-editor';
 import {
   HttpClient,
   HttpErrorResponse,
-  HttpEvent,
-  HttpEventType,
-  HttpRequest,
-  HttpResponse,
+  HttpEvent
 } from '@angular/common/http';
-import { FormGroup, FormControl, Validators, MaxLengthValidator, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { environment } from 'src/environment/enviroment';
 import { NewsUpdateService } from 'src/app/services/newsUpdate.service';
 import { Router } from '@angular/router';
@@ -54,6 +50,8 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,private translate:TranslateService,
     private fb: FormBuilder
   ) {
+    let lang:any=localStorage.getItem('lang')
+    translate.use(lang);
     // this.newsContent = this.fb.group({
     //   content: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxCharacterCount)])],
     //   title: ['', Validators.required],});
@@ -303,7 +301,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
                 console.log('error in api ', error);
                 this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
               }
-             
+
             }
           );
       } else {
@@ -347,7 +345,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
               console.log('error in api ', error);
               this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
             }
-            
+
           }
         );
       }
