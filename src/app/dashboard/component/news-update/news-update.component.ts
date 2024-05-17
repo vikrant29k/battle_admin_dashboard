@@ -297,6 +297,9 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
               else if(error.error.message=="Something went wrong on the server."){
                 this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SOMETHING_WENT_WRONG'));
               }
+              else if(error.error.message=="The content must not exceed 1000 characters."){
+                this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_NEWS_MAX_LENGTH_ERROR'));
+              }
               else{
                 console.log('error in api ', error);
                 this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
@@ -340,6 +343,9 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
             }
             else if(error.error.message=="Content should be between 10 and 1000 characters."){
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_CONTENT_LENGTH_RANGE'));
+            }
+            else if(error.error.message=="The content must not exceed 1000 characters."){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_NEWS_MAX_LENGTH_ERROR'));
             }
             else{
               console.log('error in api ', error);
