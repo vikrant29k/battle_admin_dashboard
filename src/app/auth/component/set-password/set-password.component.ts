@@ -30,7 +30,7 @@ languageCodes = ['en', 'de'];
     private toastr: ToastrService,
     public translate:TranslateService
   ) {
-    let lang=localStorage.getItem('lang')||'en'
+    let lang:any=localStorage.getItem('lang')
     translate.use(lang);
   }
   public showPassword: boolean = false;
@@ -60,29 +60,27 @@ languageCodes = ['en', 'de'];
             console.log('API Response:', response);
             if (response.statusCode == 200) {
               // alert("Password set successful");
-              this.toastr.success(response.message);
+              this.toastr.success(this.translate.instant('TOASTER_RESPONSE.PASSWORD_UPDATE_SUCCESS'));
               this.route.navigate(['/', 'auth', 'login']);
-            } else {
-              this.toastr.success(response.message);
-            }
+            } 
           },
           error: (error: HttpErrorResponse) => {
             console.error('API Error:', error);
             if (error.error.message=="Token is required.") {
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SENDING_EMAIL_TOKEN_REQUIRED'));
-            } 
+            }
             else if (error.error.message=="Password must be at least 8 characters long.") {
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_PASSWORD_LENGTH_ERROR'));
-            } 
+            }
             else if (error.error.message=="Please enter valid password.") {
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_PASSWORD'));
-            } 
+            }
             else if (error.error.message=="Your session has expired. Please log in again.") {
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SESSION_EXPIRED'));
-            } 
+            }
             else if (error.error.message=="An error occurred while updating. Please try again later.") {
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UPDATE_ERROR'));
-            } 
+            }
             else {
               this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
             }
@@ -92,9 +90,9 @@ languageCodes = ['en', 'de'];
         this.toastr.error(this.translate.instant('TOASTER_RESPONSE.PASSWORD_VALIDATION_ERROR'));
       }
     } else {
-      this.passwordMismatchError = 'Passwords does not match. Please try again.';
+      this.passwordMismatchError = 'Password does not match. Please try again.';
       // alert(this.passwordMismatchError);
-      this.toastr.error(this.passwordMismatchError);
+      this.toastr.error(this.translate.instant('TOASTER_RESPONSE.PASSWORD_NOT_MATCH'));
       return;
 
       // alert("Password Should Be At Least Of Minimun 8 Character, Must Contain Number And Alphabets")

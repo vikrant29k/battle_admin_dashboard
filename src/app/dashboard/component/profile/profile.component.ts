@@ -60,7 +60,10 @@ export class ProfileComponent {
     private router: Router,
     private translateService:TranslateService,
     private translate:TranslateService
-  ) {}
+  ) {
+    let lang:any=localStorage.getItem('lang')
+    translate.use(lang);
+  }
 
   showOtherDiv: boolean = false;
   inputValue: string = '';
@@ -156,7 +159,7 @@ export class ProfileComponent {
                 if (res.statusCode == 200) {
                   console.log('password res', res);
                   this.profileUpdate();
-                  localStorage.clear()
+                  
                   // this.toastr.success("Password Updated Successfully")
                   this.router.navigate(['']);
                 }
@@ -192,6 +195,8 @@ export class ProfileComponent {
       } else {
         this.profileUpdate();
       }
+      this.changePasswordBtnDisabled = false;
+
     } else {
       this.toastr.error(this.translate.instant('TOASTER_RESPONSE.FILL_ALL_FIELDS_ERROR'));
     }
@@ -211,6 +216,7 @@ export class ProfileComponent {
             this.editBtn = true;
             this.getProfileDetails();
             this.toastr.success(this.translate.instant('TOASTER_RESPONSE.PROFILE_UPDATED_SUCCESS'));
+            localStorage.clear()
           }
         },
         error: (error: HttpErrorResponse) => {

@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ImportExcelComponent {
   isActive: boolean = false;
-fileUploaded: boolean = false;
+  fileUploaded: boolean = false;
 
   selectedFile: File | null = null;
   file: File | null = null;
@@ -29,18 +29,19 @@ fileUploaded: boolean = false;
   tableHeaders: any = [];
   excelFileLineIndexForEditDialog!: number;
 
-  editLineDialogData:any
-
+  editLineDialogData: any;
 
   constructor(
     private toastr: ToastrService,
     private excelService: ExcelService,
     public dialog: MatDialog,
-    public translate:TranslateService
+    public translate: TranslateService
   ) {
-  this.editLineDialogData  = {
+    let lang: any = localStorage.getItem('lang');
+    translate.use(lang);
+    this.editLineDialogData = {
       title: this.translate.instant('UPLOAD_SECTION.EDIT_LINE_TITLE'),
-      message: this.translate.instant('UPLOAD_SECTION.EDIT_LINE_MESSAGE')
+      message: this.translate.instant('UPLOAD_SECTION.EDIT_LINE_MESSAGE'),
     };
   }
 
@@ -56,7 +57,14 @@ fileUploaded: boolean = false;
       exitAnimationDuration,
     });
     dialogRef.afterClosed().subscribe((result) => {
+      // console.log("dialog result is ", result)
       if (result) {
+        let Gl = result['Game-Leader (GL)'];
+        // console.log("gl is", Gl)
+        if (Gl == '') {
+          result['Game-Leader (GL)'] = undefined;
+        }
+        // console.log("updated result", result)
         const salesRepNo = parseInt(result['Sales rep No']);
         if (!isNaN(salesRepNo)) {
           result['Sales rep No'] = salesRepNo;
@@ -103,9 +111,13 @@ fileUploaded: boolean = false;
       !this.file?.name.endsWith('.xlsx')
     ) {
       // File format is not supported
-      this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SELECT_EXCEL_FILE_ERROR'));
-            this.fileError = true;
-      this.fileErrorMessage = this.translate.instant('.TOASTER_RESPONSESELECT_EXCEL_FILE_ERROR');
+      this.toastr.error(
+        this.translate.instant('TOASTER_RESPONSE.SELECT_EXCEL_FILE_ERROR')
+      );
+      this.fileError = true;
+      this.fileErrorMessage = this.translate.instant(
+        '.TOASTER_RESPONSESELECT_EXCEL_FILE_ERROR'
+      );
       return;
     }
     this.disableConfirmButotn = false;
@@ -158,7 +170,9 @@ fileUploaded: boolean = false;
         // console.log('arrays is same');
       } else {
         // console.log('array not same');
-        this.toastr.error(this.translate.instant('TOASTER_RESPONSE.CHECK_HEADERS_ERROR'));
+        this.toastr.error(
+          this.translate.instant('TOASTER_RESPONSE.CHECK_HEADERS_ERROR')
+        );
 
         this.fileError = true;
         this.fileSelectedSpinner = false;
@@ -243,9 +257,13 @@ fileUploaded: boolean = false;
             // console.log("obj", obj)
 
             if (obj[header] === undefined && header !== 'Game-Leader (GL)') {
-              this.toastr.error(this.translate.instant(`FILL_ALL_FIELDS_ERROR  ${header}`));
+              this.toastr.error(
+                this.translate.instant(`FILL_ALL_FIELDS_ERROR  ${header}`)
+              );
 
-              this.fileErrorMessage = this.translate.instant(`FILL_ALL_FIELDS_ERROR  ${header}`);
+              this.fileErrorMessage = this.translate.instant(
+                `FILL_ALL_FIELDS_ERROR  ${header}`
+              );
               this.fileError = true;
               this.fileSelectedSpinner = false;
               throw new Error(`Error: Missing value in "${header}" field`);
@@ -312,18 +330,30 @@ fileUploaded: boolean = false;
         let values: any = [];
         let teamName = '';
         arr.map((obj, i) => {
+          // console.log("gl checker - ", obj)
           if (
             obj['Game-Leader (GL)'] !== undefined &&
             obj['Game-Leader (GL)'] !== 'SU'
           ) {
             // console.log('other value', obj);
             if (obj['Game-Leader (GL)'] !== 'GL') {
-              this.toastr.error(this.translate.instant(`GAME_LEADER_COLUMN_ERROR ${obj['Sales rep No']}`))
-              this.fileErrorMessage = this.translate.instant(`GAME_LEADER_COLUMN_ERROR ${obj['Sales rep No']}`);
+              this.toastr.error(
+                this.translate.instant(
+                  `TOASTER_RESPONSE.GAME_LEADER_COLUMN_ERROR`,
+                  { val: obj['Sales rep No'] }
+                )
+              );
+              this.fileErrorMessage = this.translate.instant(
+                `TOASTER_RESPONSE.GAME_LEADER_COLUMN_ERROR`,
+                { val: obj['Sales rep No'] }
+              );
               this.fileError = true;
               this.fileSelectedSpinner = false;
               throw new Error(
-                `Game-Leader (GL) column only GL and SU allowed. check check sales rep no ${obj['Sales rep No']}`
+                this.translate.instant(
+                  `TOASTER_RESPONSE.GAME_LEADER_COLUMN_ERROR`,
+                  { val: obj['Sales rep No'] }
+                )
               );
             }
           }
@@ -340,10 +370,16 @@ fileUploaded: boolean = false;
               'superuser'
           ) {
             if (!(obj['Game-Leader (GL)'] == 'SU')) {
-              this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SUPERUSER_COLUMN_ERROR'));
+              this.toastr.error(
+                this.translate.instant(
+                  'TOASTER_RESPONSE.SUPERUSER_COLUMN_ERROR'
+                )
+              );
 
               throw new Error(
-                'For Superuser You need to enter SU in Game-Leader (GL) column'
+                this.translate.instant(
+                  'TOASTER_RESPONSE.SUPERUSER_COLUMN_ERROR'
+                )
               );
             }
           }
@@ -354,46 +390,78 @@ fileUploaded: boolean = false;
               obj['Company Unit (Region or Division...)'].toLowerCase() !==
               'superuser'
             ) {
-              this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_ERROR'));
+              this.toastr.error(
+                this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_ERROR')
+              );
 
               this.fileError = true;
-              this.fileErrorMessage = `superuser name should be Superuser in Company Unit (Region or Division...)`;
+              this.fileErrorMessage = this.translate.instant(
+                'TOASTER_RESPONSE.SUPERUSER_NAME_ERROR'
+              );
               this.fileSelectedSpinner = false;
               throw new Error(
-                'superuser name should be Superuser in Company Unit (Region or Division...)'
+                this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_ERROR')
               );
             }
             if (obj['Team name (ASM level)'].toLowerCase() !== 'superuser') {
-              this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_ASM_LEVEL_ERROR'));
+              this.toastr.error(
+                this.translate.instant(
+                  'TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_ASM_LEVEL_ERROR'
+                )
+              );
 
               this.fileError = true;
-              this.fileErrorMessage = `superuser name should be Superuser in Team name (ASM level)`;
+              this.fileErrorMessage = this.translate.instant(
+                'TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_ASM_LEVEL_ERROR'
+              );
               this.fileSelectedSpinner = false;
               throw new Error(
-                'superuser name should be Superuser in Team name (ASM level)'
+                this.translate.instant(
+                  'TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_ASM_LEVEL_ERROR'
+                )
               );
             }
             if (obj['Sales rep No'].toLowerCase() !== 'superuser') {
-              this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_SALES_REP_NO_ERROR'));
+              this.toastr.error(
+                this.translate.instant(
+                  'TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_SALES_REP_NO_ERROR'
+                )
+              );
 
               this.fileError = true;
-              this.fileErrorMessage = `superuser name should be Superuser in Sales rep No`;
+              // this.fileErrorMessage = `superuser name should be Superuser in Sales rep No`;
+              this.fileErrorMessage = this.translate.instant(
+                'TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_SALES_REP_NO_ERROR'
+              );
               this.fileSelectedSpinner = false;
+              // throw new Error(
+              //   'superuser name should be Superuser in Sales rep No'
+              // );
               throw new Error(
-                'superuser name should be Superuser in Sales rep No'
+                this.translate.instant(
+                  'TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_SALES_REP_NO_ERROR'
+                )
               );
             }
             if (
               obj['Battle Partner Team name (ASM level)'].toLowerCase() !==
               'superuser'
             ) {
-              this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_BATTLE_PARTNER_ERROR'));
+              this.toastr.error(
+                this.translate.instant(
+                  'TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_BATTLE_PARTNER_ERROR'
+                )
+              );
 
               this.fileError = true;
-              this.fileErrorMessage = `superuser name should be Superuser in Battle Partner Team name (ASM level)`;
+              this.fileErrorMessage = this.translate.instant(
+                'TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_BATTLE_PARTNER_ERROR'
+              );
               this.fileSelectedSpinner = false;
               throw new Error(
-                'superuser name should be Superuser in Battle Partner Team name (ASM level)'
+                this.translate.instant(
+                  'TOASTER_RESPONSE.SUPERUSER_NAME_SUPERUSER_BATTLE_PARTNER_ERROR'
+                )
               );
             }
           }
@@ -414,11 +482,24 @@ fileUploaded: boolean = false;
 
         if (stringCount === 0) {
           // console.log('game leader not found, team name', teamName);
-          this.toastr.error(this.translate.instant('TOASTER_RESPONSE.GAME_LEADER_NOT_FOUND', teamName));
+          this.toastr.error(
+            this.translate.instant('TOASTER_RESPONSE.GAME_LEADER_NOT_FOUND', {
+              teamName: teamName,
+            })
+          );
           this.fileError = true;
-          this.fileErrorMessage = `game leader not found, team name ${teamName}`;
+          // this.fileErrorMessage = `game leader not found, team name ${teamName}`;
+          this.fileErrorMessage = this.translate.instant(
+            'TOASTER_RESPONSE.GAME_LEADER_NOT_FOUND',
+            { teamName: teamName }
+          );
           this.fileSelectedSpinner = false;
-          throw new Error(`game leader not found, team name,${teamName}`);
+          // throw new Error(`game leader not found, team name,${teamName}`);
+          throw new Error(
+            this.translate.instant('TOASTER_RESPONSE.GAME_LEADER_NOT_FOUND', {
+              teamName: teamName,
+            })
+          );
         } else {
           // console.log('No error. team leader found');
         }
@@ -431,12 +512,25 @@ fileUploaded: boolean = false;
 
         if (stringCountforMoreGL > 1) {
           // console.log('game leader not found, team name', teamName);
-          this.toastr.error(this.translate.instant('TOASTER_RESPONSE.MULTIPLE_GAME_LEADERS_FOUND', {teamName:teamName}));
+          this.toastr.error(
+            this.translate.instant(
+              'TOASTER_RESPONSE.MULTIPLE_GAME_LEADERS_FOUND',
+              { teamName: teamName }
+            )
+          );
 
           this.fileError = true;
-          this.fileErrorMessage = `more than one game leader found in ${teamName}`;
+          this.fileErrorMessage = this.translate.instant(
+            'TOASTER_RESPONSE.MULTIPLE_GAME_LEADERS_FOUND',
+            { teamName: teamName }
+          );
           this.fileSelectedSpinner = false;
-          throw new Error(`more than one game leader found in,${teamName}`);
+          throw new Error(
+            this.translate.instant(
+              'TOASTER_RESPONSE.MULTIPLE_GAME_LEADERS_FOUND',
+              { teamName: teamName }
+            )
+          );
         } else {
           // console.log('No error. team leader found');
         }
@@ -481,7 +575,10 @@ fileUploaded: boolean = false;
       // console.log(
       //   'Not all values in the first array exist in the second array.'
       // );
-      let mess = this.translate.instant('TOASTER_RESPONSE.TEAM_NAME_NOT_PRESENT', {teamName:missingValues[0]});
+      let mess = this.translate.instant(
+        'TOASTER_RESPONSE.TEAM_NAME_NOT_PRESENT',
+        { teamName: missingValues[0] }
+      );
       this.toastr.error(mess);
 
       this.fileError = true;
@@ -496,7 +593,10 @@ fileUploaded: boolean = false;
       // console.log(
       //   'Not all values in the second array exist in the first array.'
       // );
-      let mess = this.translate.instant('TOASTER_RESPONSE.BATTLE_PARTNER_TEAM_NAME_NOT_PRESENT', {teamName:missingValues1});
+      let mess = this.translate.instant(
+        'TOASTER_RESPONSE.BATTLE_PARTNER_TEAM_NAME_NOT_PRESENT',
+        { teamName: missingValues1 }
+      );
       this.toastr.error(mess);
       this.fileError = true;
       this.fileErrorMessage = mess;
@@ -531,10 +631,18 @@ fileUploaded: boolean = false;
                 index + 1
               } in the "${columnName}" column.`
             );
-            this.toastr.error(this.translate.instant(`TOASTER_RESPONSE.INVALID_EMAIL ${email}`));
+            this.toastr.error(
+              this.translate.instant(`TOASTER_RESPONSE.INVALID_EMAIL`, {
+                email: email,
+              })
+            );
 
             // this.toastr.error(`Invalid Email: );
-            throw new Error('Invalid email found'); // Exit the loop by throwing an error
+            throw new Error(
+              this.translate.instant(`TOASTER_RESPONSE.INVALID_EMAIL`, {
+                email: email,
+              })
+            ); // Exit the loop by throwing an error
           }
         }
         return;
@@ -554,9 +662,17 @@ fileUploaded: boolean = false;
           console.error(
             `Error: Not all values in the "${columnName}" column are numbers.`
           );
-          this.toastr.error(this.translate.instant(`TOASTER_RESPONSE.CHECK_NUMBER_COLUMN "${columnName}"`));
+          this.toastr.error(
+            this.translate.instant(`TOASTER_RESPONSE.CHECK_NUMBER_COLUMN`, {
+              columnName: columnName,
+            })
+          );
           this.fileError = true;
-          throw new Error('column values not in number');
+          throw new Error(
+            this.translate.instant(`TOASTER_RESPONSE.CHECK_NUMBER_COLUMN`, {
+              columnName: columnName,
+            })
+          );
           return;
         }
       }
@@ -575,11 +691,19 @@ fileUploaded: boolean = false;
             }
           }
           if (seenSet.has(val)) {
-            this.toastr.error(this.translate.instant(`${val} TOASTER_REPONSE.SALES_REP_DUPLICATE_ENTRY`));
+            this.toastr.error(
+              this.translate.instant(
+                `TOASTER_RESPONSE.SALES_REP_DUPLICATE_ENTRY`,
+                { val: val }
+              )
+            );
 
             this.fileError = true;
             throw new Error(
-              `${val} is already exist in Sales rep No. check and remove duplicate entry`
+              this.translate.instant(
+                `TOASTER_RESPONSE.SALES_REP_DUPLICATE_ENTRY`,
+                { val: val }
+              )
             );
           }
           seenSet.add(val);
@@ -590,10 +714,16 @@ fileUploaded: boolean = false;
             `Error: Not all values in the "${columnName}" column are numbers or string.`
           );
           this.toastr.error(
-            this.translate.instant(`TOASTER_RESPONSE.COLUMN_VALUE_ERROR ${columnName}`)
+            this.translate.instant(`TOASTER_RESPONSE.COLUMN_VALUE_ERROR`, {
+              columnName: columnName,
+            })
           );
           this.fileError = true;
-          throw new Error('column values not in number or string');
+          throw new Error(
+            this.translate.instant(`TOASTER_RESPONSE.COLUMN_VALUE_ERROR`, {
+              columnName: columnName,
+            })
+          );
           return;
         }
       }
@@ -644,11 +774,15 @@ fileUploaded: boolean = false;
             `Error: Not all values in the "${columnName}" column are string.`
           );
           this.toastr.error(
-            this.translate.instant(`TOASTER_RESPONSE.ERROR_MESSAGE ${columnName}`)
+            this.translate.instant(`TOASTER_RESPONSE.ERROR_MESSAGE`, {
+              columnName: columnName,
+            })
           );
           this.fileError = true;
           throw new Error(
-            `Please check all values in string, column ${columnName}`
+            this.translate.instant(`TOASTER_RESPONSE.ERROR_MESSAGE`, {
+              columnName: columnName,
+            })
           );
         }
       }
@@ -678,9 +812,17 @@ fileUploaded: boolean = false;
         //   `Error: Not all values in the "${columnName}" column are the same.`
         // );
 
-        this.toastr.error( this.translate.instant(`${columnName} COLUMN_VALUE_MATCH_ERROR`));
+        this.toastr.error(
+          this.translate.instant(`TOASTER_RESPONSE.COLUMN_VALUE_MATCH_ERROR`, {
+            columnName: columnName,
+          })
+        );
         this.fileError = true;
-        throw new Error(`${columnName} need to same `);
+        throw new Error(
+          this.translate.instant(`TOASTER_RESPONSE.COLUMN_VALUE_MATCH_ERROR`, {
+            columnName: columnName,
+          })
+        );
       }
     } catch (error: any) {
       console.error('error while validating', error.message);
@@ -694,14 +836,18 @@ fileUploaded: boolean = false;
   arraysAreEqual(arr1: any[], arr2: any[]): boolean {
     // Check if arrays have the same length
     if (arr1.length !== arr2.length) {
-      this.fileErrorMessage = 'Please Check Headers';
+      this.fileErrorMessage = this.translate.instant(
+        'TOASTER_RESPONSE.CHECK_HEADERS_ERROR'
+      );
       return false;
     }
 
     // Check if each element at corresponding indices is equal
     for (let i = 0; i < arr1.length; i++) {
       if (arr1[i] !== arr2[i]) {
-        this.fileErrorMessage = 'Please Check Headers';
+        this.fileErrorMessage = this.translate.instant(
+          'TOASTER_RESPONSE.CHECK_HEADERS_ERROR'
+        );
         return false;
       }
     }
@@ -720,7 +866,11 @@ fileUploaded: boolean = false;
           // console.log('File upload response:', res);
           if (res.statusCode == 200) {
             // alert("Import Successful");
-            this.toastr.success(this.translate.instant('EXCEL_FILE_ADDED_SUCCESS'));
+            this.toastr.success(
+              this.translate.instant(
+                'TOASTER_RESPONSE.EXCEL_FILE_ADDED_SUCCESS'
+              )
+            );
             this.selectedFile = null;
             this.file = null;
             this.tableData = [];
@@ -736,45 +886,93 @@ fileUploaded: boolean = false;
           this.confirm = false;
           this.file = null;
           console.error('Error uploading file:', error);
-          if (error.error.message=="Something went wrong on the server.") {
-            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SERVER_ERROR'));
-          }
-          else if (error.error.message=="Unauthorized") {
-            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED'));
-          }
-          else if (error.error.message=="User is not admin or Invalid user Id.") {
-            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_USER_NOT_ADMIN_OR_INVALID_USER_ID'));
-          }
-          else if (error.error.message=="No data in excel file") {
-            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_NO_DATA_IN_EXCEL_FILE'));
-          }
-          else if (error.error.message=="Resource not found. Please check the ID and try again.") {
-            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_RESOURCE_NOT_FOUND'));
-          }
-          else if (error.error.message=="Your are not authorised to add another company details.") {
-            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_NOT_AUTHORIZED_TO_ADD_COMPANY'));
-          }
-          else if (error.error.message=="Given battle partner company number and name not exist --- & ---") {
-            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_BATTLE_PARTNER_COMPANY'));
-          }
-          else if (error.error.message=="Given company number and name not exist ---  ---") {
-            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_BATTLE_PARTNER_COMPANY'));
-          }
-          else if (error.error.message=="Within one company the sales rep number cannot come up twice  ---") {
-            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_DUPLICATE_SALES_REP_NUMBER'));
-          }
-          else if (error.error.message=="error occurred while sending email...") {
-            this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SENDING_EMAIL'));
-          }
-           else {
-            this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
+          if (error.error.message == 'Something went wrong on the server.') {
+            this.toastr.error(
+              this.translate.instant('TOASTER_ERROR.ERROR_SERVER_ERROR')
+            );
+          } else if (error.error.message == 'Unauthorized') {
+            this.toastr.error(
+              this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED')
+            );
+          } else if (
+            error.error.message == 'User is not admin or Invalid user Id.'
+          ) {
+            this.toastr.error(
+              this.translate.instant(
+                'TOASTER_ERROR.ERROR_USER_NOT_ADMIN_OR_INVALID_USER_ID'
+              )
+            );
+          } else if (error.error.message == 'No data in excel file') {
+            this.toastr.error(
+              this.translate.instant(
+                'TOASTER_ERROR.ERROR_NO_DATA_IN_EXCEL_FILE'
+              )
+            );
+          } else if (
+            error.error.message ==
+            'Resource not found. Please check the ID and try again.'
+          ) {
+            this.toastr.error(
+              this.translate.instant('TOASTER_ERROR.ERROR_RESOURCE_NOT_FOUND')
+            );
+          } else if (
+            error.error.message ==
+            'Your are not authorised to add another company details.'
+          ) {
+            this.toastr.error(
+              this.translate.instant(
+                'TOASTER_ERROR.ERROR_NOT_AUTHORIZED_TO_ADD_COMPANY'
+              )
+            );
+          } else if (
+            error.error.message.includes(
+              'Given battle partner company number and name not exis'
+            )
+          ) {
+            this.toastr.error(
+              this.translate.instant(
+                'TOASTER_ERROR.ERROR_INVALID_BATTLE_PARTNER_COMPANY'
+              )
+            );
+          } else if (
+            error.error.message.includes(
+              'Given company number and name not exist'
+            )
+          ) {
+            this.toastr.error(
+              this.translate.instant(
+                'TOASTER_ERROR.ERROR_INVALID_BATTLE_PARTNER_COMPANY'
+              )
+            );
+          } else if (
+            error.error.message ==
+            'Within one company the sales rep number cannot come up twice {{data}}'
+          ) {
+            this.toastr.error(
+              this.translate.instant(
+                'TOASTER_ERROR.ERROR_DUPLICATE_SALES_REP_NUMBER',
+                { data: error.error.errors }
+              )
+            );
+          } else if (
+            error.error.message == 'error occurred while sending email...'
+          ) {
+            this.toastr.error(
+              this.translate.instant('TOASTER_ERROR.ERROR_SENDING_EMAIL')
+            );
+          } else {
+            this.toastr.error(
+              this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR')
+            );
           }
         }
       );
     } else {
       this.confirm = false;
       if (!this.selectedFile) {
-        this.toastr.error(this.translate.instant('TOASTER_RESPONSE.PLEASE_SELECT_FILE_ERROR'));
+        this.toastr.error(
+          this.translate.instant('TOASTER_RESPONSE.PLEASE_SELECT_FILE_ERROR')
+        );
       } else {
         this.toastr.error(this.fileErrorMessage);
       }
@@ -784,6 +982,7 @@ fileUploaded: boolean = false;
   convertobjectToArray(tableData: any) {
     const arrayOfArrays = tableData.map((obj: any) => Object.values(obj));
     this.dataArray = arrayOfArrays;
+    // console.log("data arr", this.dataArray)
     this.validateAndFinalResult();
   }
 

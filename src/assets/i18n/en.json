@@ -36,6 +36,54 @@
       "CANCEL_BUTTON": "Cancel",
       "OK_BUTTON": "OK"
     },
+    "USERS_EDIT_LINE_PAGE":{
+      "LABELS":{
+        "COMPANY_NUMBER":"Company Number",
+        "COMPANY_NAME":"Company Name",
+        "COMPANY_UNIT_REGION":"Company Unit (Region or Division...)",
+        "TEAM_NAME_ASM_LEVEL":"Team name (ASM level)",
+        "COMPANY_TARGET_LC_TOTAL":"Company Target LC Total",
+        "TARGET_SALES_REP_LC":"Target / Sales Rep LC",
+        "CURRENCY":"Currency",
+        "SALES_REP_NUMBER":"Sales rep No",
+        "E_Mail":"E-Mail",
+        "GAME_LEADER":"Game-Leader (GL)",
+        "BATTLE_PARTNER_TEAM_NAME":"Battle Partner Team name (ASM level)",
+        "TIME_ZONE":"Time zone (correlated to CET)",
+        "LANGUAGE":"Language ISO-639-1",
+        "BATTLE_PARTNER_COMPANY_NUMBER":"Battle Partner Company No",
+        "BATTLE_PARTNER_COMPANY_NAME":"Battle Partner Company Name"
+      },
+      "PLACEHOLDERS":{
+        "COMPANY_NUMBER":"Enter Company Number",
+        "COMPANY_NAME":"Enter Company Name",
+        "COMPANY_UNIT_REGION":"Enter Company Unit (Region or Division...)",
+        "TEAM_NAME_ASM_LEVEL":"Enter Team name (ASM level)",
+        "COMPANY_TARGET_LC_TOTAL":"Enter Company Target LC Total",
+        "TARGET_SALES_REP_LC":"Enter Target / Sales Rep LC",
+        "CURRENCY":"Enter Currency",
+        "SALES_REP_NUMBER":"Enter Sales rep No",
+        "E_Mail":"Enter E-Mail",
+        "GAME_LEADER":"Enter Game-Leader (GL)",
+        "BATTLE_PARTNER_TEAM_NAME":"Enter Battle Partner Team name (ASM level)",
+        "TIME_ZONE":"Enter Time zone (correlated to CET)",
+        "LANGUAGE":"Enter Language ISO-639-1",
+        "BATTLE_PARTNER_COMPANY_NUMBER":"Enter Battle Partner Company No",
+        "BATTLE_PARTNER_COMPANY_NAME":"Enter Battle Partner Company Name"
+      }
+    },
+    "HOURLY_EDIT_LINE_PAGE":{
+      "LABELS":{
+        "COMPANY_ID":"Company ID",
+        "SALES_REP_NUMBER":"Sales rep no",
+        "SALES_IN_LC":"Sales in LC"
+      },
+      "PLACEHOLDERS":{
+        "COMPANY_ID":"Enter Company ID",
+        "SALES_REP_NUMBER":"Enter Sales rep no",
+        "SALES_IN_LC":"Enter Sales in LC"
+      }
+    },
     "POST_NEWS_PAGE": {
       "HEADER_TITLE": "Post News",
       "HEADER_DESCRIPTION": "Post Your Source For Wuerth Updates, Images And Video Links",
@@ -119,6 +167,14 @@
         "NO_BUTTON": "No",
         "YES_BUTTON": "Yes"
       },
+      "DELETE_ACTIVE_EVENT_DIALOG_BOX_POP_UP": {
+        "TITLE": "Delete Active Event",
+        "MESSAGE": "Are you sure you want to delete the active event?"
+      },
+      "DELETE_EVENT_DIALOG_BOX_POP_UP": {
+        "TITLE": "Delete Event",
+        "MESSAGE": "Are you sure you want to delete this event?"
+      },
       "DASHBOARD_SIDEBAR": {
         "MENU_HOME": "Home",
         "MENU_POST_NEWS": "Post News",
@@ -134,43 +190,53 @@
       },
       "TOASTER_RESPONSE":{
         "UPDATE_SUCCESS": "Update successfully",
+        "SALES_DATA_UPDATE_SUCCESS": "Sales data updated successfully",
         "ENTER_ALL_FIELDS": "Enter all required fields",
         "LOGOUT_SUCCESS": "Logout successfully",
+        "LOGIN_SUCCESS":"Login successfully",
         "NEWS_DELETED_SUCCESS": "News deleted successfully",
         "NEWS_ADDED_SUCCESS": "News added successfully",
+        "NEWS_UPDATED_SUCCESS": "News updated successfully",
         "INVALID_YOUTUBE_URL": "Invalid YouTube URL",
         "EXCEL_FILE_ADDED_SUCCESS": "Excel file added successfully",
+        "EVENT_ADDED_SUCCESS": "Event added successfully",
+        "EVENT_UPDATED_SUCCESS": "Event updated successfully",
+        "EVENT_DELETED_SUCCESS": "Event deleted successfully",
         "PROMPT_VIDEO_URL": "Please enter the YouTube video URL:",
         "PROFILE_UPDATED_SUCCESS": "Profile updated successfully",
+        "PASSWORD_RESET_LINK_SENT_SUCCESS": "Password reset link sent to your email",
+        "PASSWORD_NOT_MATCH":"Password does not match. Please try again",
         "ENTER_VALID_EMAIL": "Enter valid email",
         "SERVER_ERROR": "Server error",
         "PASSWORD_VALIDATION_ERROR": "Password should have minimum 8 characters, at least one uppercase letter, one lowercase letter, one digit, and one special character.",
+        "PASSWORD_UPDATE_SUCCESS":"Password Updated successfully",
         "LOGIN_ERROR": "Error occurred during login.",
         "SELECT_EXCEL_FILE_ERROR": "Please select an Excel file (.xlsx).",
         "CHECK_HEADERS_ERROR": "Please Check Headers",
         "FILL_ALL_FIELDS_ERROR": "Fill all fields in",
-        "GAME_LEADER_COLUMN_ERROR": "Game-Leader (GL) column only GL and SU allowed. check sales rep no ",
+        "GAME_LEADER_COLUMN_ERROR": "Game-Leader (GL) column only GL and SU allowed. check sales rep no {{val}}",
         "SUPERUSER_COLUMN_ERROR": "For Superuser You need to enter SU in Game-Leader (GL) column",
         "SUPERUSER_NAME_ERROR": "Superuser name should be Superuser in Company Unit (Region or Division...)",
         "PLEASE_SELECT_FILE_ERROR": "Please select file",
         "SUPERUSER_NAME_SUPERUSER_ASM_LEVEL_ERROR": "superuser name should be Superuser in Team name (ASM level)",
         "SUPERUSER_NAME_SUPERUSER_SALES_REP_NO_ERROR": "Superuser name should be Superuser in Sales rep No",
-        "SUPERUSER_NAME_SUPERUSER_BATTLE_PARTNER_ERROR": "Der Name des Superusers sollte im Schlachtpartner-Teamnamen (ASM-Ebene) Superuser sein",
-        "GAME_LEADER_NOT_FOUND": "Game leader not found",
+        "SUPERUSER_NAME_SUPERUSER_BATTLE_PARTNER_ERROR": "Superuser name should be Superuser in Battle Partner Team name (ASM level)",
+        "GAME_LEADER_NOT_FOUND": "Game leader not found {{teamName}}",
         "MULTIPLE_GAME_LEADERS_FOUND": "More than one game leader found in {{teamName}}",
         "TEAM_NAME_NOT_PRESENT": "Team name (ASM level) {{teamName}} not present in Battle Partner Team name (ASM level)",
         "BATTLE_PARTNER_TEAM_NAME_NOT_PRESENT": "Battle Partner Team name (ASM level) {{teamName}} not present in Team name (ASM level)",
-        "INVALID_EMAIL": "Invalid Email:",
+        "INVALID_EMAIL": "Invalid Email: {{email}}",
         "CHECK_NUMBER_COLUMN": "Please check all values in number column {{columnName}}",
-        "SALES_REP_DUPLICATE_ENTRY": "is already exist in Sales rep No. check and remove duplicate entry",
-        "ERROR_MESSAGE": "Please check all values in the string, column",
-        "COLUMN_VALUE_ERROR": "Please check all values in number or string in column",
-        "COLUMN_VALUE_MATCH_ERROR": "needs to be the same",
+        "SALES_REP_DUPLICATE_ENTRY": "{{val}} is already exist in Sales rep No. check and remove duplicate entry",
+        "ERROR_MESSAGE": "Please check all values in the string, column {{columnName}}",
+        "COLUMN_VALUE_ERROR": "Please check all values in number or string in column {{columnName}}",
+        "COLUMN_VALUE_MATCH_ERROR": "{{columnName}} needs to be the same",
         "IMAGE_SELECTION_ERROR": "Please select both the images",
         "MATCH_NAME_MISSING_ERROR": "Enter Match Name",
         "NEW_PASSWORD_ENTRY_INFO": "Enter New Password",
         "COLUMN_NUMBER_VALUE_ERROR": "Please check all values in number in column {{columnName}} or enter superuser",
-        "FILE_UPLOAD_IN_PROGRESS": "File upload in progress"
+        "FILE_UPLOAD_IN_PROGRESS": "File upload in progress",
+        "VERIFYING":"Verifying..."
       },
       "TOASTER_ERROR":{
         "ERROR_BAD_REQUEST_INVALID_PARAMETERS": "Bad request. Invalid input parameters",
@@ -231,10 +297,10 @@
           "ERROR_INVALID_NEWS_ID_OR_USER_ID": "Invalid news ID or user ID.",
           "ERROR_SOMETHING_WENT_WRONG": "Something went wrong on the server.",
           "ERROR_INVALID_TEAM_ID": "Invalid team ID.",
-          "ERROR_DUPLICATE_SALES_REP_NUMBER":"Within one company the sales rep number cannot come up twice  ---"
+          "ERROR_DUPLICATE_SALES_REP_NUMBER":"Within one company the sales rep number cannot come up twice {{data}}"
 
       }
-     
+
 
 
 }

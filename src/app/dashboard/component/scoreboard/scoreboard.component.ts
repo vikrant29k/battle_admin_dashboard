@@ -19,6 +19,8 @@ export class ScoreboardComponent implements OnInit {
     public dialog: MatDialog,
     public translate:TranslateService
   ) {
+    let lang:any=localStorage.getItem('lang')
+    translate.use(lang);
     this.editLineDialogData = {
       title: this.translate.instant('UPLOAD_SECTION.EDIT_LINE_TITLE'),
       message: this.translate.instant('UPLOAD_SECTION.EDIT_LINE_MESSAGE')
@@ -125,7 +127,7 @@ export class ScoreboardComponent implements OnInit {
         // console.log('array not same');
         this.toastr.error(this.translate.instant('TOASTER_RESPONSE.CHECK_HEADERS_ERROR'));
         this.fileError = true;
-        this.fileErrorMessage = 'Please Check Headers';
+        this.fileErrorMessage = this.translate.instant('TOASTER_RESPONSE.CHECK_HEADERS_ERROR');
         this.fileSelectedSpinner = false;
         return;
       }
@@ -351,7 +353,7 @@ export class ScoreboardComponent implements OnInit {
                   this.downloadJsonFile();
                   this.selectedFile = null;
                   this.file = null;
-                  this.toastr.success(res.message);
+                  this.toastr.success(this.translate.instant('TOASTER_RESPONSE.SALES_DATA_UPDATE_SUCCESS'));
                   this.fileData = [];
                   this.headers = [];
                 }
@@ -369,6 +371,7 @@ export class ScoreboardComponent implements OnInit {
                 // this.file = null;
                 if (error.error.message) {
                   // this.toastr.error(error.error.message);
+                 
                   if(error.error.message=="An error occurred while updating. Please try again later."){
                     this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UPDATE_ERROR'));
                   }
@@ -393,7 +396,11 @@ export class ScoreboardComponent implements OnInit {
                   else if(error.error.message=="Your are not authorised to add another company details."){
                     this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_NOT_AUTHORIZED_TO_ADD_COMPANY'));
                   }
-                  else if(error.error.message=="--- sales rep no does not exist in database"){
+                  else if(error.error.message.includes("sales rep no does not exist in database")){
+                    // if(error.error.errors.length>=1){
+                    //   let nums = error.error.errors[0]
+                    //   var nums1 = nums.split(",")
+                    // }
                     this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SALES_REP_NO_NOT_EXIST'));
                   }
                   else if(error.error.message=="Forbidden"){

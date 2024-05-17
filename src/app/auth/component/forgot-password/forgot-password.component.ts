@@ -18,7 +18,10 @@ export class ForgotPasswordComponent {
     private toastr: ToastrService,
     private route: Router,
     public translate: TranslateService
-  ) {}
+  ) {
+    let lang:any=localStorage.getItem('lang')
+    translate.use(lang);
+  }
 
   forgotBtnClick() {
     // alert(this.email)
@@ -34,12 +37,9 @@ export class ForgotPasswordComponent {
       next: (response) => {
         console.log('API Response:', response);
         if (response.statusCode == 200) {
-          this.toastr.success(response.message);
+          this.toastr.success(this.translate.instant('TOASTER_RESPONSE.PASSWORD_RESET_LINK_SENT_SUCCESS'));
           this.spinner = false
           this.route.navigate(['']);
-        } else {
-          this.toastr.success(response.message);
-          this.spinner = false
         }
       },
       error: (error: HttpErrorResponse) => {
@@ -47,19 +47,19 @@ export class ForgotPasswordComponent {
         this.spinner = false
         if (error.error.message=="This email is not associated with wuerth") {
           this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_EMAIL_NOT_ASSOCIATED_WITH_WUERTH'));
-        } 
+        }
         else if (error.error.message=="Email must be a string.") {
           this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_EMAIL_MUST_BE_STRING'));
-        } 
+        }
         else if (error.error.message=="Invalid email address.") {
           this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_INVALID_EMAIL_ADDRESS'));
-        } 
+        }
         else if (error.error.message=="Only Admin can forget password not player.") {
           this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_ONLY_ADMIN_FORGET_PASSWORD'));
-        } 
+        }
         else if (error.error.message=="error occurred while sending email...") {
           this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SENDING_EMAIL'));
-        } 
+        }
         else {
           this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
         }

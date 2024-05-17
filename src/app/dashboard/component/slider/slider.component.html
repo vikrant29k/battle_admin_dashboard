@@ -44,7 +44,7 @@
           </ng-template>
         </p>
       </span>
-      <span class="menu" [ngStyle]="{'background-color': activeMenu=='event'?'#b5b5b5':''}" (click)="goToRoute('event')">
+      <!-- <span class="menu" [ngStyle]="{'background-color': activeMenu=='event'?'#b5b5b5':''}" (click)="goToRoute('event')">
         <p>
           <ng-container *ngIf="showMenu; else match">
             <mat-icon>image</mat-icon> {{ 'DASHBOARD_SIDEBAR.MENU_EVENT_GRAPHICS' | translate }}
@@ -53,7 +53,7 @@
             <mat-icon>image</mat-icon>
           </ng-template>
         </p>
-      </span>
+      </span> -->
       <span class="menu"[ngStyle]="{'background-color': activeMenu=='profile'?'#b5b5b5':''}" (click)="goToRoute('profile')">
         <p>
           <ng-container *ngIf="showMenu; else profile">
