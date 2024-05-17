@@ -25,7 +25,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class NewsUpdateComponent implements OnInit, OnDestroy {
   characterCount: number = 0;
-
+  maxCharacters: number = 800;
   // maxCharacterCount = 800;
   textarea: string = '';
   @ViewChild('editor') editor: ElementRef | any;
@@ -99,28 +99,36 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
       const cleanContent = editorContent.replace(/[^a-zA-Z]/g, '');
       // Count characters
       this.characterCount = cleanContent.length;
-
+  
       // Allow backspace to work
-      if (event.keyCode === 8) { // 8 is the key code for backspace
+      if (event.keyCode === 8 || event.keyCode === 46) { // 8 is the key code for backspace, 46 for delete
         return;
       }
-
+  
       // Disable typing when character count exceeds 800
-      if (this.characterCount >= 800) {
+      if (this.characterCount >= 800 && (event.key.length === 1 && /[a-zA-Z]/.test(event.key))) {
         event.preventDefault(); // Prevent further key presses
       }
     } else {
       this.characterCount = 0; // If content is null, set character count to 0
     }
-
+  
     // Check if the target is the video input
     if (event.target.id === 'video-input') {
       // Allow only up to 3 characters in the video input
       if (event.target.value.length >= 3) {
-
         event.preventDefault();
       }
     }
+  
+    // Prevent accepting pasted characters
+    if (event.type === 'paste') {
+      event.preventDefault();
+    }
+  }
+  
+  preventPaste(event: ClipboardEvent): void {
+    event.preventDefault();
   }
 
 
@@ -257,6 +265,18 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
 
   submitContent() {
     if (this.newsContent.valid) {
+      // Get the character count
+      const editorContent = this.newsContent.get('content')?.value;
+      const cleanContent = editorContent ? editorContent.replace(/[^a-zA-Z]/g, '') : '';
+      const characterCount = cleanContent.length;
+  
+      // Check if character count exceeds 800
+      if (characterCount > 800) {
+        this.toastr.error("Character count should not exceed 800");
+        return; // Stop further execution
+      }
+    }
+    if (this.newsContent.valid) {
       console.log(this.newsContent.value);
       if (this.updateNews) {
         this.http
@@ -356,7 +376,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
         );
       }
     } else {
-      this.toastr.success(this.translate.instant('TOASTER_RESPONSE.ENTER_ALL_FIELDS'));
+      this.toastr.error(this.translate.instant('TOASTER_RESPONSE.ENTER_ALL_FIELDS'));
     }
   }
 
