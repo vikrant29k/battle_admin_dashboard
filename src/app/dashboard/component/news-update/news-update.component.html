@@ -10,25 +10,28 @@
     </mat-form-field>
     <div class="angular-editor-wrapper">
       <angular-editor
-        formControlName="content"
-        id="angular-editor"
-        class="angular-editor custom-input"
-        [config]="config"
-        #editor
-        (keydown)="countCharacters($event)"
-      >
-        <ng-template #customButtons let-executeCommandFn="executeCommandFn">
-          <ae-toolbar-set>
-            <ae-button
-              iconClass="fa fa-video-camera"
-              title="Insert Video"
-              (buttonClick)="addVideo()"
-            ></ae-button>
-          </ae-toolbar-set>
-          <span class="character-count"
-            >Characters No: {{ characterCount }} / 800</span
-          >
-        </ng-template>
+      formControlName="content"
+      id="angular-editor"
+      class="angular-editor custom-input"
+      [config]="config"
+      #editor
+      (keydown)="countCharacters($event)"
+      (paste)="preventPaste($event)"
+    >
+      <ng-template #customButtons let-executeCommandFn="executeCommandFn">
+        <ae-toolbar-set>
+          <ae-button
+            iconClass="fa fa-video-camera"
+            title="Insert Video"
+            (buttonClick)="addVideo()"
+          ></ae-button>
+        </ae-toolbar-set>
+    
+        <span class="character-count" [style.color]="characterCount > maxCharacters ? 'red' : 'black'">
+          Characters No: {{ characterCount }} / {{ maxCharacters }}
+        </span>
+      </ng-template>
+    
       </angular-editor>
     </div>
     <div class="box">
