@@ -89,7 +89,8 @@
       "HEADER_DESCRIPTION": "Post Your Source For Wuerth Updates, Images And Video Links",
       "TITLE_LABEL": "Title",
       "POST_BUTTON": "Post",
-      "EDITOR_PLACEHOLDER": "Enter text here..."
+      "EDITOR_PLACEHOLDER": "Enter text here...",
+      "CHARACHTER_NO":"Characters No:"
     },
       "UPDATE_NEWS_PAGE": {
         "HEADER_TITLE": "Update News",

@@ -89,7 +89,8 @@
       "HEADER_DESCRIPTION": "Veröffentlichen Sie Ihre Quelle für Wuerth-Updates, Bilder und Videolinks",
       "TITLE_LABEL": "Titel",
       "POST_BUTTON": " Veröffentlichen",
-      "EDITOR_PLACEHOLDER": "Hier Text eingeben..."
+      "EDITOR_PLACEHOLDER": "Hier Text eingeben...",
+      "CHARACHTER_NO":"Zeichen Nr.:"
     },
     "UPDATE_NEWS_PAGE": {
       "HEADER_TITLE": "Nachrichten aktualisieren",

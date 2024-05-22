@@ -47,7 +47,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private updateService: NewsUpdateService,
     private route: Router,
-    private toastr: ToastrService,private translate:TranslateService,
+    private toastr: ToastrService,public translate:TranslateService,
     private fb: FormBuilder
   ) {
     let lang:any=localStorage.getItem('lang')
@@ -57,21 +57,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     //   title: ['', Validators.required],});
   }
 
-  // ngOnInit(): void {
-  //   let data: any = this.updateService.news;
-  //   this.newsId = data._id;
-  //   if (this.newsId) {
-  //     this.buttonName='Update'
-  //     console.log(data, 'hii');
-  //     this.updateNews = true;
-  //     this.newsContent.patchValue({
-  //       content: data.content,
-  //       title: data.title,
-  //     });
-  //   }else{
-  //     this.buttonName='Post'
-  //   }
-  // }
+
 
   ngOnInit(): void {
     let data: any = this.updateService.news;
@@ -99,12 +85,12 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
       const cleanContent = editorContent.replace(/[^a-zA-Z]/g, '');
       // Count characters
       this.characterCount = cleanContent.length;
-  
+
       // Allow backspace to work
       if (event.keyCode === 8 || event.keyCode === 46) { // 8 is the key code for backspace, 46 for delete
         return;
       }
-  
+
       // Disable typing when character count exceeds 800
       if (this.characterCount >= 800 && (event.key.length === 1 && /[a-zA-Z]/.test(event.key))) {
         event.preventDefault(); // Prevent further key presses
@@ -112,7 +98,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     } else {
       this.characterCount = 0; // If content is null, set character count to 0
     }
-  
+
     // Check if the target is the video input
     if (event.target.id === 'video-input') {
       // Allow only up to 3 characters in the video input
@@ -120,13 +106,13 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
         event.preventDefault();
       }
     }
-  
+
     // Prevent accepting pasted characters
     if (event.type === 'paste') {
       event.preventDefault();
     }
   }
-  
+
   preventPaste(event: ClipboardEvent): void {
     event.preventDefault();
   }
@@ -242,7 +228,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
         }
       );
     },
-    placeholder: this.translate.instant('POST_NEWS_PAGE.EDITOR_PLACEHOLDER'),
+    // placeholder: this.translate.instant('POST_NEWS_PAGE.EDITOR_PLACEHOLDER'),
     translate: 'no',
     sanitize: false,
     toolbarPosition: 'top',
@@ -269,7 +255,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
       const editorContent = this.newsContent.get('content')?.value;
       const cleanContent = editorContent ? editorContent.replace(/[^a-zA-Z]/g, '') : '';
       const characterCount = cleanContent.length;
-  
+
       // Check if character count exceeds 800
       if (characterCount > 800) {
         this.toastr.error("Character count should not exceed 800");
