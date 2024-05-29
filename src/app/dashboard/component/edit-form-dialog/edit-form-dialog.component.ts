@@ -18,8 +18,12 @@ export class EditFormDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data:any,
     public translate:TranslateService
   ) {
-    let lang:any=localStorage.getItem('lang')
-    translate.use(lang);
+    let lang=localStorage.getItem('lang')
+    if(lang){
+      translate.use(lang);
+    }else{
+      translate.use('en');
+    }
 
     this.excelFileLineForm = fb.group({
       'Company No':['',Validators.required],
@@ -41,7 +45,7 @@ export class EditFormDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("dialog data", this.data)
+    // console.log("dialog data", this.data)
     // if(!this.data['Game-Leader (GL)']){
     //   this.excelFileLineForm.get('Game-Leader (GL)')?.disable()
     // }
@@ -62,7 +66,7 @@ export class EditFormDialogComponent implements OnInit {
   }
 
   onDismiss(): void {
-    console.log("on dismiss")
+    // console.log("on dismiss")
     this.dialogRef.close(false);
   }
 }

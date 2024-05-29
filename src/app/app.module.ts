@@ -25,8 +25,8 @@ import { AuthModule } from './auth/auth.module';
     AppRoutingModule,
     DashboardModule,
     ToastrModule.forRoot(
-      {timeOut: 2000,
-        extendedTimeOut: 2000,
+      {timeOut: 3500,
+        extendedTimeOut: 4000,
         preventDuplicates: true}
     ),
     TranslateModule.forRoot({

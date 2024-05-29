@@ -64,9 +64,9 @@ export class LoginComponent {
       if (validatePass) {
         this.auth.login(this.LoginForm.value).subscribe({
           next: (response: any) => {
-            console.log('response =>>', response);
+            // console.log('response =>>', response);
             if (response.statusCode == 200) {
-              console.log('API Response:', response);
+              // console.log('API Response:', response);
               // this.toastr.success(response.message);
               this.toastr.success(this.translate.instant('TOASTER_RESPONSE.LOGIN_SUCCESS'));
               localStorage.setItem('token', response.data.token);

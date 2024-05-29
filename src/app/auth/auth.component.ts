@@ -34,7 +34,7 @@ ngOnInit(): void {
     localStorage.setItem('lang', event.lang);
   });
   this.translate.get('AUTH.LOG_IN').subscribe(translation => {
-    console.log('Translation for "AUTH.LOG_IN":', translation); // For debugging
+    // console.log('Translation for "AUTH.LOG_IN":', translation); // For debugging
     this.loginText=translation
   });
 const loginBtn:any = document.getElementById('login'); // Select the login button

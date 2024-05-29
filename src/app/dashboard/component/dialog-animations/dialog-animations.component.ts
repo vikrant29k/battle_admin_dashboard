@@ -24,10 +24,10 @@ export class DialogAnimationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("dialog data", this.data)
+    // console.log("dialog data", this.data)
     this.title = this.data.title
     this.message = this.data.message
-    console.log("lineEditForm", this.data)
+    // console.log("lineEditForm", this.data)
   }
 
   onConfirm(): void {

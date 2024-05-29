@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit{
 
   constructor(public translate: TranslateService){
     let lang:any=localStorage.getItem('lang')
-    console.log(lang,"asdwqerqwr")
+    // console.log(lang,"asdwqerqwr")
     translate.use(lang);
   }
 ngOnInit(): void {

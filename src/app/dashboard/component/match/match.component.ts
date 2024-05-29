@@ -72,11 +72,11 @@ export class MatchComponent implements OnInit {
 
   onFileSelectedLogo(event: any): void {
     this.selectedImgLogo = event.target.files[0];
-    console.log(this.selectedImgLogo);
+    // console.log(this.selectedImgLogo);
   }
   onFileSelectedBg(event: any): void {
     this.selectedImgBg = event.target.files[0];
-    console.log(this.selectedImgBg);
+    // console.log(this.selectedImgBg);
   }
 
   onFileUpload(match: any) {
@@ -227,7 +227,7 @@ export class MatchComponent implements OnInit {
   }
 
   updateMatchBtn(match: any) {
-    console.log('update match btn', match);
+    // console.log('update match btn', match);
 
     this.matchNameInput.nativeElement.value = match.eventName;
     this.selectedImgLogo = { name: match.avatar };
@@ -269,7 +269,7 @@ export class MatchComponent implements OnInit {
           }
         },
         error: (error: HttpErrorResponse) => {
-          console.log('error', error);
+          // console.log('error', error);
           this.toastr.error(error.error.message);
         },
       });

@@ -43,7 +43,7 @@ export class HourlyExcelEditFormDialogComponent implements OnInit {
 
 
   onDismiss(): void {
-    console.log('on dismiss');
+    // console.log('on dismiss');
     this.dialogRef.close(false);
   }
 }

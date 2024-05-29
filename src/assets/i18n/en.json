@@ -18,14 +18,14 @@
       "FORM_TITLE": "Sign Up",
       "NAME_LABEL": "Name",
       "EMAIL_LABEL": "Email",
-      "UID_LABEL": "UID",
+      "UID_LABEL": "Company ID",
       "COMPANY_NAME_LABEL": "Company Name",
       "SUBMIT_BUTTON": "Sign Up"
     }
   },
     "UPLOAD_SECTION": {
       "HELLO_ADMIN": "Hello Admin!!",
-      "UPLOAD_COMPANY_STRUCTURE": "Upload Your Company Battle Structure Here",
+      "UPLOAD_COMPANY_STRUCTURE": "Upload your company battle structure here",
       "SELECT_FILE": "Select a file to upload from your computer or device",
       "CHOOSE_FILE": "Choose a File",
       "SELECTED_FILE": "Selected File: ",
@@ -86,7 +86,7 @@
     },
     "POST_NEWS_PAGE": {
       "HEADER_TITLE": "Post News",
-      "HEADER_DESCRIPTION": "Post Your Source For Wuerth Updates, Images And Video Links",
+      "HEADER_DESCRIPTION": "Post your source for Würth updates, images and video links",
       "TITLE_LABEL": "Title",
       "POST_BUTTON": "Post",
       "EDITOR_PLACEHOLDER": "Enter text here...",
@@ -94,14 +94,14 @@
     },
       "UPDATE_NEWS_PAGE": {
         "HEADER_TITLE": "Update News",
-        "HEADER_DESCRIPTION": "Update Your Source For Wuerth Updates, Images And Video Links",
+        "HEADER_DESCRIPTION": "Update your source for Würth updates, images and video links",
         "TITLE_LABEL": "New Title",
         "UPDATE_BUTTON": "Update"
       },
 
     "NEWS_LIST_PAGE": {
       "HEADER_TITLE": "News",
-      "HEADER_DESCRIPTION": "Explore The Latest Wuerth Updates",
+      "HEADER_DESCRIPTION": "Explore the latest Würth updates",
       "UPDATE_BUTTON": "Update",
       "DELETE_BUTTON": "Delete",
       "LIKES_LABEL": "Total Likes"
@@ -109,7 +109,7 @@
 
       "UPLOAD_EXCEL": {
         "HEADER_TITLE": "Sales Data",
-        "HEADER_DESCRIPTION": "Upload Hourly Excel File for Sales Updates",
+        "HEADER_DESCRIPTION": "Upload hourly excel file for sales updates",
         "SELECT_FILE": "Select a file to upload from your computer or device",
         "CHOOSE_FILE_BUTTON": "Choose a File",
         "SELECTED_FILE_LABEL": "Selected File: ",
@@ -117,7 +117,7 @@
       },
       "EVENT_UPLOAD_PAGE": {
         "HEADER_TITLE": "Event Graphics",
-        "HEADER_DESCRIPTION": "Upload Event Graphics. Name The Event, Add Logo/Graphics",
+        "HEADER_DESCRIPTION": "Upload event graphics. Name the event, add logo/graphics",
         "EVENT_NAME_LABEL": "Event Name",
         "LOGO_IMAGE_LABEL": "Logo Image",
         "BACKGROUND_IMAGE_LABEL": "Background Image",
@@ -139,10 +139,10 @@
       },
       "PROFILE_PAGE": {
         "HEADER_TITLE": "Profile",
-        "HEADER_DESCRIPTION": "Access Your Profile Info, Edit, Change Password.",
+        "HEADER_DESCRIPTION": "Access your profile info, edit, change password.",
         "NAME_LABEL": "Name",
         "EMAIL_LABEL": "Email",
-        "COMPANY_NUMBER_LABEL": "Company Number",
+        "COMPANY_NUMBER_LABEL": "Company ID",
         "COMPANY_NAME_LABEL": "Company Name",
         "CHANGE_PASSWORD_LABEL": "Change Password",
         "NEW_PASSWORD_LABEL": "Enter new password",

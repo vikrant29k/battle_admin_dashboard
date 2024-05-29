@@ -19,8 +19,12 @@ export class ScoreboardComponent implements OnInit {
     public dialog: MatDialog,
     public translate:TranslateService
   ) {
-    let lang:any=localStorage.getItem('lang')
-    translate.use(lang);
+    let lang=localStorage.getItem('lang')
+    if(lang){
+      translate.use(lang);
+    }else{
+      translate.use('en');
+    }
     this.editLineDialogData = {
       title: this.translate.instant('UPLOAD_SECTION.EDIT_LINE_TITLE'),
       message: this.translate.instant('UPLOAD_SECTION.EDIT_LINE_MESSAGE')
@@ -350,7 +354,7 @@ export class ScoreboardComponent implements OnInit {
                     JSON.stringify(this.fileData)
                   );
                   // this.storedData = localStorage.getItem('hourly_file_data');
-                  this.downloadJsonFile();
+                  // this.downloadJsonFile();
                   this.selectedFile = null;
                   this.file = null;
                   this.toastr.success(this.translate.instant('TOASTER_RESPONSE.SALES_DATA_UPDATE_SUCCESS'));
@@ -371,7 +375,7 @@ export class ScoreboardComponent implements OnInit {
                 // this.file = null;
                 if (error.error.message) {
                   // this.toastr.error(error.error.message);
-                 
+
                   if(error.error.message=="An error occurred while updating. Please try again later."){
                     this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UPDATE_ERROR'));
                   }
@@ -449,7 +453,7 @@ export class ScoreboardComponent implements OnInit {
       next: (res: any) => {
         // console.log('res==', res);
         if (res.success) {
-          console.log('api data', res.data);
+          // console.log('api data', res.data);
           // console.log('file data data', res.data);
           const promises = res.data.map((obj: any) => {
             // console.log('abj is', obj);

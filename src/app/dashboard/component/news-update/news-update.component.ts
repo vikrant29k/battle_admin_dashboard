@@ -50,8 +50,12 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,public translate:TranslateService,
     private fb: FormBuilder
   ) {
-    let lang:any=localStorage.getItem('lang')
-    translate.use(lang);
+    let lang=localStorage.getItem('lang')
+    if(lang){
+      translate.use(lang);
+    }else{
+      translate.use('en');
+    }
     // this.newsContent = this.fb.group({
     //   content: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxCharacterCount)])],
     //   title: ['', Validators.required],});
@@ -66,7 +70,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     this.translateDescription();
     this.buttonName = this.getButtonLabel();
     if (this.newsId) {
-      console.log(data, 'hii');
+      // console.log(data, 'hii');
       this.updateNews = true;
       this.newsContent.patchValue({
         content: data.content,
@@ -153,7 +157,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     // width: '50rem',
 
     upload: (file: File): Observable<HttpEvent<UploadResponse>> => {
-      console.log('file is', file);
+      // console.log('file is', file);
       return Observable.create(
         (observer: Observer<HttpEvent<UploadResponse>>) => {
           // const maxDimension = 250;
@@ -218,7 +222,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
                     this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SERVER_ERROR'));
                   }
                   else{
-                    console.log('error in api ', error);
+                    // console.log('error in api ', error);
                     this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
                   }
                 }
@@ -263,7 +267,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
       }
     }
     if (this.newsContent.valid) {
-      console.log(this.newsContent.value);
+      // console.log(this.newsContent.value);
       if (this.updateNews) {
         this.http
           .patch(
@@ -307,17 +311,17 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
                 this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_NEWS_MAX_LENGTH_ERROR'));
               }
               else{
-                console.log('error in api ', error);
+                // console.log('error in api ', error);
                 this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
               }
 
             }
           );
       } else {
-        console.log('news adding', this.images);
+        // console.log('news adding', this.images);
         this.updateService.postNews(this.newsContent.value).subscribe(
           (res: any) => {
-            console.log(res);
+            // console.log(res);
             if (res.statusCode == 200) {
               this.toastr.success(this.translate.instant('TOASTER_RESPONSE.NEWS_ADDED_SUCCESS'));
 
@@ -325,7 +329,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
             }
           },
           (error: HttpErrorResponse) => {
-            console.log('error in api', error);
+            // console.log('error in api', error);
             if(error.error.message=="Title should not be empty."){
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_EMPTY_TITLE'));
             }
@@ -354,7 +358,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_NEWS_MAX_LENGTH_ERROR'));
             }
             else{
-              console.log('error in api ', error);
+              // console.log('error in api ', error);
               this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
             }
 

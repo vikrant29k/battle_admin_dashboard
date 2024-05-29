@@ -61,8 +61,12 @@ export class ProfileComponent {
     private translateService:TranslateService,
     private translate:TranslateService
   ) {
-    let lang:any=localStorage.getItem('lang')
-    translate.use(lang);
+    let lang=localStorage.getItem('lang')
+    if(lang){
+      translate.use(lang);
+    }else{
+      translate.use('en');
+    }
   }
 
   showOtherDiv: boolean = false;
@@ -97,7 +101,7 @@ export class ProfileComponent {
   getProfileDetails() {
     this.http.get(`${environment.baseUrl}user/details`).subscribe({
       next: (res: any) => {
-        console.log('api res', res);
+        // console.log('api res', res);
         let formData = {
           userName: res.data?.userName,
           email: res.data?.email,
@@ -147,7 +151,7 @@ export class ProfileComponent {
             this.toastr.error(this.translate.instant('TOASTER_RESPONSE.PASSWORD_VALIDATION_ERROR'));
             return;
           }
-          console.log('new password', this.profileForm.get('newPassword'));
+          // console.log('new /password', this.profileForm.get('newPassword'));
           let password = {
             password: this.profileForm.get('newPassword')?.value,
             token: localStorage.getItem('token'),
@@ -157,9 +161,9 @@ export class ProfileComponent {
             .subscribe({
               next: (res: any) => {
                 if (res.statusCode == 200) {
-                  console.log('password res', res);
+                  // console.log('password res', res);
                   this.profileUpdate();
-                  
+
                   // this.toastr.success("Password Updated Successfully")
                   this.router.navigate(['']);
                 }
@@ -203,7 +207,7 @@ export class ProfileComponent {
   }
 
   profileUpdate() {
-    console.log(this.profileForm.valid);
+    // console.log(this.profileForm.valid);
     if (this.profileForm.valid) {
       let data = this.profileForm.value;
       delete data.newPassword
@@ -211,7 +215,7 @@ export class ProfileComponent {
       this.http.patch(`${environment.baseUrl}user/admin-update`, data).subscribe({
         next: (res: any) => {
           if (res.statusCode == 200) {
-            console.log('api res', res);
+            // console.log('api res', res);
             this.profileForm.disable();
             this.editBtn = true;
             this.getProfileDetails();

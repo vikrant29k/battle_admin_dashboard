@@ -27,9 +27,9 @@ export class NewsUpdateService {
           return throwError('Failed to upload file');
         }),
         map((data: any) => {
-          console.log('Upload data:', data);
+          // console.log('Upload data:', data);
           const imageUrl = `${environment.baseUrl}${data.data.path}`;
-          console.log('Image URL:', imageUrl);
+          // console.log('Image URL:', imageUrl);
           return new HttpResponse({
             body: { imageUrl },
             status: 200,
