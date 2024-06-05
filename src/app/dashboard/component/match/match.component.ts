@@ -13,8 +13,9 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class MatchComponent implements OnInit {
   @ViewChild('matchName') matchNameInput!: ElementRef;
+  @ViewChild('themeColor') themeColor!: ElementRef;
   @ViewChild('uploadSection') uploadSection!: ElementRef;
-  isActive: boolean = false;
+  isActive: boolean = true;
   selectedImgLogo: any = null;
   selectedImgBg: any = null;
   fileError: boolean = false;
@@ -69,9 +70,18 @@ export class MatchComponent implements OnInit {
       }
     });
   }
-
+  selectedImgBanner:any;
+  selectedImgFlyer:any;
   onFileSelectedLogo(event: any): void {
     this.selectedImgLogo = event.target.files[0];
+    // console.log(this.selectedImgLogo);
+  }
+  onFileSelectedBanner(event: any): void {
+    this.selectedImgBanner = event.target.files[0];
+    // console.log(this.selectedImgLogo);
+  }
+  onFileSelectedFlyer(event: any): void {
+    this.selectedImgFlyer = event.target.files[0];
     // console.log(this.selectedImgLogo);
   }
   onFileSelectedBg(event: any): void {
@@ -79,21 +89,24 @@ export class MatchComponent implements OnInit {
     // console.log(this.selectedImgBg);
   }
 
-  onFileUpload(match: any) {
+  onFileUpload(match: any, color:string) {
     // console.log('file type is', this.selectedImg.type);
     this.isActive = true;
-    if (match) {
+    if (match && color) {
       // console.log('match', match);
       let data = new FormData();
-      if (this.selectedImgLogo && this.selectedImgBg) {
+      if (this.selectedImgLogo && this.selectedImgBg && this.selectedImgBanner && this.selectedImgFlyer) {
         data.append('avatar', this.selectedImgLogo);
         data.append('bgAvatar', this.selectedImgBg);
+        data.append('dashboardImage',this.selectedImgBanner)
+        data.append('groundImage',this.selectedImgFlyer)
       } else {
         this.toastr.error(this.translate.instant('TOASTER_RESPONSE.IMAGE_SELECTION_ERROR'));
         return;
       }
 
       data.append('eventName', match);
+      data.append('themeColor',color)
       this.http.post(`${environment.baseUrl}event`, data).subscribe({
         next: (response: any) => {
           // console.log('response =>>', response);
@@ -101,7 +114,10 @@ export class MatchComponent implements OnInit {
             // console.log('API Response:', response);
             this.selectedImgLogo = null;
             this.selectedImgBg = null;
+            this.selectedImgBanner=null;
+            this.selectedImgFlyer=null
             this.matchNameInput.nativeElement.value = '';
+            this.themeColor.nativeElement.value=''
             this.toastr.success(this.translate.instant('TOASTER_RESPONSE.EVENT_ADDED_SUCCESS'));
             this.getAllMatches();
           }
@@ -202,9 +218,12 @@ export class MatchComponent implements OnInit {
           // console.log('api res', res);
           this.toastr.success(this.translate.instant("TOASTER_RESPONSE.EVENT_DELETED_SUCCESS"));
          // Clear the form details when the record is deleted
-         this.matchNameInput.nativeElement.value = '';
          this.selectedImgLogo = null;
-         this.selectedImgBg = null;
+            this.selectedImgBg = null;
+            this.selectedImgBanner=null;
+            this.selectedImgFlyer=null
+            this.matchNameInput.nativeElement.value = '';
+            this.themeColor.nativeElement.value=''
          this.updateBtn = false;
          this.matchIdForUpdate = '';
           this.getAllMatches();
@@ -227,11 +246,14 @@ export class MatchComponent implements OnInit {
   }
 
   updateMatchBtn(match: any) {
-    // console.log('update match btn', match);
+    console.log('update match btn', match);
 
     this.matchNameInput.nativeElement.value = match.eventName;
+    this.themeColor.nativeElement.value =match.themeColor
     this.selectedImgLogo = { name: match.avatar };
     this.selectedImgBg = { name: match.bgAvatar };
+    this.selectedImgBanner = {name: match.dashboardImage}
+    this.selectedImgFlyer = {name: match.groundImage}
     this.updateBtn = true;
     this.matchIdForUpdate = match._id;
     if (this.uploadSection && this.uploadSection.nativeElement) {
@@ -241,16 +263,24 @@ export class MatchComponent implements OnInit {
 
 
 
-  updateMatch(matchName: any) {
+  updateMatch(matchName: any, color:string) {
 
     let data = new FormData();
     data.append('eventName', matchName);
+    data.append('themeColor',color)
     if (this.selectedImgLogo.type !== undefined) {
       data.append('avatar', this.selectedImgLogo);
     }
     if (this.selectedImgBg.type !== undefined) {
       data.append('bgAvatar', this.selectedImgBg);
     }
+     if(this.selectedImgBanner.type !== undefined){
+      data.append('dashboardImage',this.selectedImgBanner)
+
+     }
+     if(this.selectedImgFlyer !== undefined){
+      data.append('groundImage',this.selectedImgFlyer)
+     }
 
     this.http
       .patch(`${environment.baseUrl}event/${this.matchIdForUpdate}`, data)
@@ -261,9 +291,12 @@ export class MatchComponent implements OnInit {
             this.toastr.success(this.translate.instant('TOASTER_RESPONSE.EVENT_UPDATED_SUCCESS'));
             this.getAllMatches();
 
-            this.matchNameInput.nativeElement.value = '';
             this.selectedImgLogo = null;
             this.selectedImgBg = null;
+            this.selectedImgBanner=null;
+            this.selectedImgFlyer=null
+            this.matchNameInput.nativeElement.value = '';
+            this.themeColor.nativeElement.value=''
             this.updateBtn = false;
             this.matchIdForUpdate = '';
           }

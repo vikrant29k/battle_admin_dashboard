@@ -1,22 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-slider',
   templateUrl: './slider.component.html',
-  styleUrls: ['./slider.component.scss']
+  styleUrls: ['./slider.component.scss'],
 })
-export class SliderComponent {
+export class SliderComponent implements OnInit {
   showMenu = false;
-  activeMenu: string = localStorage.getItem('activeMenu') || 'import-file'; // Use localStorage for persistence
+  activeMenu!: string; // Use localStorage for persistence
+  ifSuperUser: boolean = false;
+  constructor(
+    private route: Router,
+    private toastr: ToastrService,
+    public translate: TranslateService
+  ) {}
 
-  constructor(private route: Router,private toastr:ToastrService, public translate:TranslateService) { }
-
+  ngOnInit(): void {
+    let user = localStorage.getItem('user');
+    if (user == 'super-admin') {
+      this.activeMenu = 'super-admin-dashboard';
+      this.ifSuperUser = true;
+    } else if (user == 'admin') {
+      this.activeMenu = 'import-file';
+      this.ifSuperUser = false;
+    }
+  }
   goToRoute(name: string) {
-    this.route.navigate(['/dashboard', name]);
     this.activeMenu = name;
-    this.showMenu = false;
     localStorage.setItem('activeMenu', name);
   }
 
@@ -26,14 +39,15 @@ export class SliderComponent {
 
   logOut() {
     // Clear token and any other related data from localStorage
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     localStorage.removeItem('activeMenu');
-
+    localStorage.removeItem('user');
     // Redirect to login page
     this.route.navigate(['/auth/login']);
 
     // Show success message
-    this.toastr.success(this.translate.instant('TOASTER_RESPONSE.LOGOUT_SUCCESS'));
-
+    this.toastr.success(
+      this.translate.instant('TOASTER_RESPONSE.LOGOUT_SUCCESS')
+    );
   }
 }

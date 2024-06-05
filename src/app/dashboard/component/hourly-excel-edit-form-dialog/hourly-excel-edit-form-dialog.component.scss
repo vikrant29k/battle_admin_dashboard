@@ -1,6 +1,6 @@
 .dialog-container {
   text-align: center;
-  padding: 19px 90px;
+  // padding: 19px 90px;
 
   .action-buttons {
     display: flex;
@@ -30,7 +30,7 @@
 
   .custom-form {
     max-height: 400px; /* Set a maximum height for the container */
-   
+
     display: flex;
     flex-direction: column;
     gap: 20px; /* Add space between form fields */
@@ -44,15 +44,15 @@
   /* Styles for dialog actions */
   .action-buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-top: 20px; /* Add space above the buttons */
   }
 }
 @media only screen and (max-width: 428px) and (min-width: 320px) {
   .dialog-container{
     text-align: center;
-   
+
     padding: 0px;
-      
+
   }
 }

@@ -24,6 +24,8 @@ export class DialogAnimationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let lang:any=localStorage.getItem('lang')
+    this.translateService.use(lang)
     // console.log("dialog data", this.data)
     this.title = this.data.title
     this.message = this.data.message

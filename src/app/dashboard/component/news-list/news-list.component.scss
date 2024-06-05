@@ -71,6 +71,13 @@
           flex-direction: row;
           gap: 1rem;
         }
+        .likes{
+          .like-container{
+            display: inline-flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        }
        }
         .card-footer{
           margin-right:10px;
@@ -132,7 +139,7 @@
             }
 
           }
-          
+
           .card-action{
             .likes{
               font-size: 0.9rem;

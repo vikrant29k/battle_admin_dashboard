@@ -8,11 +8,11 @@ import { HourlyExcelEditFormDialogComponent } from '../hourly-excel-edit-form-di
 import { DialogAnimationsComponent } from '../dialog-animations/dialog-animations.component';
 import { TranslateService } from '@ngx-translate/core';
 @Component({
-  selector: 'app-scoreboard',
-  templateUrl: './scoreboard.component.html',
-  styleUrls: ['./scoreboard.component.scss'],
+  selector: 'app-super-admin-dashboard',
+  templateUrl: './super-admin-dashboard.component.html',
+  styleUrls: ['./super-admin-dashboard.component.scss'],
 })
-export class ScoreboardComponent implements OnInit {
+export class SuperAdminDashboardComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
@@ -162,7 +162,7 @@ export class ScoreboardComponent implements OnInit {
 
     // Validate the "Company No" column
     if (
-      this.validateColumn(columnData, 'Company ID') ||
+      // this.validateColumn(columnData, 'Company ID') ||
       this.validateColumn(columnData, 'Sales rep no.') ||
       this.validateColumn(columnData, 'Sales in LC')
     ) {
@@ -182,12 +182,6 @@ export class ScoreboardComponent implements OnInit {
         this.headers.forEach((header: any, index: any) => {
           obj[header] = row[index];
 
-          // if (obj[header] == undefined) {
-          //   this.toastr.error(`fill all fields in ${header}`);
-          //   this.fileErrorMessage = `fill all fields in ${header}`
-          //   this.fileError = true;
-          // }
-
           try {
             this.headers.forEach((header: any, index: any) => {
               obj[header] = row[index];
@@ -201,7 +195,7 @@ export class ScoreboardComponent implements OnInit {
               }
             });
           } catch (error: any) {
-            // console.error(error.message);
+            console.error(error.message);
             throw error;
           }
         });
@@ -211,7 +205,7 @@ export class ScoreboardComponent implements OnInit {
             obj[header] = row[index];
           });
         } catch (error: any) {
-          // console.error(error.message);
+          console.error(error.message);
           throw error;
         }
 
@@ -230,26 +224,28 @@ export class ScoreboardComponent implements OnInit {
       const columnArray = columnData[columnName];
 
       // check all values same
-      if (columnName === 'Company ID') {
-        const firstValue = columnArray[0];
 
-        const allValuesMatch = columnArray.every(
-          (value: any) => value === firstValue
-        );
+      // if (columnName === 'Company ID') {
+      //   const firstValue = columnArray[0];
 
-        if (!allValuesMatch) {
-          // console.error(
-          //   `Error: Not all values in the "${columnName}" column are the same.`
-          // );
+      //   const allValuesMatch = columnArray.every(
+      //     (value: any) => value === firstValue
+      //   );
 
-          this.toastr.error(this.translate.instant('TOASTER_RESPONSE.COLUMN_VALUE_MATCH_ERROR',{columnName:columnName}));
-          this.fileError = true;
-          // throw new Error(`${columnName} need to same `);
-        }
-      }
+      //   if (!allValuesMatch) {
+      //     console.error(
+      //       `Error: Not all values in the "${columnName}" column are the same.`
+      //     );
+
+      //     this.toastr.error(this.translate.instant(`${columnName} need to same COLUMN_VALUE_MATCH_ERROR`));
+      //     this.fileError = true;
+      //     throw new Error(`${columnName} need to same `);
+      //   }
+      // }
 
       // check if column values in numbers
-      if (columnName == 'Company ID' || columnName == 'Sales in LC') {
+      // if (columnName == 'Company ID' || columnName == 'Sales in LC') {
+        if (columnName == 'Sales in LC') {
         var allVAluesInNumber = columnArray.every(
           (value: any) => typeof value === 'number'
         );
@@ -340,7 +336,8 @@ export class ScoreboardComponent implements OnInit {
           let data = {
             data: this.fileData,
           };
-          // console.log('data for api ', data);
+
+          console.log('data for api ', data);
           this.http
             .post(`${environment.baseUrl}sales/upload-hourly-sales-data`, data)
             .subscribe(
@@ -399,7 +396,8 @@ export class ScoreboardComponent implements OnInit {
                   }
                   else if(error.error.message=="Your are not authorised to add another company details."){
                     this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_NOT_AUTHORIZED_TO_ADD_COMPANY'));
-                  }  else if(error.error.message=='{{data}} company IDs do not exist in database'){
+                  }
+                  else if(error.error.message=='{{data}} company IDs do not exist in database'){
                     this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_COMPANY_ID_NOT_EXIST',{data:error.error.errors}));
                   }
                   else if(error.error.message.includes("sales rep no does not exist in database")){
@@ -496,12 +494,12 @@ export class ScoreboardComponent implements OnInit {
               URL.revokeObjectURL(url);
             })
             .catch((error) => {
-              // console.error('Error processing data:', error);
+              console.error('Error processing data:', error);
             });
         }
       },
       error: (error) => {
-        // console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error);
       },
     });
   }

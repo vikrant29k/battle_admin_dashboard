@@ -1,10 +1,10 @@
 <div class="dialog-container">
   <h1 mat-dialog-title>
-    {{title}}
+    {{title |translate}}
 </h1>
 
 <div mat-dialog-content>
-    <p>{{message}}</p>
+    <p>{{message | translate}}</p>
 </div>
 <div mat-dialog-actions class="action-buttons">
   <button mat-raised-button (click)="onDismiss()">{{ 'DIALOG_BOX_POP_UP.NO_BUTTON' | translate }}</button>

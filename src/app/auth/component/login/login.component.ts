@@ -64,13 +64,18 @@ export class LoginComponent {
       if (validatePass) {
         this.auth.login(this.LoginForm.value).subscribe({
           next: (response: any) => {
-            // console.log('response =>>', response);
             if (response.statusCode == 200) {
-              // console.log('API Response:', response);
-              // this.toastr.success(response.message);
               this.toastr.success(this.translate.instant('TOASTER_RESPONSE.LOGIN_SUCCESS'));
               localStorage.setItem('token', response.data.token);
-              this.router.navigate(['/dashboard']);
+
+              if(response.data.superSuperUser){
+                localStorage.setItem('user','super-admin')
+                this.router.navigate(['/dashboard/super-admin-dashboard'])
+              }else{
+                localStorage.setItem('user','admin')
+                this.router.navigate(['/dashboard']);
+              }
+
             }
           },
           error: (error: HttpErrorResponse) => {

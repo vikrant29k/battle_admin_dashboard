@@ -4,47 +4,80 @@
     <p>{{ 'EVENT_UPLOAD_PAGE.HEADER_DESCRIPTION' | translate }}</p>
   </div>
   <div class="section">
-  <div class="upload-section" #uploadSection>
-    <div class="file-selection">
-      <mat-form-field class="form-group">
-        <mat-label>{{ 'EVENT_UPLOAD_PAGE.EVENT_NAME_LABEL' | translate }}</mat-label>
-        <input matInput #matchName type="text" name="name" placeholder="{{ 'EVENT_UPLOAD_PAGE.EVENT_NAME_LABEL' | translate }}" required />
-      </mat-form-field>
+    <div class="upload-section" #uploadSection>
+      <div class="file-selection">
+        <!-- Existing Input Text Field -->
+        <mat-form-field class="form-group">
+          <mat-label>{{ 'EVENT_UPLOAD_PAGE.EVENT_NAME_LABEL' | translate }}</mat-label>
+          <input matInput #matchName type="text" name="name" placeholder="{{ 'EVENT_UPLOAD_PAGE.EVENT_NAME_LABEL' | translate }}" required />
+        </mat-form-field>
 
-      <div class="file-chooser">
-        <div class="file-logo-image">
-          <label for="logo">{{ 'EVENT_UPLOAD_PAGE.LOGO_IMAGE_LABEL' | translate }}</label>
-          <input name="logo" type="file" #fileInputLogo style="display: none" accept="image/*" (change)="onFileSelectedLogo($event)" />
-          <button mat-raised-button color="primary" class="choose-button" (click)="fileInputLogo.click()">
-            {{ 'EVENT_UPLOAD_PAGE.CHOOSE_IMAGE_BUTTON' | translate }}
-          </button>
-          <p *ngIf="selectedImgLogo" class="selected-file-name">
-            <b>{{ 'EVENT_UPLOAD_PAGE.SELECTED_FILE_LABEL' | translate }}</b> {{ selectedImgLogo.name }}
-          </p>
-        </div>
-        <div class="file-bg-image">
-          <label for="bg">{{ 'EVENT_UPLOAD_PAGE.BACKGROUND_IMAGE_LABEL' | translate }}</label>
-          <input name="bg" type="file" #fileInputBg style="display: none" accept="image/*" (change)="onFileSelectedBg($event)" />
-          <button mat-raised-button color="primary" class="choose-button" (click)="fileInputBg.click()">
-            {{ 'EVENT_UPLOAD_PAGE.CHOOSE_IMAGE_BUTTON' | translate }}
-          </button>
-          <p *ngIf="selectedImgBg" class="selected-file-name">
-            <b>{{ 'EVENT_UPLOAD_PAGE.SELECTED_FILE_LABEL' | translate }}</b> {{ selectedImgBg.name }}
-          </p>
-        </div>
-      </div>
+        <!-- Additional Input Text Fields -->
+        <mat-form-field class="form-group">
+          <mat-label>Color</mat-label>
+          <input matInput #themeColor type="text" name="location" placeholder="Enter Color" required />
+        </mat-form-field>
 
-      <br />
-      <div class="confirm-button">
-        <button mat-raised-button (click)="onFileUpload(matchName.value)" *ngIf="!updateBtn">
-          {{ 'EVENT_UPLOAD_PAGE.CONFIRM_BUTTON' | translate }}
-        </button>
-        <button mat-raised-button (click)="updateMatch(matchName.value)" *ngIf="updateBtn">
-          {{ 'EVENT_UPLOAD_PAGE.UPDATE_BUTTON' | translate }}
-        </button>
+        <!-- Existing Image Pickers -->
+        <div class="file-chooser">
+          <div class="file-logo-image">
+            <label for="logo">{{ 'EVENT_UPLOAD_PAGE.LOGO_IMAGE_LABEL' | translate }}</label>
+            <input name="logo" type="file" #fileInputLogo style="display: none" accept="image/*" (change)="onFileSelectedLogo($event)" />
+            <button mat-raised-button color="primary" class="choose-button" (click)="fileInputLogo.click()">
+              {{ 'EVENT_UPLOAD_PAGE.CHOOSE_IMAGE_BUTTON' | translate }}
+            </button>
+            <p *ngIf="selectedImgLogo" class="selected-file-name">
+              <b>{{ 'EVENT_UPLOAD_PAGE.SELECTED_FILE_LABEL' | translate }}</b> {{ selectedImgLogo.name }}
+            </p>
+          </div>
+          <div class="file-flyer-image">
+            <label for="flyer">{{ 'EVENT_UPLOAD_PAGE.TABLE_HEADERS.GROUND_IMAGE' | translate }}</label>
+            <input name="flyer" type="file" #fileInputFlyer style="display: none" accept="image/*" (change)="onFileSelectedFlyer($event)" />
+            <button mat-raised-button color="primary" class="choose-button" (click)="fileInputFlyer.click()">
+              {{ 'EVENT_UPLOAD_PAGE.CHOOSE_IMAGE_BUTTON' | translate }}
+            </button>
+            <p *ngIf="selectedImgFlyer" class="selected-file-name">
+              <b>{{ 'EVENT_UPLOAD_PAGE.SELECTED_FILE_LABEL' | translate }}</b> {{ selectedImgFlyer.name }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Additional Image Pickers -->
+        <div style="margin-block-start: 1rem;" class="file-chooser">
+          <div class="file-banner-image">
+            <label for="banner">{{ 'EVENT_UPLOAD_PAGE.TABLE_HEADERS.DASHBOARD_CENTER_IMAGE' | translate }}</label>
+            <input name="banner" type="file" #fileInputBanner style="display: none" accept="image/*" (change)="onFileSelectedBanner($event)" />
+            <button mat-raised-button color="primary" class="choose-button" (click)="fileInputBanner.click()">
+              {{ 'EVENT_UPLOAD_PAGE.CHOOSE_IMAGE_BUTTON' | translate }}
+            </button>
+            <p *ngIf="selectedImgBanner" class="selected-file-name">
+              <b>{{ 'EVENT_UPLOAD_PAGE.SELECTED_FILE_LABEL' | translate }}</b> {{ selectedImgBanner.name }}
+            </p>
+          </div>
+
+          <div class="file-bg-image">
+            <label for="bg">{{ 'EVENT_UPLOAD_PAGE.BACKGROUND_IMAGE_LABEL' | translate }}</label>
+            <input name="bg" type="file" #fileInputBg style="display: none" accept="image/*" (change)="onFileSelectedBg($event)" />
+            <button mat-raised-button color="primary" class="choose-button" (click)="fileInputBg.click()">
+              {{ 'EVENT_UPLOAD_PAGE.CHOOSE_IMAGE_BUTTON' | translate }}
+            </button>
+            <p *ngIf="selectedImgBg" class="selected-file-name">
+              <b>{{ 'EVENT_UPLOAD_PAGE.SELECTED_FILE_LABEL' | translate }}</b> {{ selectedImgBg.name }}
+            </p>
+          </div>
+        </div>
+
+        <br />
+        <div class="confirm-button">
+          <button mat-raised-button (click)="onFileUpload(matchName.value, themeColor.value)" *ngIf="!updateBtn">
+            {{ 'EVENT_UPLOAD_PAGE.CONFIRM_BUTTON' | translate }}
+          </button>
+          <button mat-raised-button (click)="updateMatch(matchName.value,themeColor.value)" *ngIf="updateBtn">
+            {{ 'EVENT_UPLOAD_PAGE.UPDATE_BUTTON' | translate }}
+          </button>
+        </div>
       </div>
     </div>
-  </div>
   <div class="table"  *ngIf="isActive">
     <div class="tableContainer" [class.scrollable]="tableData.length > 0">
       <table>
@@ -52,8 +85,11 @@
           <tr>
             <td>{{ 'EVENT_UPLOAD_PAGE.TABLE_HEADERS.SELECT' | translate }}</td>
             <td>{{ 'EVENT_UPLOAD_PAGE.TABLE_HEADERS.EVENT_NAME' | translate }}</td>
+            <td>{{ 'EVENT_UPLOAD_PAGE.TABLE_HEADERS.THEME_COLOR' | translate }}</td>
             <td>{{ 'EVENT_UPLOAD_PAGE.TABLE_HEADERS.LOGO_IMAGE' | translate }}</td>
             <td>{{ 'EVENT_UPLOAD_PAGE.TABLE_HEADERS.BACKGROUND_IMAGE' | translate }}</td>
+            <td>{{ 'EVENT_UPLOAD_PAGE.TABLE_HEADERS.DASHBOARD_CENTER_IMAGE' | translate }}</td>
+            <td>{{ 'EVENT_UPLOAD_PAGE.TABLE_HEADERS.GROUND_IMAGE' | translate }}</td>
             <td>{{ 'EVENT_UPLOAD_PAGE.TABLE_HEADERS.ACTION' | translate }}</td>
           </tr>
         </thead>
@@ -64,8 +100,11 @@
                 <input [checked]="match.isActive" type="radio" name="selectedMatch" (change)="updateActiveMatch(match)" />
               </td>
               <td>{{ match.eventName }}</td>
+              <td>{{ match.themeColor }}</td>
               <td><img id="img" [src]="baseUrl + 'images/' + match.avatar" alt="Logo Image" /></td>
               <td><img id="img" [src]="baseUrl + 'images/' + match.bgAvatar" alt="Background Image" /></td>
+              <td><img id="img" [src]="baseUrl + 'images/' + match.dashboardImage" alt="Dashboard Image" /></td>
+              <td><img id="img" [src]="baseUrl + 'images/' + match.groundImage" alt="Ground Image" /></td>
               <td>
                 <button mat-icon-button matTooltip="{{ 'EVENT_UPLOAD_PAGE.TOOLTIPS.DELETE' | translate }}" (click)="openDialog('0ms', '0ms', match)">
                   <mat-icon>delete</mat-icon>
@@ -82,3 +121,6 @@
   </div>
 </div>
 </div>
+
+
+
