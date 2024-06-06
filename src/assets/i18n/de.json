@@ -206,6 +206,7 @@
       "EVENT_DELETED_SUCCESS": "Ereignis erfolgreich gelöscht",
       "PROMPT_VIDEO_URL": "Bitte geben Sie die URL des YouTube-Videos ein:",
       "PROFILE_UPDATED_SUCCESS": "Profil erfolgreich aktualisiert",
+      "PASSWORD_LINK_SENT_SUCCESS":"Passwort-Link an Ihre E-Mail gesendet",
       "PASSWORD_RESET_LINK_SENT_SUCCESS": "Der Link zum Zurücksetzen des Passworts wurde an Ihre E-Mail-Adresse gesendet",
       "PASSWORD_NOT_MATCH":"Passwort stimmt nicht überein. Bitte versuche es erneut",
       "ENTER_VALID_EMAIL": "Geben Sie eine gültige E-Mail-Adresse ein",
