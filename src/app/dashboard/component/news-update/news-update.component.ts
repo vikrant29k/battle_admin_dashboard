@@ -94,6 +94,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
 
   countCharacters(event: any) {
     const editorContent = this.newsContent.get('content')?.value;
+    console.log(editorContent)
     if (editorContent) {
       // Remove non-character content using regular expression
       const cleanContent = editorContent.replace(/[^a-zA-Z]/g, '');
@@ -106,7 +107,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
       }
   
       // Disable typing when character count exceeds 800
-      if (this.characterCount >= 800 && (event.key.length === 1 && /[a-zA-Z]/.test(event.key))) {
+      if (this.characterCount  >= 800 && (event.key.length === 1 && /[a-zA-Z]/.test(event.key))) {
         event.preventDefault(); // Prevent further key presses
       }
     } else {
@@ -269,7 +270,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
       const editorContent = this.newsContent.get('content')?.value;
       const cleanContent = editorContent ? editorContent.replace(/[^a-zA-Z]/g, '') : '';
       const characterCount = cleanContent.length;
-  
+  // debugger
       // Check if character count exceeds 800
       if (characterCount > 800) {
         this.toastr.error("Character count should not exceed 800");
@@ -358,7 +359,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
             else if(error.error.message=="Forbidden"){
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_FORBIDDEN'));
             }
-            else if(error.error.message=="Content should be between 10 and 1000 characters."){
+            else if(error.error.message=="Content should be between 10 and 800 characters."){
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_CONTENT_LENGTH_RANGE'));
             }
             else{
@@ -374,13 +375,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
-  // addVideo() {
-  //   const videoLink = prompt("Please enter the video link:");
-  //   if (videoLink) {
-  //     const videoEmbedCode = `<iframe src="${videoLink}" width="640" height="360" frameborder="0" allowfullscreen></iframe>`;
-  //     this.editor.executeCommand('insertHtml', videoEmbedCode);
-  //   }
-  // }
+
 
   private videoCount: number = 0;
 

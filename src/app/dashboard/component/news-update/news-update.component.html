@@ -15,7 +15,7 @@
       class="angular-editor custom-input"
       [config]="config"
       #editor
-      (keydown)="countCharacters($event)"
+      (keyup)="countCharacters($event)"
       (paste)="preventPaste($event)"
     >
       <ng-template #customButtons let-executeCommandFn="executeCommandFn">
@@ -28,7 +28,8 @@
         </ae-toolbar-set>
     
         <span class="character-count" [style.color]="characterCount > maxCharacters ? 'red' : 'black'">
-          Characters No: {{ characterCount }} / {{ maxCharacters }}
+          Characters No: {{ characterCount }} 
+          / {{ maxCharacters }}
         </span>
       </ng-template>
     
