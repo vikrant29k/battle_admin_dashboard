@@ -17,15 +17,17 @@
     "SIGN_UP_FORM": {
       "FORM_TITLE": "Sign Up",
       "NAME_LABEL": "Name",
-      "EMAIL_LABEL": "Email",
-      "UID_LABEL": "UID",
+      "UID_LABEL": "Company ID",
       "COMPANY_NAME_LABEL": "Company Name",
       "SUBMIT_BUTTON": "Sign Up"
     }
   },
+  "SUPER_SUPER_USER":{
+    "HEADER_DESCRIPTION":"Upload hourly excel file for all company sales updates"
+  },
     "UPLOAD_SECTION": {
       "HELLO_ADMIN": "Hello Admin!!",
-      "UPLOAD_COMPANY_STRUCTURE": "Upload Your Company Battle Structure Here",
+      "UPLOAD_COMPANY_STRUCTURE": "Upload your company battle structure here",
       "SELECT_FILE": "Select a file to upload from your computer or device",
       "CHOOSE_FILE": "Choose a File",
       "SELECTED_FILE": "Selected File: ",
@@ -59,9 +61,9 @@
         "COMPANY_NAME":"Enter Company Name",
         "COMPANY_UNIT_REGION":"Enter Company Unit (Region or Division...)",
         "TEAM_NAME_ASM_LEVEL":"Enter Team name (ASM level)",
-        "COMPANY_TARGET_LC_TOTAL":"Enter Company Target LC Total",
+        "COMPANY_TARGET_LC_TOTAL_INPUT":"Enter Company Target LC Total",
         "TARGET_SALES_REP_LC":"Enter Target / Sales Rep LC",
-        "CURRENCY":"Enter Currency",
+        "CURRENCY_INPUT":"Enter Currency",
         "SALES_REP_NUMBER":"Enter Sales rep No",
         "E_Mail":"Enter E-Mail",
         "GAME_LEADER":"Enter Game-Leader (GL)",
@@ -86,29 +88,28 @@
     },
     "POST_NEWS_PAGE": {
       "HEADER_TITLE": "Post News",
-      "HEADER_DESCRIPTION": "Post Your Source For Wuerth Updates, Images And Video Links",
+      "HEADER_DESCRIPTION": "Post your source for Würth updates, images and video links",
       "TITLE_LABEL": "Title",
       "POST_BUTTON": "Post",
-      "EDITOR_PLACEHOLDER": "Enter text here..."
+      "EDITOR_PLACEHOLDER": "Enter text here...",
+      "CHARACHTER_NO":"Characters No:"
     },
       "UPDATE_NEWS_PAGE": {
         "HEADER_TITLE": "Update News",
-        "HEADER_DESCRIPTION": "Update Your Source For Wuerth Updates, Images And Video Links",
-        "TITLE_LABEL": "New Title",
+        "HEADER_DESCRIPTION": "Update your source for Würth updates, images and video links",
+        "TITLE_LABEL": "News Title",
         "UPDATE_BUTTON": "Update"
       },
-
     "NEWS_LIST_PAGE": {
       "HEADER_TITLE": "News",
-      "HEADER_DESCRIPTION": "Explore The Latest Wuerth Updates",
+      "HEADER_DESCRIPTION": "Explore the latest Würth updates",
       "UPDATE_BUTTON": "Update",
       "DELETE_BUTTON": "Delete",
       "LIKES_LABEL": "Total Likes"
     },
-
       "UPLOAD_EXCEL": {
         "HEADER_TITLE": "Sales Data",
-        "HEADER_DESCRIPTION": "Upload Hourly Excel File for Sales Updates",
+        "HEADER_DESCRIPTION": "Upload hourly excel file for sales updates",
         "SELECT_FILE": "Select a file to upload from your computer or device",
         "CHOOSE_FILE_BUTTON": "Choose a File",
         "SELECTED_FILE_LABEL": "Selected File: ",
@@ -116,7 +117,7 @@
       },
       "EVENT_UPLOAD_PAGE": {
         "HEADER_TITLE": "Event Graphics",
-        "HEADER_DESCRIPTION": "Upload Event Graphics. Name The Event, Add Logo/Graphics",
+        "HEADER_DESCRIPTION": "Upload event graphics. Name the event, add logo/graphics",
         "EVENT_NAME_LABEL": "Event Name",
         "LOGO_IMAGE_LABEL": "Logo Image",
         "BACKGROUND_IMAGE_LABEL": "Background Image",
@@ -128,7 +129,10 @@
           "SELECT": "Select",
           "EVENT_NAME": "Event Name",
           "LOGO_IMAGE": "Logo Image",
+          "THEME_COLOR":"Theme Color",
           "BACKGROUND_IMAGE": "Background Image",
+          "DASHBOARD_CENTER_IMAGE":"Dashboard Center Image",
+          "GROUND_IMAGE":"Ground Image",
           "ACTION": "Action"
         },
         "TOOLTIPS": {
@@ -138,10 +142,9 @@
       },
       "PROFILE_PAGE": {
         "HEADER_TITLE": "Profile",
-        "HEADER_DESCRIPTION": "Access Your Profile Info, Edit, Change Password.",
+        "HEADER_DESCRIPTION": "Access your profile info, edit, change password.",
         "NAME_LABEL": "Name",
-        "EMAIL_LABEL": "Email",
-        "COMPANY_NUMBER_LABEL": "Company Number",
+        "COMPANY_NUMBER_LABEL": "Company ID",
         "COMPANY_NAME_LABEL": "Company Name",
         "CHANGE_PASSWORD_LABEL": "Change Password",
         "NEW_PASSWORD_LABEL": "Enter new password",
@@ -152,7 +155,6 @@
         "BACK_TO_LOGIN": "Back To Login",
         "FORGOT_PASSWORD_TITLE": "Forgot Password",
         "FORGOT_PASSWORD_DESCRIPTION": "Lost your password? No worries! Just enter your email and we'll send a link.",
-        "EMAIL_LABEL": "Email",
         "FORGOT_PASSWORD_BUTTON": "Forgot Password"
       },
       "SET_PASSWORD_PAGE": {
@@ -236,6 +238,7 @@
         "NEW_PASSWORD_ENTRY_INFO": "Enter New Password",
         "COLUMN_NUMBER_VALUE_ERROR": "Please check all values in number in column {{columnName}} or enter superuser",
         "FILE_UPLOAD_IN_PROGRESS": "File upload in progress",
+        "UPLOAD_EXCEL_FIRST_ERROR":"Please upload Excel file first",
         "VERIFYING":"Verifying..."
       },
       "TOASTER_ERROR":{
@@ -292,15 +295,13 @@
           "ERROR_MISSING_SALES_REP_NO_COLUMN": "Please provide data in the proper format. Missing column Sales rep no.",
           "ERROR_MISSING_SALES_IN_LC_COLUMN": "Please provide data in the proper format. Missing column Sales in LC.",
           "ERROR_COMPANY_NOT_FOUND": "Company not found.",
-          "ERROR_SALES_REP_NO_NOT_EXIST": "Sales rep no does not exist in the database.",
+          "ERROR_SALES_REP_NO_NOT_EXIST": "{{data}} Sales rep no does not exist in the database.",
+          "ERROR_COMPANY_ID_NOT_EXIST":"{{data}} company IDs do not exist in database",
           "ERROR_FORBIDDEN": "Forbidden",
           "ERROR_INVALID_NEWS_ID_OR_USER_ID": "Invalid news ID or user ID.",
           "ERROR_SOMETHING_WENT_WRONG": "Something went wrong on the server.",
           "ERROR_INVALID_TEAM_ID": "Invalid team ID.",
-          "ERROR_DUPLICATE_SALES_REP_NUMBER":"Within one company the sales rep number cannot come up twice {{data}}"
-
+          "ERROR_DUPLICATE_SALES_REP_NUMBER":"Within one company the sales rep number cannot come up twice {{data}}",
+          "ERROR_NEWS_MAX_LENGTH_ERROR":"The content must not exceed 1000 characters."
       }
-
-
-
 }

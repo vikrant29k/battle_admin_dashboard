@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="header-tag">
+    <h2>Hello!</h2>
+    <p>{{ 'SUPER_SUPER_USER.HEADER_DESCRIPTION' | translate }}</p>
+
+  </div>
+
+  <div class="upload-section">
+    <div class="file-selection">
+      <h3>{{ 'UPLOAD_EXCEL.SELECT_FILE' | translate }}</h3>
+      <div class="file-chooser">
+        <input
+          type="file"
+          #fileInput
+          style="display: none"
+          accept=".xlsx, .xls"
+          (change)="onFileSelected($event)"
+        />
+
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="fileInput.click()"
+          *ngIf="!fileSelectedSpinner"
+        >
+          {{ 'UPLOAD_EXCEL.CHOOSE_FILE_BUTTON' | translate }}
+        </button>
+        <mat-spinner
+          style="width: 50px"
+          *ngIf="fileSelectedSpinner"
+        ></mat-spinner>
+      </div>
+      <p
+        *ngIf="selectedFile"
+        [class.colorRed]="fileError"
+        class="selected-file-name"
+        style="margin-bottom: 0%"
+      >
+        {{ 'UPLOAD_EXCEL.SELECTED_FILE_LABEL' | translate }}{{ selectedFile.name }}
+      </p>
+
+      <br />
+      <div class="confirm-button">
+        <button
+          mat-raised-button
+          (click)="onFileUpload()"
+          *ngIf="!confirm"
+          [disabled]="disableConfirmButotn"
+        >
+          {{ 'UPLOAD_EXCEL.CONFIRM_BUTTON' | translate }}
+        </button>
+        <!-- <mat-icon class="downloadBtn" (click)="downloadJsonFile()" *ngIf="storedData" >download</mat-icon> -->
+        <mat-spinner style="width: 50px" *ngIf="confirm"></mat-spinner>
+      </div>
+    </div>
+  </div>
+
+  <div class="table">
+    <div class="tableContainer">
+      <table>
+        <thead>
+          <tr>
+            <ng-container *ngIf="fileData?.length > 0">
+              <td *ngFor="let header of headers">{{ header }}</td>
+            </ng-container>
+            <td *ngIf="fileData?.length > 0" class="action-column">Action</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of fileData; let i = index">
+            <td>{{ item["Company ID"] }}</td>
+            <td>{{ item["Sales rep no."] }}</td>
+            <td>{{ item["Sales in LC"] }}</td>
+            <td class="action-column" >
+              <!-- <button mat-icon-button matTooltip="Edit" > -->
+                <mat-icon (click)="editLine(i)">edit</mat-icon>
+              <!-- </button> -->
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

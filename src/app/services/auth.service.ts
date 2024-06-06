@@ -1,7 +1,6 @@
 // auth.service.ts
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { jwtDecode } from 'jwt-decode';
 import { Observable, finalize } from 'rxjs';
 import { environment } from 'src/environment/enviroment';
 import { ToastrService } from 'ngx-toastr';
@@ -12,22 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class AuthService {
   constructor(private http:HttpClient, private toster:ToastrService, public translate: TranslateService) {}
 
-  getUserIdFromToken(): string | null {              //Get the id from the token saved in localStorage
-    const token = localStorage.getItem('token');
-    if (token) {
-      try {
-        const decoded:any = jwtDecode(token);
-        return decoded._id;
-      } catch (error) {
-        console.error('Error decoding token:', error);
-        return null;
-      }
-    }
-    return null;
-  }
-
-
-    signUp(data: any): Observable<any> {
+  signUp(data: any): Observable<any> {
       const loadingToast = this.toster.info('',this.translate.instant('TOASTER_RESPONSE.VERIFYING'), {
         disableTimeOut: true,
         closeButton: true,

@@ -7,6 +7,7 @@ import { NewsListComponent } from '../component/news-list/news-list.component';
 import { ImportExcelComponent } from '../component/import-excel/import-excel.component';
 import { ProfileComponent } from '../component/profile/profile.component';
 import { MatchComponent } from '../component/match/match.component';
+import { SuperAdminDashboardComponent } from '../component/super-admin-dashboard/super-admin-dashboard.component';
 const routes: Routes = [
   {
     path:'',
@@ -40,6 +41,9 @@ const routes: Routes = [
         {
           path:'event',
           component:MatchComponent
+        },{
+          path:'super-admin-dashboard',
+          component:SuperAdminDashboardComponent
         }
 
     ]

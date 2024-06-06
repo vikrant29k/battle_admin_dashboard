@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProfileComponent } from '../profile/profile.component';
 import { ChangepasswordService } from 'src/app/services/changepassword.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dialog-animations',
@@ -15,14 +16,20 @@ export class DialogAnimationsComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DialogAnimationsComponent>,
     public changePasswordService: ChangepasswordService,
+    public translateService:TranslateService,
     @Inject(MAT_DIALOG_DATA) public data:any
-  ) {}
+  ) {
+    let lang:any=localStorage.getItem('lang')
+    translateService.use(lang)
+  }
 
   ngOnInit(): void {
-    console.log("dialog data", this.data)
+    let lang:any=localStorage.getItem('lang')
+    this.translateService.use(lang)
+    // console.log("dialog data", this.data)
     this.title = this.data.title
     this.message = this.data.message
-    console.log("lineEditForm", this.data)
+    // console.log("lineEditForm", this.data)
   }
 
   onConfirm(): void {

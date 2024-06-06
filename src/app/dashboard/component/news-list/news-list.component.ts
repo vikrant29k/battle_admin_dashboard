@@ -97,7 +97,7 @@ export class NewsListComponent implements OnInit {
     );
   }
   updateNews(news: any) {
-    console.log(news);
+    // console.log(news);
     this.updateService.news = news;
     if (news) {
       this.route.navigate(['/', 'news-update']);

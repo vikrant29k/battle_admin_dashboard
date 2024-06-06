@@ -47,31 +47,21 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private updateService: NewsUpdateService,
     private route: Router,
-    private toastr: ToastrService,private translate:TranslateService,
+    private toastr: ToastrService,public translate:TranslateService,
     private fb: FormBuilder
   ) {
-    let lang:any=localStorage.getItem('lang')
-    translate.use(lang);
+    let lang=localStorage.getItem('lang')
+    if(lang){
+      translate.use(lang);
+    }else{
+      translate.use('en');
+    }
     // this.newsContent = this.fb.group({
     //   content: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxCharacterCount)])],
     //   title: ['', Validators.required],});
   }
 
-  // ngOnInit(): void {
-  //   let data: any = this.updateService.news;
-  //   this.newsId = data._id;
-  //   if (this.newsId) {
-  //     this.buttonName='Update'
-  //     console.log(data, 'hii');
-  //     this.updateNews = true;
-  //     this.newsContent.patchValue({
-  //       content: data.content,
-  //       title: data.title,
-  //     });
-  //   }else{
-  //     this.buttonName='Post'
-  //   }
-  // }
+
 
   ngOnInit(): void {
     let data: any = this.updateService.news;
@@ -80,7 +70,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     this.translateDescription();
     this.buttonName = this.getButtonLabel();
     if (this.newsId) {
-      console.log(data, 'hii');
+      // console.log(data, 'hii');
       this.updateNews = true;
       this.newsContent.patchValue({
         content: data.content,
@@ -100,12 +90,12 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
       const cleanContent = editorContent.replace(/[^a-zA-Z]/g, '');
       // Count characters
       this.characterCount = cleanContent.length;
-  
+
       // Allow backspace to work
       if (event.keyCode === 8 || event.keyCode === 46) { // 8 is the key code for backspace, 46 for delete
         return;
       }
-  
+
       // Disable typing when character count exceeds 800
       if (this.characterCount  >= 800 && (event.key.length === 1 && /[a-zA-Z]/.test(event.key))) {
         event.preventDefault(); // Prevent further key presses
@@ -113,7 +103,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     } else {
       this.characterCount = 0; // If content is null, set character count to 0
     }
-  
+
     // Check if the target is the video input
     if (event.target.id === 'video-input') {
       // Allow only up to 3 characters in the video input
@@ -121,13 +111,13 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
         event.preventDefault();
       }
     }
-  
+
     // Prevent accepting pasted characters
     if (event.type === 'paste') {
       event.preventDefault();
     }
   }
-  
+
   preventPaste(event: ClipboardEvent): void {
     event.preventDefault();
   }
@@ -168,7 +158,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     // width: '50rem',
 
     upload: (file: File): Observable<HttpEvent<UploadResponse>> => {
-      console.log('file is', file);
+      // console.log('file is', file);
       return Observable.create(
         (observer: Observer<HttpEvent<UploadResponse>>) => {
           // const maxDimension = 250;
@@ -233,7 +223,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
                     this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SERVER_ERROR'));
                   }
                   else{
-                    console.log('error in api ', error);
+                    // console.log('error in api ', error);
                     this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
                   }
                 }
@@ -243,7 +233,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
         }
       );
     },
-    placeholder: this.translate.instant('POST_NEWS_PAGE.EDITOR_PLACEHOLDER'),
+    // placeholder: this.translate.instant('POST_NEWS_PAGE.EDITOR_PLACEHOLDER'),
     translate: 'no',
     sanitize: false,
     toolbarPosition: 'top',
@@ -270,7 +260,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
       const editorContent = this.newsContent.get('content')?.value;
       const cleanContent = editorContent ? editorContent.replace(/[^a-zA-Z]/g, '') : '';
       const characterCount = cleanContent.length;
-  // debugger
+
       // Check if character count exceeds 800
       if (characterCount > 800) {
         this.toastr.error("Character count should not exceed 800");
@@ -278,7 +268,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
       }
     }
     if (this.newsContent.valid) {
-      console.log(this.newsContent.value);
+      // console.log(this.newsContent.value);
       if (this.updateNews) {
         this.http
           .patch(
@@ -318,18 +308,21 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
               else if(error.error.message=="Something went wrong on the server."){
                 this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SOMETHING_WENT_WRONG'));
               }
+              else if(error.error.message=="The content must not exceed 1000 characters."){
+                this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_NEWS_MAX_LENGTH_ERROR'));
+              }
               else{
-                console.log('error in api ', error);
+                // console.log('error in api ', error);
                 this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
               }
 
             }
           );
       } else {
-        console.log('news adding', this.images);
+        // console.log('news adding', this.images);
         this.updateService.postNews(this.newsContent.value).subscribe(
           (res: any) => {
-            console.log(res);
+            // console.log(res);
             if (res.statusCode == 200) {
               this.toastr.success(this.translate.instant('TOASTER_RESPONSE.NEWS_ADDED_SUCCESS'));
 
@@ -337,7 +330,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
             }
           },
           (error: HttpErrorResponse) => {
-            console.log('error in api', error);
+            // console.log('error in api', error);
             if(error.error.message=="Title should not be empty."){
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_EMPTY_TITLE'));
             }
@@ -362,8 +355,11 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
             else if(error.error.message=="Content should be between 10 and 800 characters."){
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_CONTENT_LENGTH_RANGE'));
             }
+            else if(error.error.message=="The content must not exceed 1000 characters."){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_NEWS_MAX_LENGTH_ERROR'));
+            }
             else{
-              console.log('error in api ', error);
+              // console.log('error in api ', error);
               this.toastr.error(this.translate.instant('TOASTER_RESPONSE.SERVER_ERROR'));
             }
 

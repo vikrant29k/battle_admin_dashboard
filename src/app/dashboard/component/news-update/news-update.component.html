@@ -1,7 +1,7 @@
 <div class="container">
   <div class="header-tag">
     <h2>{{ headerTitle | translate }}</h2>
-    <p>{{ headerDescription | translate }}</p>
+    <!-- <p>{{ headerDescription | translate }}</p> -->
   </div>
   <form [formGroup]="newsContent">
     <mat-form-field appearance="fill" class="title">
@@ -26,13 +26,12 @@
             (buttonClick)="addVideo()"
           ></ae-button>
         </ae-toolbar-set>
-    
+
         <span class="character-count" [style.color]="characterCount > maxCharacters ? 'red' : 'black'">
-          Characters No: {{ characterCount }} 
-          / {{ maxCharacters }}
+          {{translate.instant('POST_NEWS_PAGE.CHARACHTER_NO')}} {{ characterCount }} / {{ maxCharacters }}
         </span>
       </ng-template>
-    
+
       </angular-editor>
     </div>
     <div class="box">

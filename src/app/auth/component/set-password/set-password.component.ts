@@ -30,8 +30,12 @@ languageCodes = ['en', 'de'];
     private toastr: ToastrService,
     public translate:TranslateService
   ) {
-    let lang:any=localStorage.getItem('lang')
-    translate.use(lang);
+    let lang=localStorage.getItem('lang')
+    if(lang){
+      translate.use(lang);
+    }else{
+      translate.use('en');
+    }
   }
   public showPassword: boolean = false;
   public togglePasswordVisibility(): void {
@@ -47,7 +51,7 @@ languageCodes = ['en', 'de'];
     }
     let validatePass = this.validatePassword(this.password);
     let _id = this.router.snapshot.params['id'];
-    console.log(validatePass);
+    // console.log(validatePass);
     if (this.password == this.confirmPassword) {
       if (validatePass) {
         let data = {
@@ -57,12 +61,12 @@ languageCodes = ['en', 'de'];
         //  console.log('Password set successfully');
         this.auth.setPassword(data).subscribe({
           next: (response) => {
-            console.log('API Response:', response);
+            // console.log('API Response:', response);
             if (response.statusCode == 200) {
               // alert("Password set successful");
               this.toastr.success(this.translate.instant('TOASTER_RESPONSE.PASSWORD_UPDATE_SUCCESS'));
               this.route.navigate(['/', 'auth', 'login']);
-            } 
+            }
           },
           error: (error: HttpErrorResponse) => {
             console.error('API Error:', error);

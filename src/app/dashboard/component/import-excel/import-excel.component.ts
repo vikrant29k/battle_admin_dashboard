@@ -588,11 +588,8 @@ export class ImportExcelComponent {
     }
 
     if (missingValues1.length === 0) {
-      // console.log('All values in the second array exist in the first array.');
     } else {
-      // console.log(
-      //   'Not all values in the second array exist in the first array.'
-      // );
+
       let mess = this.translate.instant(
         'TOASTER_RESPONSE.BATTLE_PARTNER_TEAM_NAME_NOT_PRESENT',
         { teamName: missingValues1 }
@@ -603,18 +600,13 @@ export class ImportExcelComponent {
       this.fileSelectedSpinner = false;
       return;
     }
-
-    // console.log("team names", filteredTeamNameColumn, filteredBattlePartnerTeamNameColumn)
-
     this.finalResult = {
       teamsData: teamArrays,
       commonFields: this.commonFieldObject,
     };
     this.fileError = false;
     this.fileSelectedSpinner = false;
-    // console.log('Final Result:', this.finalResult);
-    // console.log('table data', this.tableData);
-    // console.log('Column data:', columnData);
+
   };
 
   validateColumn(columnData: any, columnName: string): any {
@@ -734,27 +726,7 @@ export class ImportExcelComponent {
       ) {
         return;
       }
-      //
 
-      //validate total value of Target / Sales Rep LC is equal to Company Target LC Total
-      // const Target_Sales_Rep_LC_total = columnData['Target / Sales Rep LC'];
-      // let total_value = 0;
-      // Target_Sales_Rep_LC_total.map((num: number, i: number) => {
-      //   total_value += num;
-      // });
-
-      // const Company_Target_LC_Total = columnData['Company Target LC Total'];
-      // Company_Target_LC_Total.map((val: number, i: number) => {
-      //   if (val !== total_value) {
-      //     this.fileError = true;
-      //     this.toastr.error(
-      //       'Target / Sales Rep LC total not equal to Company Target LC Total'
-      //     );
-      //     throw new Error(
-      //       'Target / Sales Rep LC total not equal to Company Target LC Total'
-      //     );
-      //   }
-      // });
 
       // check column values in string
       if (

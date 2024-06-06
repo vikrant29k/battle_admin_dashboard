@@ -72,9 +72,13 @@ export class SignUpComponent implements OnInit {
     this.companyService.getAllCompany().subscribe((res:any)=>{
       // console.log(res)
       this.companyData=res.data
-      this.filteredCompanies =this.companyData
+      this.filteredCompanies = this.companyData.slice().sort((a, b) => {
+        return a.uid - b.uid; // Reverse order by subtracting uids
+      });
       // this.filteredCompanies = this.companyData;
-      this.filteredCompaniesName = this.companyData;
+      this.filteredCompaniesName = this.companyData.slice().sort((a, b) => {
+        return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+      });
     })
 
   }
@@ -98,7 +102,7 @@ export class SignUpComponent implements OnInit {
         name: this.signupForm.value.companyName,
       };
 
-      console.log(data);
+      // console.log(data);
 
       // Call the API
 

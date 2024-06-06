@@ -11,8 +11,8 @@
           <input matInput type="text" name="name" placeholder="{{ 'PROFILE_PAGE.NAME_LABEL' | translate }}" required formControlName="userName" />
         </mat-form-field>
         <mat-form-field class="form-group">
-          <mat-label>{{ 'PROFILE_PAGE.EMAIL_LABEL' | translate }}</mat-label>
-          <input matInput type="email" name="email" placeholder="{{ 'PROFILE_PAGE.EMAIL_LABEL' | translate }}" required formControlName="email" />
+          <mat-label>{{ 'AUTH.LOG_IN_FORM.EMAIL_LABEL' | translate }}</mat-label>
+          <input matInput type="email" name="email" placeholder="{{ 'AUTH.LOG_IN_FORM.EMAIL_LABEL' | translate }}" required formControlName="email" />
         </mat-form-field>
 
         <mat-form-field class="form-group">
@@ -36,9 +36,9 @@
             {{ 'PROFILE_PAGE.CHANGE_PASSWORD_LABEL' | translate }}
           </button>
       </div>
-<!-- 
+<!--
        <div class="form-submit">
-    
+
         <button mat-raised-button color="primary" class="btn" *ngIf="editBtn" (click)="editBtnClick()">
           {{ 'PROFILE_PAGE.EDIT_BUTTON' | translate }}
         </button>

@@ -19,8 +19,12 @@ export class ForgotPasswordComponent {
     private route: Router,
     public translate: TranslateService
   ) {
-    let lang:any=localStorage.getItem('lang')
-    translate.use(lang);
+    let lang=localStorage.getItem('lang')
+    if(lang){
+      translate.use(lang);
+    }else{
+      translate.use('en');
+    }
   }
 
   forgotBtnClick() {
@@ -35,7 +39,7 @@ export class ForgotPasswordComponent {
     }
     this.auth.forgotPassword({ email: this.email }).subscribe({
       next: (response) => {
-        console.log('API Response:', response);
+        // console.log('API Response:', response);
         if (response.statusCode == 200) {
           this.toastr.success(this.translate.instant('TOASTER_RESPONSE.PASSWORD_RESET_LINK_SENT_SUCCESS'));
           this.spinner = false

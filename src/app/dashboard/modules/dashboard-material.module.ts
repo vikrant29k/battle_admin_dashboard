@@ -17,8 +17,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatBadgeModule} from '@angular/material/badge'
 const materials = [
-  MatMenuModule,
+  MatMenuModule,MatBadgeModule,
   ReactiveFormsModule,
   MatCardModule,
   MatTooltipModule,
