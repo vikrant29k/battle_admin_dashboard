@@ -258,7 +258,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     if (this.newsContent.valid) {
       // Get the character count
       const editorContent = this.newsContent.get('content')?.value;
-      const cleanContent = editorContent ? editorContent.replace(/[^a-zA-Z]/g, '') : '';
+      const cleanContent = editorContent ? editorContent.replace(/\s/g, '') : '';
       const characterCount = cleanContent.length;
 
       // Check if character count exceeds 800
