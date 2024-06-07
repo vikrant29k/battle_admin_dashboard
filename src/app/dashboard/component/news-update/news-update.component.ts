@@ -86,10 +86,10 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     console.log(editorContent);
     if (editorContent) {
       // Remove non-alphanumeric content using regular expression
-      const cleanContent = editorContent.replace(/[^a-zA-Z0-9]/g, '');
-      // Count characters
-      this.characterCount = cleanContent.length;
-
+      // const cleanContent = editorContent.replace(/[^a-zA-Z0-9]/g, '');
+      // // Count characters
+      // this.characterCount = cleanContent.length;
+      this.characterCount = editorContent.length;
       // Allow backspace and delete to work
       if (event.keyCode === 8 || event.keyCode === 46) { // 8 is the key code for backspace, 46 for delete
         return;
