@@ -81,23 +81,22 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     this.updateMinHeight();
     window.addEventListener('resize', () => this.updateMinHeight());
   }
-
   countCharacters(event: any) {
     const editorContent = this.newsContent.get('content')?.value;
-    console.log(editorContent)
+    console.log(editorContent);
     if (editorContent) {
-      // Remove non-character content using regular expression
-      const cleanContent = editorContent.replace(/[^a-zA-Z]/g, '');
+      // Remove non-alphanumeric content using regular expression
+      const cleanContent = editorContent.replace(/[^a-zA-Z0-9]/g, '');
       // Count characters
       this.characterCount = cleanContent.length;
 
-      // Allow backspace to work
+      // Allow backspace and delete to work
       if (event.keyCode === 8 || event.keyCode === 46) { // 8 is the key code for backspace, 46 for delete
         return;
       }
 
       // Disable typing when character count exceeds 800
-      if (this.characterCount  >= 800 && (event.key.length === 1 && /[a-zA-Z]/.test(event.key))) {
+      if (this.characterCount >= 800 && (event.key.length === 1 && /[a-zA-Z0-9]/.test(event.key))) {
         event.preventDefault(); // Prevent further key presses
       }
     } else {
@@ -258,7 +257,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
     if (this.newsContent.valid) {
       // Get the character count
       const editorContent = this.newsContent.get('content')?.value;
-      const cleanContent = editorContent ? editorContent.replace(/\s/g, '') : '';
+      const cleanContent = editorContent ? editorContent.replace(/[^a-zA-Z0-9]/g, '') : '';
       const characterCount = cleanContent.length;
 
       // Check if character count exceeds 800
