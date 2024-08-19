@@ -292,7 +292,7 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
               else if(error.error.message=="Content should not be empty."){
                 this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_EMPTY_CONTENT'));
               }
-              else if(error.error.message=="Content should be between 10 and 1000 characters."){
+              else if(error.error.message=="Content should be between 1 and 800 characters."){
                 this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_CONTENT_LENGTH_RANGE'));
               }
               else if(error.error.message=="Invalid news id"){
@@ -335,6 +335,9 @@ export class NewsUpdateComponent implements OnInit, OnDestroy {
             }
             else if(error.error.message=="Unauthorized"){
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED'));
+            }
+            else if(error.error.message=="Content should be between 10 and 1000 characters."){
+              this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_CONTENT_LENGTH_RANGE'));
             }
             else if(error.error.message=="Something went wrong on the server."){
               this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_SERVER_ERROR'));

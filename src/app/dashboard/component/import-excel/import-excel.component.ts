@@ -554,13 +554,6 @@ export class ImportExcelComponent {
       columnData['Battle Partner Team name (ASM level)'];
     // console.log('team names', teamNameColumn, battlePartnerTeamNameColumn);
 
-    // let filteredTeamNameColumn = teamNameColumn.filter((val:any,i:number)=>{
-    //   return val!=="Superuser"
-    // })
-    // let filteredBattlePartnerTeamNameColumn = teamNameColumn.filter((val:any,i:number)=>{
-    //   return val!=="Superuser"
-    // })
-
     const missingValues = teamNameColumn.filter(
       (val) => !battlePartnerTeamNameColumn.includes(val)
     );
@@ -858,11 +851,15 @@ export class ImportExcelComponent {
           this.confirm = false;
           this.file = null;
           console.error('Error uploading file:', error);
-          if (error.error.message == 'Something went wrong on the server.') {
+          if(error.error.message=='The email address you provided is already in use {{data}}'){
+            this.toastr.error(
+              this.translate.instant('TOASTER_ERROR.EMAIL_ADDRESS_ALREADY_IN_USE',{data:error.error.errors})
+            );
+          }else if (error.error.message == 'Something went wrong on the server.') {
             this.toastr.error(
               this.translate.instant('TOASTER_ERROR.ERROR_SERVER_ERROR')
             );
-          } else if (error.error.message == 'Unauthorized') {
+          } else if (error.error.message == 'You are not authorized to add other company Excel') {
             this.toastr.error(
               this.translate.instant('TOASTER_ERROR.ERROR_UNAUTHORIZED')
             );

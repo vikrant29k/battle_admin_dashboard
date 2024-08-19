@@ -20,11 +20,12 @@ export class SliderComponent implements OnInit {
 
   ngOnInit(): void {
     let user = localStorage.getItem('user');
+    let savedMenu = localStorage.getItem('activeMenu')
     if (user == 'super-admin') {
-      this.activeMenu = 'super-admin-dashboard';
+      this.activeMenu = savedMenu?savedMenu:'super-admin-dashboard';
       this.ifSuperUser = true;
     } else if (user == 'admin') {
-      this.activeMenu = 'import-file';
+      this.activeMenu = savedMenu?savedMenu:'import-file';
       this.ifSuperUser = false;
     }
   }

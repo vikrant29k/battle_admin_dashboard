@@ -264,7 +264,7 @@
       "ERROR_TITLE_MINIMUM_LENGTH": "Der Titel muss mindestens 10 Zeichen enthalten.",
       "ERROR_TITLE_MAXIMUM_LENGTH": "Der Titel darf maximal 200 Zeichen enthalten.",
       "ERROR_EMPTY_CONTENT": "Inhalt darf nicht leer sein.",
-      "ERROR_CONTENT_LENGTH_RANGE": "Inhalt sollte zwischen 10 und 1000 Zeichen lang sein.",
+      "ERROR_CONTENT_LENGTH_RANGE": "Inhalt sollte zwischen 1 und 800 Zeichen lang sein.",
       "ERROR_INVALID_NEWS_ID": "Ungültige Nachrichten-ID.",
       "ERROR_EMPTY_FILE_ATTACHMENT": "Bitte fügen Sie eine Datei zum Hochladen an.",
       "ERROR_EMAIL_ALREADY_EXISTS": "E-Mail ist bereits vorhanden. Bitte verwenden Sie eine andere E-Mail-Adresse.",
@@ -302,6 +302,7 @@
       "ERROR_SOMETHING_WENT_WRONG": "Auf dem Server ist ein Fehler aufgetreten.",
       "ERROR_INVALID_TEAM_ID": "Ungültige Team-ID.",
       "ERROR_DUPLICATE_SALES_REP_NUMBER":"Innerhalb eines Unternehmens darf die Vertriebsmitarbeiternummer nicht zweimal vorkommen:{{data}}",
-      "ERROR_NEWS_MAX_LENGTH_ERROR":"Der Inhalt darf 1000 Zeichen nicht überschreiten."
+      "ERROR_NEWS_MAX_LENGTH_ERROR":"Der Inhalt darf 1000 Zeichen nicht überschreiten.",
+      "EMAIL_ADDRESS_ALREADY_IN_USE":"Die von Ihnen angegebene E-Mail-Adresse wird bereits verwendet {{data}}"
     }
 }

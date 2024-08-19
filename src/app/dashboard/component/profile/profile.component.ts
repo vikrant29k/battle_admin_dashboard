@@ -33,7 +33,7 @@ export class ProfileComponent {
 
 
   ngOnInit(): void {
-    this.translateService.get(['RESET_PASSWORD.RESET_PASSWORD_TITLE', 'RESET_PASSWORD.RESET_PASSWORD_MESSAGE']).subscribe(translations => {
+    this.translate.get(['RESET_PASSWORD.RESET_PASSWORD_TITLE', 'RESET_PASSWORD.RESET_PASSWORD_MESSAGE']).subscribe(translations => {
       this.dialogData.title = translations['RESET_PASSWORD.RESET_PASSWORD_TITLE'];
       this.dialogData.message = translations['RESET_PASSWORD.RESET_PASSWORD_MESSAGE'];
     });
@@ -58,8 +58,7 @@ export class ProfileComponent {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
-    private translateService:TranslateService,
-    private translate:TranslateService
+    public translate:TranslateService
   ) {
     let lang=localStorage.getItem('lang')
     if(lang){
@@ -162,15 +161,14 @@ export class ProfileComponent {
               next: (res: any) => {
                 if (res.statusCode == 200) {
                   // console.log('password res', res);
-                  this.profileUpdate();
+                  // this.profileUpdate();
 
                   // this.toastr.success("Password Updated Successfully")
                   this.router.navigate(['']);
+                   localStorage.clear()
                 }
               },
               error: (error: HttpErrorResponse) => {
-                // console.log(' api error', err);
-                // this.toastr.error(err.error.message);
                 if (error.error.message=="An error occurred while updating. Please try again later.") {
                   this.toastr.error(this.translate.instant('TOASTER_ERROR.ERROR_UPDATE_ERROR'));
                 }
@@ -220,7 +218,7 @@ export class ProfileComponent {
             this.editBtn = true;
             this.getProfileDetails();
             this.toastr.success(this.translate.instant('TOASTER_RESPONSE.PROFILE_UPDATED_SUCCESS'));
-            localStorage.clear()
+
           }
         },
         error: (error: HttpErrorResponse) => {

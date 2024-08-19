@@ -142,8 +142,10 @@
 
           .card-action{
             .likes{
-              font-size: 0.9rem;
-            }
+              .like-container{
+                gap: 1.2rem;            
+              }
+          }
           }
           .card-footer{
             font-size: 0.8rem;

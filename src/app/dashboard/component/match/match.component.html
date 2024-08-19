@@ -40,10 +40,6 @@
               <b>{{ 'EVENT_UPLOAD_PAGE.SELECTED_FILE_LABEL' | translate }}</b> {{ selectedImgFlyer.name }}
             </p>
           </div>
-        </div>
-
-        <!-- Additional Image Pickers -->
-        <div style="margin-block-start: 1rem;" class="file-chooser">
           <div class="file-banner-image">
             <label for="banner">{{ 'EVENT_UPLOAD_PAGE.TABLE_HEADERS.DASHBOARD_CENTER_IMAGE' | translate }}</label>
             <input name="banner" type="file" #fileInputBanner style="display: none" accept="image/*" (change)="onFileSelectedBanner($event)" />
@@ -66,6 +62,11 @@
             </p>
           </div>
         </div>
+
+        <!-- Additional Image Pickers -->
+        <!-- <div style="margin-block-start: 1rem;" class="file-chooser">
+
+        </div> -->
 
         <br />
         <div class="confirm-button">

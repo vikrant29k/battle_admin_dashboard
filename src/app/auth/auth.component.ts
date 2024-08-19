@@ -29,6 +29,12 @@ constructor(public translate: TranslateService){
 }
 loginText:any;
 ngOnInit(): void {
+  let getLanguage = localStorage.getItem('lang')
+  if(getLanguage){
+    localStorage.setItem('lang',getLanguage)
+  }else{
+    localStorage.setItem('lang','en');
+  }
   this.translate.onLangChange.subscribe(event => {
     // Update localStorage with the new language
     localStorage.setItem('lang', event.lang);

@@ -206,7 +206,7 @@
         "EVENT_DELETED_SUCCESS": "Event deleted successfully",
         "PROMPT_VIDEO_URL": "Please enter the YouTube video URL:",
         "PROFILE_UPDATED_SUCCESS": "Profile updated successfully",
-        "PASSWORD_LINK_SENT_SUCCESS": "Password link sent to your email",
+        "PASSWORD_LINK_SENT_SUCCESS": "Verification link sent to your email",
         "PASSWORD_RESET_LINK_SENT_SUCCESS": "Password reset link sent to your email",
         "PASSWORD_NOT_MATCH":"Password does not match. Please try again",
         "ENTER_VALID_EMAIL": "Enter valid email",
@@ -265,7 +265,7 @@
         "ERROR_TITLE_MINIMUM_LENGTH": "The title must contain a minimum of 10 characters.",
         "ERROR_TITLE_MAXIMUM_LENGTH": "The title must not exceed 200 characters.",
         "ERROR_EMPTY_CONTENT": "Content should not be empty.",
-        "ERROR_CONTENT_LENGTH_RANGE": "Content should be between 10 and 1000 characters."  ,
+        "ERROR_CONTENT_LENGTH_RANGE": "Content should be between 1 and 800 characters."  ,
         "ERROR_INVALID_NEWS_ID": "Invalid news id."  ,
         "ERROR_EMPTY_FILE_ATTACHMENT": "Please attach a file to upload." ,
           "ERROR_EMAIL_ALREADY_EXISTS": "Email already exists. Please use a different email address.",
@@ -303,6 +303,7 @@
           "ERROR_SOMETHING_WENT_WRONG": "Something went wrong on the server.",
           "ERROR_INVALID_TEAM_ID": "Invalid team ID.",
           "ERROR_DUPLICATE_SALES_REP_NUMBER":"Within one company the sales rep number cannot come up twice {{data}}",
-          "ERROR_NEWS_MAX_LENGTH_ERROR":"The content must not exceed 1000 characters."
+          "ERROR_NEWS_MAX_LENGTH_ERROR":"The content must not exceed 1000 characters.",
+          "EMAIL_ADDRESS_ALREADY_IN_USE":"The email address you provided is already in use {{data}}"
       }
 }
